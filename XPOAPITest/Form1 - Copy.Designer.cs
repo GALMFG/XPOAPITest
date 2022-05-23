@@ -1,7 +1,7 @@
 ﻿
 namespace XPOAPITest
 {
-    partial class FormUserInterface
+    partial class Form1
     {
         /// <summary>
         ///  Required designer variable.
@@ -2370,15 +2370,15 @@ namespace XPOAPITest
             this.tabPageOrder1.Text = "Order";
             this.tabPageOrder1.UseVisualStyleBackColor = true;
             // 
-            // FormUserInterface
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1745, 1028);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "FormUserInterface";
-            this.Text = "FormUserInterface";
-            this.Load += new System.EventHandler(this.FormUserInterface_Load);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

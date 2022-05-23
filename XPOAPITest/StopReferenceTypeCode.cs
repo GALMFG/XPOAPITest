@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace XPOAPITest
 {
-    public class SpecialRequirement
+    public class StopReferenceTypeCode
     {
-        public string code { get; set; }
+        public string typeCode { get; set; }
 
         public string value { get; set; }
     }

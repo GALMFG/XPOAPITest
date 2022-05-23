@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XPOAPITest
 {
-    public class StopReferenceNumber
+    public class CustomerReferenceNumber
     {
         public string typeCode { get; set; }
 

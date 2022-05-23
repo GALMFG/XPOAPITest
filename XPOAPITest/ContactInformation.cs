@@ -6,9 +6,17 @@ using System.Threading.Tasks;
 
 namespace XPOAPITest
 {
-    public class OrderContactInformation : Contact
+    public class ContactInformation : Contact
     {
-        public IList<PhoneNumber> phoneNumbers { get; set; }
+        public ContactInformation()
+        {
+            phoneNumbers = new List<PhoneNumber>();
+        }
+        public IList<PhoneNumber> phoneNumbers;
+        public IList<PhoneNumber> PhoneNumbers {
+            get { return phoneNumbers; }
+            set { phoneNumbers = value; }
+        }
         public void addPhoneNumber(PhoneNumber phoneNumber)
         {
             if (phoneNumbers is null)

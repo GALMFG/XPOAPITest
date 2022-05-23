@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace XPOAPITest
 {
-    /// <summary>
-    /// Gets the equipment catagory code.
-    /// </summary>
-
+    public class StopContactPhoneNumber : PhoneNumber
+    {
+        public bool isPrimary { get; set; }
+    }
 }

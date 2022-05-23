@@ -9,6 +9,33 @@ namespace XPOAPITest
 {
     public class Stop
     {
+        public Stop()
+        {
+             addressInformations= new AddressInformation();
+
+            stopContactInformations=new  List<StopContactInformation>();
+
+            specialRequirement= new List<StopSpecialRequirement>();
+
+            stopReferenceNumbers = new List<StopReferenceTypeCode> ();
+    }
+        //private AddressInformation addressInformations;
+
+        //private string type;
+
+        //private string scheduledTimeFrom;
+
+        //private string scheduledTimeTo;
+
+        //private IList<StopContactInformation> stopContactInformations;
+
+        //private IList<StopSpecialRequirement> specialRequirements;
+
+        //private IList<StopReferenceTypeCode> stopReferenceTypeCodes;
+
+        //private string note;
+
+        //public int sequenceNo;
         public AddressInformation addressInformations { get; set; }
 
         public string type { get; set; }
@@ -19,9 +46,9 @@ namespace XPOAPITest
 
         public IList<StopContactInformation> stopContactInformations { get; set; }
 
-        public IList<SpecialRequirement> specialRequirements { get; set; }
+        public IList<StopSpecialRequirement> specialRequirement { get; set; }
 
-        public IList<StopReferenceNumber> stopReferenceNumbers { get; set; }
+        public IList<StopReferenceTypeCode> stopReferenceNumbers { get; set; }
 
         public string note { get; set; }
 
@@ -34,18 +61,18 @@ namespace XPOAPITest
             stopContactInformations.Add(contact);
         }
 
-        public void addSpecialRequirement(SpecialRequirement specialRequirement)
+        public void addSpecialRequirement(StopSpecialRequirement requirement)
         {
-            if (specialRequirements is null)
-                specialRequirements = new List<SpecialRequirement>();
-            specialRequirements.Add(specialRequirement);
+            if (specialRequirement is null)
+                specialRequirement = new List<StopSpecialRequirement>();
+            specialRequirement.Add(requirement);
         }
 
-        public void addStopReferenceNumber(StopReferenceNumber stopReferenceNumber)
+        public void addStopReferenceNumber(StopReferenceTypeCode stopReferenceTypeCode)
         {
             if (stopReferenceNumbers is null)
-                stopReferenceNumbers = new List<StopReferenceNumber>();
-            stopReferenceNumbers.Add(stopReferenceNumber);
+                stopReferenceNumbers = new List<StopReferenceTypeCode>();
+            stopReferenceNumbers.Add(stopReferenceTypeCode);
         }
     }
 }

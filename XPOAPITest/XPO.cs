@@ -323,25 +323,61 @@ namespace XPOAPITest
 
         public XPO()
         {
-            XPOSettings.XAPIKeyToken = ConfigurationManager.AppSettings.Get("x-api-key_token");
-            XPOSettings.XAPIKeyRequest = ConfigurationManager.AppSettings.Get("x-api-key_request");
-            XPOSettings.ClientId = ConfigurationManager.AppSettings.Get("client_id");
-            XPOSettings.ClientSecret = ConfigurationManager.AppSettings.Get("client_secret");
-            XPOSettings.Scope = ConfigurationManager.AppSettings.Get("scope");
-            XPOSettings.GrantType = ConfigurationManager.AppSettings.Get("grant_type");
-            XPOSettings.PartnerIdentificationCode = ConfigurationManager.AppSettings.Get("PartnerIdentificationCode");
-            XPOSettings.XPOConnectURL = ConfigurationManager.AppSettings.Get("xpoConnectUrl");
 
+
+        }
+        public async Task<QuoteResponse> getQuote(QuoteRequest quoteRequest)
+        {
+            var body = JsonSerializer.Serialize(quoteRequest);
+            string xpoToken = null;
+            xpoToken = await Token.getToken(xpoToken);
+
+            var client = new RestClient("https://" + XPOSettings.XPOConnectURL + "/quoteAPI/rest/v1/Create");
+            //client.Timeout = -1;
+
+            var request = new RestRequest();
+            request.AddHeader("x-api-key", XPOSettings.XAPIKeyRequest);
+
+            //request.AddHeader("Content-Type", "application/json");
+
+            request.AddHeader("Accept", "*/*");
+            request.Method = Method.Post;
+            request.AddHeader("xpoauthorization", xpoToken);
+            //request.AddHeader("Content-Type", "text/plain");
+            //request.AddParameter("text/plain", body, ParameterType.RequestBody);
+            request.AddHeader("Content-Type", "application/json");
+
+            //var TokenBody = new TokenBody { client_id = "xpo-galvantage-integration", client_secret = "6ywFMhLijCn1CpzAlTX0CWtc6m4xT0nxcZfliDyIfJ9rX6gSvl74FMX1vgh59enh", scope = "xpo-rates-api", grant_type = "client_credentials" };
+
+            //body= "{ \"partnerOrderCode\":\"718956-22\",\"partnerIdentifierCode\":\"2-1-GALMNENY\",\"equipmentCategoryCode\":\"VN\",\"equipmentTypeCode\":\"V\",\"transportationMode\":[\"LTL\"],\"applicationSource\":\"GPAPI\",\"contactInformations\":[{ \"firstName\":\"Leslie\",\"email\":\"leslie.rivera@gal.com\",\"phoneNumbers\":[{ \"type\":\"WORK\",\"number\":\"718 292 9000 x 527\"}]}],\"stops\":[{ \"type\":\"PICKUP\",\"scheduledTimeFrom\":\"2022-05-11T18:00:00-04:00\",\"scheduledTimeTo\":\"2022-05-11T20:30:00-04:00\",\"sequenceNo\":1,\"addressInformations\":{ \"locationName\":\"GAL Manufacturing Company LLC.\",\"addressLine1\":\"50 East 153rd Street\",\"cityName\":\"Bronx\",\"stateCode\":\"NY\",\"country\":\"USA\",\"zipCode\":\"10451\"},\"stopContactInformations\":[{ \"firstName\":\"Leslie\",\"lastName\":\"Rivera\",\"email\":\"leslie.rivera@gal.com\",\"phoneNumbers\":[{ \"Type\":\"MOBILE\",\"number\":\"6463373449\",\"isPrimary\":true}]}]},{ \"type\":\"DELIVERY\",\"scheduledTimeFrom\":\"2022-05-14T08:00:00-04:00\",\"scheduledTimeTo\":\"2022-05-14T15:00:00-04:00\",\"sequenceNo\":2,\"addressInformations\":{ \"locationName\":\"SCHUMACHER ELEVATOR CO., INC. \",\"addressLine1\":\"ONE SCHUMACHER WAY            \",\"cityName\":\"DENVER              \",\"stateCode\":\"IA\",\"country\":\"USA\",\"zipCode\":\"50622\"},\"stopContactInformations\":[{ \"firstName\":\"Derek\",\"lastName\":\"Gielau\",\"email\":\"derek.gielau@schumacherelevator.com\",\"phoneNumbers\":[{ \"Type\":\"MOBILE\",\"number\":\"6463373449\",\"isPrimary\":true},{ \"Type\":\"WORK\",\"number\":\"319-984-5676\",\"isPrimary\":true}]}]}],\"items\":[{ \"productCode\":\"1 CONTROLLER ETC  1\",\"units\":1,\"unitTypeCode\":\"CRTS\",\"packageUnits\":1,\"packageTypeCode\":\"CRTS\",\"weight\":331,\"weightUomCode\":\"LB\",\"height\":35,\"heightUomCode\":\"IN\",\"length\":48,\"lengthUomCode\":\"IN\",\"width\":42,\"widthUomCode\":\"IN\",\"class\":\"55\"}]}";
+
+            QuoteResponse? quoteResponse;
+            try
+            {
+                request.AddJsonBody(quoteRequest);
+                //request.AddBody(body);
+                var response = await client.ExecuteAsync(request);
+                quoteResponse =
+JsonSerializer.Deserialize<QuoteResponse>(response.Content);
+                return quoteResponse;
+            }
+            catch(Exception e)
+            {
+
+            }
+            return null;
+
+            
         }
         public  async Task<QuoteResponse> getQuote()
         {
             QuoteRequest quoteRequest = new();
-            quoteRequest.xMode = "LTL";
-            quoteRequest.partnerIdentifierCode = XPOSettings.PartnerIdentificationCode;
+        //    quoteRequest.x_mode = "LTL";
+            quoteRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
             quoteRequest.partnerOrderCode = "45565555";
             quoteRequest.equipmentCategoryCode = EquipmentCatagoryCode.VN.ToString(); ;
             quoteRequest.equipmentTypeCode =equipmentTypeCode.V.ToString();
-            quoteRequest.addTransportationMode("LTL");
+            quoteRequest.AddTransportationMode("LTL");
 
 
             quoteRequest.bolNumber = "45567";
@@ -349,7 +385,9 @@ namespace XPOAPITest
             quoteRequest.shipmentId = "45565555";
 
             //List<QuoteContactInformation> QuoteContactInformation = new List<QuoteContactInformation>();
-            QuoteContactInformation contactInformation = new();
+            ContactInformation contactInformation = new();
+
+
             contactInformation.firstName = "Leslie";
             contactInformation.lastName = "Rivera";
             contactInformation.isPrimary = true;
@@ -359,19 +397,19 @@ namespace XPOAPITest
             phoneNumber.type = PhoneNumberType.WORK.ToString();
             contactInformation.addPhoneNumber(phoneNumber);
             // contacts.Add(contactInformation);
-            quoteRequest.addContact(contactInformation);
+            quoteRequest.AddContact(contactInformation);
 
-            QuoteReferenceNumber referenceNumber = new();
+            CustomerReferenceNumber referenceNumber = new();
             referenceNumber.typeCode = "SW";
             referenceNumber.value = "344";
-            quoteRequest.addReferenceNumber(referenceNumber);
+            quoteRequest.AddReferenceNumber(referenceNumber);
 
             quoteRequest.applicationSource = ApplicationSource.GPAPI.ToString();
 
             Stop pickup = new ();
             pickup.type = TypeOfStop.PICKUP.ToString();
-            pickup.scheduledTimeFrom = "2022-05-13T18:00:00-04:00";
-            pickup.scheduledTimeTo = "2022-05-13T20:30:00-04:00";
+            pickup.scheduledTimeFrom = "2022-05-24T18:00:00-04:00";
+            pickup.scheduledTimeTo = "2022-05-24T20:30:00-04:00";
             pickup.sequenceNo = 1;
             pickup.note = "This is a note";
 
@@ -380,7 +418,7 @@ namespace XPOAPITest
             stopContactInformation.lastName = "Rivera";
             stopContactInformation.isPrimary = true;
             stopContactInformation.email = "leslie.rivera@gal.com";
-            StopPhoneNumber stopPhoneNumber = new();
+            StopContactPhoneNumber stopPhoneNumber = new();
             stopPhoneNumber.number = "6463373449";
             stopPhoneNumber.type = PhoneNumberType.MOBILE.ToString();
             stopPhoneNumber.isPrimary = true;
@@ -388,7 +426,7 @@ namespace XPOAPITest
             pickup.addContact(stopContactInformation);
 
             SpecialRequirementType srt = SpecialRequirementType.LFD;
-            SpecialRequirement sr = new ();
+            StopSpecialRequirement sr = new ();
             sr.code = srt.GetString();
             sr.value = "2334";
             pickup.addSpecialRequirement(sr);
@@ -402,16 +440,16 @@ namespace XPOAPITest
             addressInformation.zipCode = "10451";
             pickup.addressInformations = addressInformation;
 
-            StopReferenceNumber stopReferenceNumber = new StopReferenceNumber();
+            StopReferenceTypeCode stopReferenceNumber = new StopReferenceTypeCode();
             stopReferenceNumber.typeCode = "AN";
             stopReferenceNumber.value = "78777";
             pickup.addStopReferenceNumber(stopReferenceNumber);
-            quoteRequest.addStop(pickup);
+            quoteRequest.AddStop(pickup);
 
             Stop delivery = new ();
             delivery.type = TypeOfStop.DELIVERY.ToString();
-            delivery.scheduledTimeFrom = "2022-05-17T18:00:00-04:00";
-            delivery.scheduledTimeTo = "2022-05-17T20:30:00-04:00";
+            delivery.scheduledTimeFrom = "2022-05-27T18:00:00-04:00";
+            delivery.scheduledTimeTo = "2022-05-27T20:30:00-04:00";
             delivery.sequenceNo = 2;
             delivery.note = "This is a note";
 
@@ -435,7 +473,7 @@ namespace XPOAPITest
 
 
             srt = SpecialRequirementType.LFD;
-             sr = new SpecialRequirement();
+             sr = new StopSpecialRequirement();
             sr.code = srt.GetString();
             sr.value = "2334";
             delivery.addSpecialRequirement(sr);
@@ -449,13 +487,13 @@ namespace XPOAPITest
             addressInformation.zipCode = "50622";
             delivery.addressInformations = addressInformation;
 
-            stopReferenceNumber = new StopReferenceNumber();
+            stopReferenceNumber = new StopReferenceTypeCode();
             stopReferenceNumber.typeCode = "AN";
             stopReferenceNumber.value = "5555";
 
             stopReferenceNumber.value = "78777";
             delivery.addStopReferenceNumber(stopReferenceNumber);
-            quoteRequest.addStop(delivery);
+            quoteRequest.AddStop(delivery);
 
 
             QuoteItem item = new QuoteItem();
@@ -466,7 +504,7 @@ namespace XPOAPITest
             item.unitTypeCode = UnitTypeCode.CRTS.ToString();
             item.packageUnits = 5;
             item.packageTypeCode = PackageTypeCode.CRTS.ToString();
-            item.declaredValueAmount = 400;
+        //    item.declaredValueAmount = 400;
             item.weight = 340;
             item.weightUomCode = WeightUomCode.LB.ToString();
             item.height = 35;
@@ -499,13 +537,13 @@ namespace XPOAPITest
             //item.temperatureInformation = temperature;
 
 
-            item.nmfcCode = "345";
+            //item.nmfcCode = "345";
 
 
            // item.sku = "34";
            // item.itemclass = "23";
 
-            quoteRequest.addItem(item);
+            quoteRequest.AddItem(item);
 
             var body = JsonSerializer.Serialize(quoteRequest);
             string xpoToken = null;
@@ -531,68 +569,74 @@ namespace XPOAPITest
             //body= "{ \"partnerOrderCode\":\"718956-22\",\"partnerIdentifierCode\":\"2-1-GALMNENY\",\"equipmentCategoryCode\":\"VN\",\"equipmentTypeCode\":\"V\",\"transportationMode\":[\"LTL\"],\"applicationSource\":\"GPAPI\",\"contactInformations\":[{ \"firstName\":\"Leslie\",\"email\":\"leslie.rivera@gal.com\",\"phoneNumbers\":[{ \"type\":\"WORK\",\"number\":\"718 292 9000 x 527\"}]}],\"stops\":[{ \"type\":\"PICKUP\",\"scheduledTimeFrom\":\"2022-05-11T18:00:00-04:00\",\"scheduledTimeTo\":\"2022-05-11T20:30:00-04:00\",\"sequenceNo\":1,\"addressInformations\":{ \"locationName\":\"GAL Manufacturing Company LLC.\",\"addressLine1\":\"50 East 153rd Street\",\"cityName\":\"Bronx\",\"stateCode\":\"NY\",\"country\":\"USA\",\"zipCode\":\"10451\"},\"stopContactInformations\":[{ \"firstName\":\"Leslie\",\"lastName\":\"Rivera\",\"email\":\"leslie.rivera@gal.com\",\"phoneNumbers\":[{ \"Type\":\"MOBILE\",\"number\":\"6463373449\",\"isPrimary\":true}]}]},{ \"type\":\"DELIVERY\",\"scheduledTimeFrom\":\"2022-05-14T08:00:00-04:00\",\"scheduledTimeTo\":\"2022-05-14T15:00:00-04:00\",\"sequenceNo\":2,\"addressInformations\":{ \"locationName\":\"SCHUMACHER ELEVATOR CO., INC. \",\"addressLine1\":\"ONE SCHUMACHER WAY            \",\"cityName\":\"DENVER              \",\"stateCode\":\"IA\",\"country\":\"USA\",\"zipCode\":\"50622\"},\"stopContactInformations\":[{ \"firstName\":\"Derek\",\"lastName\":\"Gielau\",\"email\":\"derek.gielau@schumacherelevator.com\",\"phoneNumbers\":[{ \"Type\":\"MOBILE\",\"number\":\"6463373449\",\"isPrimary\":true},{ \"Type\":\"WORK\",\"number\":\"319-984-5676\",\"isPrimary\":true}]}]}],\"items\":[{ \"productCode\":\"1 CONTROLLER ETC  1\",\"units\":1,\"unitTypeCode\":\"CRTS\",\"packageUnits\":1,\"packageTypeCode\":\"CRTS\",\"weight\":331,\"weightUomCode\":\"LB\",\"height\":35,\"heightUomCode\":\"IN\",\"length\":48,\"lengthUomCode\":\"IN\",\"width\":42,\"widthUomCode\":\"IN\",\"class\":\"55\"}]}";
 
 
+            try
+            {
+                request.AddJsonBody(quoteRequest);
+                //request.AddBody(body);
+                var response = await client.ExecuteAsync(request);
 
-            request.AddJsonBody(quoteRequest);
-            //request.AddBody(body);
-            var response = await client.ExecuteAsync(request);
 
+                QuoteResponse? quoteResponse =
+    JsonSerializer.Deserialize<QuoteResponse>(response.Content);
 
-            QuoteResponse? quoteResponse =
-JsonSerializer.Deserialize<QuoteResponse>(response.Content);
+                return quoteResponse;
+            }catch(Exception e)
+            {
 
-            return quoteResponse;
-
+            }
+            return null;
         }
 
         public async Task<OrderResponse> convertToOrder(TabPage tabPage)
         {
             OrderRequest orderRequest = new();
-            orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentificationCode;
+            orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
          //   orderRequest.equipmentCategoryCode = EquipmentCatagoryCode.VN.ToString(); ;
          //   orderRequest.equipmentTypeCode = equipmentTypeCode.V.ToString();
             orderRequest.transportationMode="LTL";
             orderRequest.applicationSource = ApplicationSource.GPAPI.ToString();
             Label lblQuoteId = tabPage.Controls["lblQuoteIdValue"] as Label;
             orderRequest.quoteId = lblQuoteId.Text;
-        //    orderRequest.shipmentId = "45565555";
-        //    orderRequest.paymentMethod = PaymentMethod.COL.ToString();
+            //    orderRequest.shipmentId = "45565555";
+            //    orderRequest.paymentMethod = PaymentMethod.COL.ToString();
 
 
-            List<OrderContactInformation> contacts = new List<OrderContactInformation>();
-            OrderContactInformation contactInformation = new();
-            contactInformation.firstName = "Leslie";
-            contactInformation.lastName = "Rivera";
-            contactInformation.isPrimary = true;
-            contactInformation.email = "leslie.rivera@gal.com";
-            PhoneNumber phoneNumber = new();
-            phoneNumber.number = "718 292 9000 x 527";
-            phoneNumber.type = PhoneNumberType.WORK.ToString();
-            contactInformation.addPhoneNumber(phoneNumber);
-         //   orderRequest.addOrderContact(contactInformation);
+            // List<OrderContactInformation> contacts = new List<OrderContactInformation>();
+            //OrderContactInformation contactInformation = new();
+            //contactInformation.firstName = "Leslie";
+            //contactInformation.lastName = "Rivera";
+            //contactInformation.isPrimary = true;
+            //contactInformation.email = "leslie.rivera@gal.com";
+            //PhoneNumber phoneNumber = new();
+            //phoneNumber.number = "718 292 9000 x 527";
+            //phoneNumber.type = PhoneNumberType.WORK.ToString();
+            //contactInformation.addPhoneNumber(phoneNumber);
+            //   orderRequest.addOrderContact(contactInformation);
 
-            OrderReferenceNumber referenceNumber = new();
-            referenceNumber.code = "PRO";
-            referenceNumber.type = "PRO";
-            referenceNumber.value = "887551205";
-            orderRequest.addReferenceNumber(referenceNumber);
 
-            Note orderNote = new();
-            orderNote.type = "HY";
-            orderNote.value = "SW";
-       //     orderRequest.addOrderNote(orderNote);
+      //      OrderReferenceNumber referenceNumber = new();
+      //      referenceNumber.code = "PRO";
+      //      referenceNumber.type = "PRO";
+      //      referenceNumber.value = "887551205";
+      //      orderRequest.addReferenceNumber(referenceNumber);
 
-            OrderDocument orderDocument = new();
-            orderDocument.key = "4443";
-            orderDocument.type = "WR";
-            orderDocument.name = "344";
-      //      orderRequest.addOrderDocument(orderDocument);
+      //      Note orderNote = new();
+      //      orderNote.type = "HY";
+      //      orderNote.value = "SW";
+      // //     orderRequest.addOrderNote(orderNote);
 
-            Service additionalService = new();
-            additionalService.code = "SW";
-            additionalService.name = "Software";
-            additionalService.description = "Something";
-            additionalService.quantity = 12;
-            additionalService.unitOfMeasure = "IN";
+      //      OrderDocument orderDocument = new();
+      //      orderDocument.key = "4443";
+      //      orderDocument.type = "WR";
+      //      orderDocument.name = "344";
+      ////      orderRequest.addOrderDocument(orderDocument);
+
+      //      Service additionalService = new();
+      //      additionalService.code = "SW";
+      //      additionalService.name = "Software";
+      //      additionalService.description = "Something";
+      //      additionalService.quantity = 12;
+      //      additionalService.unitOfMeasure = "IN";
      //       orderRequest.addAdditionalService(additionalService);
 
 
@@ -608,7 +652,7 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             stopContactInformation.lastName = "Rivera";
             stopContactInformation.isPrimary = true;
             stopContactInformation.email = "leslie.rivera@gal.com";
-            StopPhoneNumber stopPhoneNumber = new();
+            StopContactPhoneNumber stopPhoneNumber = new();
             stopPhoneNumber.number = "6463373449";
             stopPhoneNumber.type = PhoneNumberType.MOBILE.ToString();
             stopPhoneNumber.isPrimary = true;
@@ -616,7 +660,7 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             pickup.addContact(stopContactInformation);
 
             SpecialRequirementType srt = SpecialRequirementType.LFD;
-            SpecialRequirement sr = new();
+            StopSpecialRequirement sr = new();
             sr.code = srt.GetString();
             sr.value = "2334";
             pickup.addSpecialRequirement(sr);
@@ -630,12 +674,12 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             addressInformation.zipCode = "10451";
             pickup.addressInformations = addressInformation;
 
-            StopReferenceNumber stopReferenceNumber = new StopReferenceNumber();
+            StopReferenceTypeCode stopReferenceNumber = new StopReferenceTypeCode();
             stopReferenceNumber.typeCode = "AN";
 
             stopReferenceNumber.value = "78777";
             pickup.addStopReferenceNumber(stopReferenceNumber);
-    //        orderRequest.addStop(pickup);
+            //        orderRequest.addStop(pickup);
 
             Stop delivery = new();
             delivery.type = TypeOfStop.DELIVERY.ToString();
@@ -664,7 +708,7 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
 
 
             srt = SpecialRequirementType.LFD;
-            sr = new SpecialRequirement();
+            sr = new StopSpecialRequirement();
             sr.code = srt.GetString();
             sr.value = "2334";
             delivery.addSpecialRequirement(sr);
@@ -679,7 +723,7 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             
             delivery.addressInformations = addressInformation;
 
-            stopReferenceNumber = new StopReferenceNumber();
+            stopReferenceNumber = new StopReferenceTypeCode();
             stopReferenceNumber.typeCode = "AN";
             stopReferenceNumber.value = "78777";
             delivery.addStopReferenceNumber(stopReferenceNumber);
@@ -707,6 +751,108 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             item.widthUomCode = WidthUomCode.IN.ToString();
             item.nmfcCode = "345";
      //       orderRequest.addItem(item);
+
+            var body = JsonSerializer.Serialize(orderRequest);
+            string xpoToken = null;
+            xpoToken = await Token.getToken(xpoToken);
+
+            var client = new RestClient("https://" + XPOSettings.XPOConnectURL + "/quoteAPI/rest/v1/ConvertToOrder");
+            //client.Timeout = -1;
+
+            var request = new RestRequest();
+            request.AddHeader("x-api-key", XPOSettings.XAPIKeyRequest);
+
+            request.AddHeader("Accept", "*/*");
+            request.Method = Method.Post;
+            request.AddHeader("xpoauthorization", xpoToken);
+            request.AddHeader("Content-Type", "application/json");
+
+            try
+            {
+                request.AddJsonBody(orderRequest);
+                var response = await client.ExecuteAsync(request);
+
+                OrderResponse? orderResponse =
+JsonSerializer.Deserialize<OrderResponse>(response.Content);
+                return orderResponse;
+            }
+            catch (Exception e)
+            {
+
+            }
+            return null;
+
+        }
+        public async Task<OrderResponse> convertToOrder(TabPage tabPage, QuoteRequest quoteRequest)
+        {
+            OrderRequest orderRequest = new();
+            orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
+            orderRequest.transportationMode = "LTL";
+            orderRequest.applicationSource = ApplicationSource.GPAPI.ToString();
+            Label lblQuoteId = tabPage.Controls["lblQuoteIdValue"] as Label;
+            orderRequest.quoteId = lblQuoteId.Text;
+
+            //IList<ContactInformation> contacts = quoteRequest.contactInformations;
+            //orderRequest.orderContactInformations= quoteRequest.contactInformations;
+
+            //OrderReferenceNumber referenceNumber = new();
+            //referenceNumber.code = "PRO";
+            //referenceNumber.type = "PRO";
+            //referenceNumber.value = "887551205";
+            //orderRequest.addReferenceNumber(referenceNumber);
+
+            //IList<Stop> stops = quoteRequest.stops;
+            //foreach (Stop stop in stops)
+            //{
+            //    orderRequest.addStop(stop);
+
+            //}
+            //IList<QuoteItem> items = quoteRequest.items;
+            //foreach (QuoteItem item in items)
+            //{
+            //    OrderItem orderItem = new OrderItem();
+            //    orderItem.itemCode = item.productCode;
+            //    orderItem.itemDescription = item.itemDescription;
+            //    orderItem.itemNumber = item.itemNumber;
+            //    orderItem.units = item.units;
+            //    orderItem.packageUnits = item.packageUnits;
+            //    orderItem.unitTypeCode = item.unitTypeCode;
+            //    orderItem.packageTypeCode = item.packageTypeCode;
+            //    orderItem.weight = item.weight;
+            //    orderItem.weightUomCode = item.weightUomCode;
+            //    orderItem.height = item.height;
+            //    orderItem.heightUomCode = item.heightUomCode;
+            //    orderItem.length = item.length;
+            //    orderItem.lengthUomCode = item.lengthUomCode;
+            //    orderItem.width = item.width;
+            //    orderItem.widthUomCode = item.widthUomCode;
+            //    //orderItem.isHazmat = false;
+            //    //orderItem.hazardousItemInfo = item.hazardousItemInfo;
+            //    orderItem.htsCode = "";
+            //    orderItem.purchaseOrderNumber ="";
+
+
+            //    orderItem.isOversized = false;
+            //    orderItem.isStackable = false;
+            //    //orderItem.isTemperatureControlled = item.isTemperatureControlled;
+            //    //orderItem.temperatureInformation = item.temperatureInformation;
+            //    //orderItem.sku = item.sku;
+            //    orderItem.classCode = "";
+            //    orderItem.nmfcCode = "";
+            //    orderItem.declaredValue = 20;
+            //    orderItem.itemDescription = item.itemDescription;
+            //    orderItem.declaredValueCurrencyCode = "";
+            //    orderItem.itemPrice = 20;
+            //    orderItem.itemPriceCurrencyCode = "";
+
+
+
+            //    orderItem.itemServices = null;
+            //    orderItem.itemReferenceNumbers =null;
+            //    orderItem.itemNotes = null;
+
+            //    orderRequest.addItem(orderItem);
+            //}
 
             var body = JsonSerializer.Serialize(orderRequest);
             string xpoToken = null;

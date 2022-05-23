@@ -15,6 +15,7 @@ namespace XPOAPITest
         public static string Scope;
         public static string GrantType;
         public static string XPOConnectURL;
-        public static string PartnerIdentificationCode;
+        public static string PartnerIdentifierCode;
+        public static string TransportationMode;
     }
 }

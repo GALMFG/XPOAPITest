@@ -3,74 +3,73 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace XPOAPITest
 {
     public class QuoteRequest
     {
-        public string xMode { get; set; }
-        public string partnerOrderCode { get; set; }
+        public QuoteRequest()
+        {
+            transportationMode = new List<String>();
+            contactInformations = new List<ContactInformation>();
+            //referenceNumbers = new  List<CustomerReferenceNumber>();
 
+            stops= new List<Stop>();
+            items= new List<QuoteItem>();
+            //additionalServices= new  List<String>() ;
+    }
+        //[JsonPropertyName("x-mode")]
+        //public string x_mode { get; set; }
+        public string partnerOrderCode { get; set; }
         public string partnerIdentifierCode { get; set; }
         public string equipmentCategoryCode { get; set; }
-
         public string equipmentTypeCode { get; set; }
         public IList<String> transportationMode { get; set; }
-
         public string bolNumber { get; set; }
         public string shipmentId { get; set; }
-
-        // public ArrayList contactInformations;
-
-        public IList<QuoteContactInformation> contactInformations { get; set; }
-
-
-        public IList<QuoteReferenceNumber> referenceNumbers { get; set; }
+        public IList<ContactInformation> contactInformations { get; set; }
+        //public IList<CustomerReferenceNumber> referenceNumbers { get; set; }
         public string applicationSource { get; set; }
-
         public IList<Stop> stops { get; set; }
-
         public IList<QuoteItem> items { get; set; }
+        //public IList<String> additionalServices { get; set; }
 
-        public IList<String> additionalServices { get; set; }
 
-        public void addContact(QuoteContactInformation contact)
+
+
+        public void AddContact(ContactInformation contact)
         {
-            if (contactInformations is null)
-                contactInformations = new List<QuoteContactInformation>();
+            if (contactInformations is not null)
             contactInformations.Add(contact);
 
         }
-        public void addReferenceNumber(QuoteReferenceNumber referenceNumber)
+        public void AddReferenceNumber(CustomerReferenceNumber referenceNumber)
         {
-            if (referenceNumbers is null)
-                referenceNumbers = new List<QuoteReferenceNumber>();
-            referenceNumbers.Add(referenceNumber);
+            //if (referenceNumbers is not null)
+            //referenceNumbers.Add(referenceNumber);
         }
-        public void addTransportationMode(String mode)
+        public void AddTransportationMode(String mode)
         {
-            if (transportationMode is null)
-                transportationMode = new List<String>();
+            if (transportationMode is not  null)
             transportationMode.Add(mode);
         }
-        public void addStop(Stop stop)
+        public void AddStop(Stop stop)
         {
-            if (stops is null)
-                stops = new List<Stop>();
-            stops.Add(stop);
+            if (stops is not null)
+                stops.Add(stop);
         }
-        public void addItem(QuoteItem item)
+        public void AddItem(QuoteItem item)
         {
-            if (items is null)
-                items = new List<QuoteItem>();
+            if (items is not null)
             items.Add(item);
         }
-        public void addAdditionalService(String additionalService)
+        public void AddAdditionalService(String additionalService)
         {
-            if (additionalServices is null)
-                additionalServices = new List<String>();
-            additionalServices.Add(additionalService);
+            //if (additionalServices is not null)
+            //additionalServices.Add(additionalService);
         }
     }
 }

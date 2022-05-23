@@ -8,11 +8,20 @@ namespace XPOAPITest
 {
     public class StopContactInformation : Contact
     {
-        public IList<StopPhoneNumber>  phoneNumbers { get; set; }
-        public void addPhoneNumber(StopPhoneNumber phoneNumber)
+
+        public StopContactInformation():base()
+        {
+            phoneNumbers = new  List<StopContactPhoneNumber> ();
+    }
+        public IList<StopContactPhoneNumber> phoneNumbers;
+        public IList<StopContactPhoneNumber>  PhoneNumbers {
+            get { return phoneNumbers; }
+            set { phoneNumbers = value; }
+        }
+        public void addPhoneNumber(StopContactPhoneNumber phoneNumber)
         {
             if (phoneNumbers is null)
-                phoneNumbers = new List<StopPhoneNumber>();
+                phoneNumbers = new List<StopContactPhoneNumber>();
             phoneNumbers.Add(phoneNumber);
         }
     }

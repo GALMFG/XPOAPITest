@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace XPOAPITest
 {
-    public class QuoteReferenceNumber
+    public class StopSpecialRequirement
     {
-        public string typeCode { get; set; }
+        public string code { get; set; }
 
         public string value { get; set; }
     }
