@@ -31,6 +31,8 @@ namespace XPOAPITest
         {
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.textBoxTrackingNumber = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
             this.comboBoxApplicationSource = new System.Windows.Forms.ComboBox();
             this.textBoxShipmentId = new System.Windows.Forms.TextBox();
             this.textBoxBOLNumber = new System.Windows.Forms.TextBox();
@@ -44,7 +46,6 @@ namespace XPOAPITest
             this.label33 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.tabPageStops = new System.Windows.Forms.TabPage();
-            this.buttonAddStop = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.comboBoxStops = new System.Windows.Forms.ComboBox();
             this.tabControlStop = new System.Windows.Forms.TabControl();
@@ -57,7 +58,6 @@ namespace XPOAPITest
             this.numericUpDownSequenceNo = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.buttonAddStopContact = new System.Windows.Forms.Button();
             this.comboBoxStopContactPhoneNumber = new System.Windows.Forms.ComboBox();
             this.textBoxStopContactEmail = new System.Windows.Forms.TextBox();
             this.textBoxStopContactFirstName = new System.Windows.Forms.TextBox();
@@ -75,9 +75,10 @@ namespace XPOAPITest
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPageStopReferences = new System.Windows.Forms.TabPage();
-            this.comboBoxStopReefernceTypeCode = new System.Windows.Forms.ComboBox();
+            this.comboBoxStopRefernceNumbers = new System.Windows.Forms.ComboBox();
+            this.label83 = new System.Windows.Forms.Label();
+            this.comboBoxStopRefernceTypeCode = new System.Windows.Forms.ComboBox();
             this.buttonStopReferenceTypeCodeAdd = new System.Windows.Forms.Button();
-            this.comboBoxStopReferenceNumber = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.textBoxStopReferenceTypeCodeValue = new System.Windows.Forms.TextBox();
@@ -112,36 +113,42 @@ namespace XPOAPITest
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxStopType = new System.Windows.Forms.ComboBox();
             this.tabPageCustomerContacts = new System.Windows.Forms.TabPage();
-            this.comboBoxCustomerContactPhoneNumber = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.radioButtonContactPrimaryNo = new System.Windows.Forms.RadioButton();
             this.radioButtonContactPrimaryYes = new System.Windows.Forms.RadioButton();
             this.comboBoxCustomerConact = new System.Windows.Forms.ComboBox();
-            this.buttonAddCustomerContact = new System.Windows.Forms.Button();
-            this.textBoxContactTitle = new System.Windows.Forms.TextBox();
+            this.textBoxCustomerContactTitle = new System.Windows.Forms.TextBox();
             this.textBoxCustomerContactEmail = new System.Windows.Forms.TextBox();
             this.textBoxCustomerContactLastName = new System.Windows.Forms.TextBox();
             this.textBoxCustomerContactFirstName = new System.Windows.Forms.TextBox();
-            this.comboBoxCustomerContactPhoneNumbers = new System.Windows.Forms.ComboBox();
-            this.label45 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.comboBoxCustomerContactPhoneNumber = new System.Windows.Forms.ComboBox();
             this.comboBoxCustomerContactPhoneNumberType = new System.Windows.Forms.ComboBox();
             this.buttonCustomerContactPhoneNumber = new System.Windows.Forms.Button();
-            this.textBoxContactPhoneNumber = new System.Windows.Forms.TextBox();
+            this.textBoxCustomerContactPhoneNumber = new System.Windows.Forms.TextBox();
             this.label41 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.tabPageCustomerReferenceNumbers = new System.Windows.Forms.TabPage();
+            this.label31 = new System.Windows.Forms.Label();
             this.buttonAddCustomerReferenceNumber = new System.Windows.Forms.Button();
             this.comboBoxCustomerReferenceNumbers = new System.Windows.Forms.ComboBox();
             this.comboBoxContactReferenceNumberTypeCode = new System.Windows.Forms.ComboBox();
             this.textBoxContactReferenceNumberValue = new System.Windows.Forms.TextBox();
             this.label47 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
+            this.tabPageAdditionalServices = new System.Windows.Forms.TabPage();
+            this.buttonAddAdditionalServices = new System.Windows.Forms.Button();
+            this.comboBoxAdditionalServices = new System.Windows.Forms.ComboBox();
+            this.label86 = new System.Windows.Forms.Label();
+            this.comboBoxAdditionalServiceCode = new System.Windows.Forms.ComboBox();
+            this.label84 = new System.Windows.Forms.Label();
             this.tabPageItems = new System.Windows.Forms.TabPage();
+            this.label79 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.radioButtonTemperatureControlledNo = new System.Windows.Forms.RadioButton();
             this.radioButtonTemperatureControlledYes = new System.Windows.Forms.RadioButton();
@@ -241,13 +248,9 @@ namespace XPOAPITest
             this.radioButtonStopContactPhoneNumberPrimaryNo = new System.Windows.Forms.RadioButton();
             this.radioButtonStopContactPhoneNumberPrimaryYes = new System.Windows.Forms.RadioButton();
             this.tabPage9 = new System.Windows.Forms.TabPage();
-            this.buttonAddAdditionalServices = new System.Windows.Forms.Button();
             this.comboBoxAdditionalServicesCode = new System.Windows.Forms.ComboBox();
-            this.textBoxAdditionalServiceCode = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.label31 = new System.Windows.Forms.Label();
-            this.textBoxTrackingNumber = new System.Windows.Forms.TextBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
             this.tabPageStops.SuspendLayout();
@@ -263,6 +266,7 @@ namespace XPOAPITest
             this.groupBox4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabPageCustomerReferenceNumbers.SuspendLayout();
+            this.tabPageAdditionalServices.SuspendLayout();
             this.tabPageItems.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -281,6 +285,7 @@ namespace XPOAPITest
             this.tabControlMain.Controls.Add(this.tabPageStops);
             this.tabControlMain.Controls.Add(this.tabPageCustomerContacts);
             this.tabControlMain.Controls.Add(this.tabPageCustomerReferenceNumbers);
+            this.tabControlMain.Controls.Add(this.tabPageAdditionalServices);
             this.tabControlMain.Controls.Add(this.tabPageItems);
             this.tabControlMain.Controls.Add(this.tabPageQuotes);
             this.tabControlMain.Controls.Add(this.tabPageOrder);
@@ -293,6 +298,8 @@ namespace XPOAPITest
             // 
             // tabPageGeneral
             // 
+            this.tabPageGeneral.Controls.Add(this.textBoxTrackingNumber);
+            this.tabPageGeneral.Controls.Add(this.label35);
             this.tabPageGeneral.Controls.Add(this.comboBoxApplicationSource);
             this.tabPageGeneral.Controls.Add(this.textBoxShipmentId);
             this.tabPageGeneral.Controls.Add(this.textBoxBOLNumber);
@@ -309,60 +316,78 @@ namespace XPOAPITest
             this.tabPageGeneral.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageGeneral.Name = "tabPageGeneral";
             this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageGeneral.Size = new System.Drawing.Size(936, 616);
+            this.tabPageGeneral.Size = new System.Drawing.Size(936, 596);
             this.tabPageGeneral.TabIndex = 0;
             this.tabPageGeneral.Text = "General";
             this.tabPageGeneral.UseVisualStyleBackColor = true;
             // 
+            // textBoxTrackingNumber
+            // 
+            this.textBoxTrackingNumber.Location = new System.Drawing.Point(180, 230);
+            this.textBoxTrackingNumber.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxTrackingNumber.Name = "textBoxTrackingNumber";
+            this.textBoxTrackingNumber.Size = new System.Drawing.Size(300, 23);
+            this.textBoxTrackingNumber.TabIndex = 18;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(15, 230);
+            this.label35.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(70, 15);
+            this.label35.TabIndex = 17;
+            this.label35.Text = "Tracking No";
+            // 
             // comboBoxApplicationSource
             // 
             this.comboBoxApplicationSource.FormattingEnabled = true;
-            this.comboBoxApplicationSource.Location = new System.Drawing.Point(183, 200);
+            this.comboBoxApplicationSource.Location = new System.Drawing.Point(180, 200);
             this.comboBoxApplicationSource.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxApplicationSource.Name = "comboBoxApplicationSource";
-            this.comboBoxApplicationSource.Size = new System.Drawing.Size(304, 23);
+            this.comboBoxApplicationSource.Size = new System.Drawing.Size(300, 23);
             this.comboBoxApplicationSource.TabIndex = 16;
             // 
             // textBoxShipmentId
             // 
-            this.textBoxShipmentId.Location = new System.Drawing.Point(182, 170);
+            this.textBoxShipmentId.Location = new System.Drawing.Point(180, 170);
             this.textBoxShipmentId.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxShipmentId.Name = "textBoxShipmentId";
-            this.textBoxShipmentId.Size = new System.Drawing.Size(306, 23);
+            this.textBoxShipmentId.Size = new System.Drawing.Size(300, 23);
             this.textBoxShipmentId.TabIndex = 15;
             // 
             // textBoxBOLNumber
             // 
-            this.textBoxBOLNumber.Location = new System.Drawing.Point(182, 140);
+            this.textBoxBOLNumber.Location = new System.Drawing.Point(180, 140);
             this.textBoxBOLNumber.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxBOLNumber.Name = "textBoxBOLNumber";
-            this.textBoxBOLNumber.Size = new System.Drawing.Size(306, 23);
+            this.textBoxBOLNumber.Size = new System.Drawing.Size(300, 23);
             this.textBoxBOLNumber.TabIndex = 13;
             // 
             // comboBoxEquipmentTypeCode
             // 
             this.comboBoxEquipmentTypeCode.FormattingEnabled = true;
-            this.comboBoxEquipmentTypeCode.Location = new System.Drawing.Point(182, 110);
+            this.comboBoxEquipmentTypeCode.Location = new System.Drawing.Point(180, 110);
             this.comboBoxEquipmentTypeCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxEquipmentTypeCode.Name = "comboBoxEquipmentTypeCode";
-            this.comboBoxEquipmentTypeCode.Size = new System.Drawing.Size(302, 23);
+            this.comboBoxEquipmentTypeCode.Size = new System.Drawing.Size(300, 23);
             this.comboBoxEquipmentTypeCode.TabIndex = 11;
             // 
             // comboBoxEquipmentCategoryCode
             // 
             this.comboBoxEquipmentCategoryCode.FormattingEnabled = true;
-            this.comboBoxEquipmentCategoryCode.Location = new System.Drawing.Point(182, 80);
+            this.comboBoxEquipmentCategoryCode.Location = new System.Drawing.Point(180, 80);
             this.comboBoxEquipmentCategoryCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxEquipmentCategoryCode.Name = "comboBoxEquipmentCategoryCode";
-            this.comboBoxEquipmentCategoryCode.Size = new System.Drawing.Size(302, 23);
+            this.comboBoxEquipmentCategoryCode.Size = new System.Drawing.Size(300, 23);
             this.comboBoxEquipmentCategoryCode.TabIndex = 10;
             // 
             // textBoxPartnerOrderCode
             // 
-            this.textBoxPartnerOrderCode.Location = new System.Drawing.Point(182, 50);
+            this.textBoxPartnerOrderCode.Location = new System.Drawing.Point(180, 50);
             this.textBoxPartnerOrderCode.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPartnerOrderCode.Name = "textBoxPartnerOrderCode";
-            this.textBoxPartnerOrderCode.Size = new System.Drawing.Size(302, 23);
+            this.textBoxPartnerOrderCode.Size = new System.Drawing.Size(300, 23);
             this.textBoxPartnerOrderCode.TabIndex = 9;
             // 
             // label38
@@ -427,7 +452,6 @@ namespace XPOAPITest
             // 
             // tabPageStops
             // 
-            this.tabPageStops.Controls.Add(this.buttonAddStop);
             this.tabPageStops.Controls.Add(this.label16);
             this.tabPageStops.Controls.Add(this.comboBoxStops);
             this.tabPageStops.Controls.Add(this.tabControlStop);
@@ -441,21 +465,10 @@ namespace XPOAPITest
             this.tabPageStops.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageStops.Name = "tabPageStops";
             this.tabPageStops.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageStops.Size = new System.Drawing.Size(936, 415);
+            this.tabPageStops.Size = new System.Drawing.Size(936, 596);
             this.tabPageStops.TabIndex = 1;
             this.tabPageStops.Text = "Stops";
             this.tabPageStops.UseVisualStyleBackColor = true;
-            // 
-            // buttonAddStop
-            // 
-            this.buttonAddStop.Location = new System.Drawing.Point(102, 502);
-            this.buttonAddStop.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonAddStop.Name = "buttonAddStop";
-            this.buttonAddStop.Size = new System.Drawing.Size(120, 23);
-            this.buttonAddStop.TabIndex = 16;
-            this.buttonAddStop.Text = "Add Stop";
-            this.buttonAddStop.UseVisualStyleBackColor = true;
-            this.buttonAddStop.Click += new System.EventHandler(this.buttonAddStop_Click);
             // 
             // label16
             // 
@@ -470,11 +483,14 @@ namespace XPOAPITest
             // comboBoxStops
             // 
             this.comboBoxStops.FormattingEnabled = true;
+            this.comboBoxStops.Items.AddRange(new object[] {
+            "NEW..."});
             this.comboBoxStops.Location = new System.Drawing.Point(74, 5);
             this.comboBoxStops.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxStops.Name = "comboBoxStops";
             this.comboBoxStops.Size = new System.Drawing.Size(288, 23);
             this.comboBoxStops.TabIndex = 14;
+            this.comboBoxStops.SelectedIndexChanged += new System.EventHandler(this.comboBoxStops_SelectedIndexChanged);
             // 
             // tabControlStop
             // 
@@ -486,7 +502,7 @@ namespace XPOAPITest
             this.tabControlStop.Margin = new System.Windows.Forms.Padding(2);
             this.tabControlStop.Name = "tabControlStop";
             this.tabControlStop.SelectedIndex = 0;
-            this.tabControlStop.Size = new System.Drawing.Size(678, 390);
+            this.tabControlStop.Size = new System.Drawing.Size(688, 420);
             this.tabControlStop.TabIndex = 13;
             // 
             // tabPageStopContacts
@@ -497,7 +513,6 @@ namespace XPOAPITest
             this.tabPageStopContacts.Controls.Add(this.numericUpDownSequenceNo);
             this.tabPageStopContacts.Controls.Add(this.label18);
             this.tabPageStopContacts.Controls.Add(this.label17);
-            this.tabPageStopContacts.Controls.Add(this.buttonAddStopContact);
             this.tabPageStopContacts.Controls.Add(this.comboBoxStopContactPhoneNumber);
             this.tabPageStopContacts.Controls.Add(this.textBoxStopContactEmail);
             this.tabPageStopContacts.Controls.Add(this.textBoxStopContactFirstName);
@@ -512,7 +527,7 @@ namespace XPOAPITest
             this.tabPageStopContacts.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageStopContacts.Name = "tabPageStopContacts";
             this.tabPageStopContacts.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageStopContacts.Size = new System.Drawing.Size(670, 362);
+            this.tabPageStopContacts.Size = new System.Drawing.Size(680, 392);
             this.tabPageStopContacts.TabIndex = 0;
             this.tabPageStopContacts.Text = "Contacts";
             this.tabPageStopContacts.UseVisualStyleBackColor = true;
@@ -575,7 +590,7 @@ namespace XPOAPITest
             // 
             // numericUpDownSequenceNo
             // 
-            this.numericUpDownSequenceNo.Location = new System.Drawing.Point(500, 98);
+            this.numericUpDownSequenceNo.Location = new System.Drawing.Point(472, 101);
             this.numericUpDownSequenceNo.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDownSequenceNo.Maximum = new decimal(new int[] {
             10,
@@ -616,17 +631,6 @@ namespace XPOAPITest
             this.label17.TabIndex = 14;
             this.label17.Text = "Note";
             // 
-            // buttonAddStopContact
-            // 
-            this.buttonAddStopContact.Location = new System.Drawing.Point(63, 338);
-            this.buttonAddStopContact.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonAddStopContact.Name = "buttonAddStopContact";
-            this.buttonAddStopContact.Size = new System.Drawing.Size(137, 19);
-            this.buttonAddStopContact.TabIndex = 12;
-            this.buttonAddStopContact.Text = "Add Contact";
-            this.buttonAddStopContact.UseVisualStyleBackColor = true;
-            this.buttonAddStopContact.Click += new System.EventHandler(this.buttonAddStopContact_Click);
-            // 
             // comboBoxStopContactPhoneNumber
             // 
             this.comboBoxStopContactPhoneNumber.FormattingEnabled = true;
@@ -635,13 +639,14 @@ namespace XPOAPITest
             this.comboBoxStopContactPhoneNumber.Name = "comboBoxStopContactPhoneNumber";
             this.comboBoxStopContactPhoneNumber.Size = new System.Drawing.Size(223, 23);
             this.comboBoxStopContactPhoneNumber.TabIndex = 0;
+            this.comboBoxStopContactPhoneNumber.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopContactPhoneNumber_SelectedIndexChanged);
             // 
             // textBoxStopContactEmail
             // 
             this.textBoxStopContactEmail.Location = new System.Drawing.Point(111, 65);
             this.textBoxStopContactEmail.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxStopContactEmail.Name = "textBoxStopContactEmail";
-            this.textBoxStopContactEmail.Size = new System.Drawing.Size(171, 23);
+            this.textBoxStopContactEmail.Size = new System.Drawing.Size(231, 23);
             this.textBoxStopContactEmail.TabIndex = 3;
             // 
             // textBoxStopContactFirstName
@@ -649,7 +654,7 @@ namespace XPOAPITest
             this.textBoxStopContactFirstName.Location = new System.Drawing.Point(111, 36);
             this.textBoxStopContactFirstName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxStopContactFirstName.Name = "textBoxStopContactFirstName";
-            this.textBoxStopContactFirstName.Size = new System.Drawing.Size(168, 23);
+            this.textBoxStopContactFirstName.Size = new System.Drawing.Size(231, 23);
             this.textBoxStopContactFirstName.TabIndex = 1;
             // 
             // textBoxStopContactLastName
@@ -663,11 +668,14 @@ namespace XPOAPITest
             // comboBoxStopContact
             // 
             this.comboBoxStopContact.FormattingEnabled = true;
+            this.comboBoxStopContact.Items.AddRange(new object[] {
+            "NEW..."});
             this.comboBoxStopContact.Location = new System.Drawing.Point(22, 7);
             this.comboBoxStopContact.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxStopContact.Name = "comboBoxStopContact";
             this.comboBoxStopContact.Size = new System.Drawing.Size(517, 23);
             this.comboBoxStopContact.TabIndex = 8;
+            this.comboBoxStopContact.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopContact_SelectedIndexChanged);
             // 
             // panel1
             // 
@@ -695,10 +703,10 @@ namespace XPOAPITest
             // 
             // buttonAddStopContactPhoneNumber
             // 
-            this.buttonAddStopContactPhoneNumber.Location = new System.Drawing.Point(114, 106);
+            this.buttonAddStopContactPhoneNumber.Location = new System.Drawing.Point(76, 111);
             this.buttonAddStopContactPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddStopContactPhoneNumber.Name = "buttonAddStopContactPhoneNumber";
-            this.buttonAddStopContactPhoneNumber.Size = new System.Drawing.Size(60, 26);
+            this.buttonAddStopContactPhoneNumber.Size = new System.Drawing.Size(170, 35);
             this.buttonAddStopContactPhoneNumber.TabIndex = 7;
             this.buttonAddStopContactPhoneNumber.Text = "Add Phone Number";
             this.buttonAddStopContactPhoneNumber.UseVisualStyleBackColor = true;
@@ -754,7 +762,7 @@ namespace XPOAPITest
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(5, 69);
+            this.label10.Location = new System.Drawing.Point(17, 69);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(36, 15);
@@ -774,7 +782,7 @@ namespace XPOAPITest
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 41);
+            this.label8.Location = new System.Drawing.Point(17, 41);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(64, 15);
@@ -783,9 +791,10 @@ namespace XPOAPITest
             // 
             // tabPageStopReferences
             // 
-            this.tabPageStopReferences.Controls.Add(this.comboBoxStopReefernceTypeCode);
+            this.tabPageStopReferences.Controls.Add(this.comboBoxStopRefernceNumbers);
+            this.tabPageStopReferences.Controls.Add(this.label83);
+            this.tabPageStopReferences.Controls.Add(this.comboBoxStopRefernceTypeCode);
             this.tabPageStopReferences.Controls.Add(this.buttonStopReferenceTypeCodeAdd);
-            this.tabPageStopReferences.Controls.Add(this.comboBoxStopReferenceNumber);
             this.tabPageStopReferences.Controls.Add(this.label28);
             this.tabPageStopReferences.Controls.Add(this.label27);
             this.tabPageStopReferences.Controls.Add(this.textBoxStopReferenceTypeCodeValue);
@@ -793,19 +802,37 @@ namespace XPOAPITest
             this.tabPageStopReferences.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageStopReferences.Name = "tabPageStopReferences";
             this.tabPageStopReferences.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPageStopReferences.Size = new System.Drawing.Size(670, 362);
+            this.tabPageStopReferences.Size = new System.Drawing.Size(680, 392);
             this.tabPageStopReferences.TabIndex = 1;
             this.tabPageStopReferences.Text = "References";
             this.tabPageStopReferences.UseVisualStyleBackColor = true;
             // 
-            // comboBoxStopReefernceTypeCode
+            // comboBoxStopRefernceNumbers
             // 
-            this.comboBoxStopReefernceTypeCode.FormattingEnabled = true;
-            this.comboBoxStopReefernceTypeCode.Location = new System.Drawing.Point(175, 60);
-            this.comboBoxStopReefernceTypeCode.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxStopReefernceTypeCode.Name = "comboBoxStopReefernceTypeCode";
-            this.comboBoxStopReefernceTypeCode.Size = new System.Drawing.Size(327, 23);
-            this.comboBoxStopReefernceTypeCode.TabIndex = 6;
+            this.comboBoxStopRefernceNumbers.FormattingEnabled = true;
+            this.comboBoxStopRefernceNumbers.Location = new System.Drawing.Point(174, 13);
+            this.comboBoxStopRefernceNumbers.Name = "comboBoxStopRefernceNumbers";
+            this.comboBoxStopRefernceNumbers.Size = new System.Drawing.Size(327, 23);
+            this.comboBoxStopRefernceNumbers.TabIndex = 8;
+            this.comboBoxStopRefernceNumbers.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomerRefernceNumbers_SelectedIndexChanged);
+            // 
+            // label83
+            // 
+            this.label83.AutoSize = true;
+            this.label83.Location = new System.Drawing.Point(28, 16);
+            this.label83.Name = "label83";
+            this.label83.Size = new System.Drawing.Size(111, 15);
+            this.label83.TabIndex = 7;
+            this.label83.Text = "Reference Numbers";
+            // 
+            // comboBoxStopRefernceTypeCode
+            // 
+            this.comboBoxStopRefernceTypeCode.FormattingEnabled = true;
+            this.comboBoxStopRefernceTypeCode.Location = new System.Drawing.Point(175, 60);
+            this.comboBoxStopRefernceTypeCode.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxStopRefernceTypeCode.Name = "comboBoxStopRefernceTypeCode";
+            this.comboBoxStopRefernceTypeCode.Size = new System.Drawing.Size(327, 23);
+            this.comboBoxStopRefernceTypeCode.TabIndex = 6;
             // 
             // buttonStopReferenceTypeCodeAdd
             // 
@@ -817,15 +844,6 @@ namespace XPOAPITest
             this.buttonStopReferenceTypeCodeAdd.Text = "Add";
             this.buttonStopReferenceTypeCodeAdd.UseVisualStyleBackColor = true;
             this.buttonStopReferenceTypeCodeAdd.Click += new System.EventHandler(this.buttonStopReferenceTypeCodeAdd_Click_1);
-            // 
-            // comboBoxStopReferenceNumber
-            // 
-            this.comboBoxStopReferenceNumber.FormattingEnabled = true;
-            this.comboBoxStopReferenceNumber.Location = new System.Drawing.Point(27, 15);
-            this.comboBoxStopReferenceNumber.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxStopReferenceNumber.Name = "comboBoxStopReferenceNumber";
-            this.comboBoxStopReferenceNumber.Size = new System.Drawing.Size(486, 23);
-            this.comboBoxStopReferenceNumber.TabIndex = 4;
             // 
             // label28
             // 
@@ -852,7 +870,7 @@ namespace XPOAPITest
             this.textBoxStopReferenceTypeCodeValue.Location = new System.Drawing.Point(175, 90);
             this.textBoxStopReferenceTypeCodeValue.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxStopReferenceTypeCodeValue.Name = "textBoxStopReferenceTypeCodeValue";
-            this.textBoxStopReferenceTypeCodeValue.Size = new System.Drawing.Size(323, 23);
+            this.textBoxStopReferenceTypeCodeValue.Size = new System.Drawing.Size(327, 23);
             this.textBoxStopReferenceTypeCodeValue.TabIndex = 1;
             // 
             // tabPageStopSpecialRequirement
@@ -866,17 +884,17 @@ namespace XPOAPITest
             this.tabPageStopSpecialRequirement.Location = new System.Drawing.Point(4, 24);
             this.tabPageStopSpecialRequirement.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageStopSpecialRequirement.Name = "tabPageStopSpecialRequirement";
-            this.tabPageStopSpecialRequirement.Size = new System.Drawing.Size(670, 362);
+            this.tabPageStopSpecialRequirement.Size = new System.Drawing.Size(680, 392);
             this.tabPageStopSpecialRequirement.TabIndex = 2;
             this.tabPageStopSpecialRequirement.Text = "Special Requirement";
             this.tabPageStopSpecialRequirement.UseVisualStyleBackColor = true;
             // 
             // buttonStopSpecialRequirement
             // 
-            this.buttonStopSpecialRequirement.Location = new System.Drawing.Point(132, 141);
+            this.buttonStopSpecialRequirement.Location = new System.Drawing.Point(100, 139);
             this.buttonStopSpecialRequirement.Margin = new System.Windows.Forms.Padding(2);
             this.buttonStopSpecialRequirement.Name = "buttonStopSpecialRequirement";
-            this.buttonStopSpecialRequirement.Size = new System.Drawing.Size(92, 20);
+            this.buttonStopSpecialRequirement.Size = new System.Drawing.Size(135, 28);
             this.buttonStopSpecialRequirement.TabIndex = 6;
             this.buttonStopSpecialRequirement.Text = "Add";
             this.buttonStopSpecialRequirement.UseVisualStyleBackColor = true;
@@ -894,7 +912,7 @@ namespace XPOAPITest
             // comboBoxSpecialRequirementCode
             // 
             this.comboBoxSpecialRequirementCode.FormattingEnabled = true;
-            this.comboBoxSpecialRequirementCode.Location = new System.Drawing.Point(132, 59);
+            this.comboBoxSpecialRequirementCode.Location = new System.Drawing.Point(100, 59);
             this.comboBoxSpecialRequirementCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxSpecialRequirementCode.Name = "comboBoxSpecialRequirementCode";
             this.comboBoxSpecialRequirementCode.Size = new System.Drawing.Size(417, 23);
@@ -902,10 +920,10 @@ namespace XPOAPITest
             // 
             // textBoxSpecialRequirementValue
             // 
-            this.textBoxSpecialRequirementValue.Location = new System.Drawing.Point(132, 83);
+            this.textBoxSpecialRequirementValue.Location = new System.Drawing.Point(100, 83);
             this.textBoxSpecialRequirementValue.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxSpecialRequirementValue.Name = "textBoxSpecialRequirementValue";
-            this.textBoxSpecialRequirementValue.Size = new System.Drawing.Size(414, 23);
+            this.textBoxSpecialRequirementValue.Size = new System.Drawing.Size(417, 23);
             this.textBoxSpecialRequirementValue.TabIndex = 3;
             // 
             // label30
@@ -949,7 +967,7 @@ namespace XPOAPITest
             this.tabPageStopAddress.Location = new System.Drawing.Point(4, 24);
             this.tabPageStopAddress.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageStopAddress.Name = "tabPageStopAddress";
-            this.tabPageStopAddress.Size = new System.Drawing.Size(670, 362);
+            this.tabPageStopAddress.Size = new System.Drawing.Size(680, 392);
             this.tabPageStopAddress.TabIndex = 3;
             this.tabPageStopAddress.Text = "Address";
             this.tabPageStopAddress.UseVisualStyleBackColor = true;
@@ -960,7 +978,7 @@ namespace XPOAPITest
             this.textBoxZipCode.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxZipCode.Name = "textBoxZipCode";
             this.textBoxZipCode.Size = new System.Drawing.Size(167, 23);
-            this.textBoxZipCode.TabIndex = 4;
+            this.textBoxZipCode.TabIndex = 8;
             // 
             // textBoxCountry
             // 
@@ -968,7 +986,7 @@ namespace XPOAPITest
             this.textBoxCountry.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCountry.Name = "textBoxCountry";
             this.textBoxCountry.Size = new System.Drawing.Size(168, 23);
-            this.textBoxCountry.TabIndex = 3;
+            this.textBoxCountry.TabIndex = 7;
             // 
             // textBoxState
             // 
@@ -976,7 +994,7 @@ namespace XPOAPITest
             this.textBoxState.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxState.Name = "textBoxState";
             this.textBoxState.Size = new System.Drawing.Size(168, 23);
-            this.textBoxState.TabIndex = 2;
+            this.textBoxState.TabIndex = 6;
             // 
             // textBoxCity
             // 
@@ -984,15 +1002,15 @@ namespace XPOAPITest
             this.textBoxCity.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCity.Name = "textBoxCity";
             this.textBoxCity.Size = new System.Drawing.Size(168, 23);
-            this.textBoxCity.TabIndex = 1;
+            this.textBoxCity.TabIndex = 5;
             // 
             // textBoxAddress2
             // 
             this.textBoxAddress2.Location = new System.Drawing.Point(192, 102);
             this.textBoxAddress2.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxAddress2.Name = "textBoxAddress2";
-            this.textBoxAddress2.Size = new System.Drawing.Size(166, 23);
-            this.textBoxAddress2.TabIndex = 11;
+            this.textBoxAddress2.Size = new System.Drawing.Size(168, 23);
+            this.textBoxAddress2.TabIndex = 4;
             // 
             // textBoxAddress1
             // 
@@ -1000,7 +1018,7 @@ namespace XPOAPITest
             this.textBoxAddress1.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxAddress1.Name = "textBoxAddress1";
             this.textBoxAddress1.Size = new System.Drawing.Size(168, 23);
-            this.textBoxAddress1.TabIndex = 10;
+            this.textBoxAddress1.TabIndex = 3;
             // 
             // textBoxLocationName
             // 
@@ -1008,7 +1026,7 @@ namespace XPOAPITest
             this.textBoxLocationName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLocationName.Name = "textBoxLocationName";
             this.textBoxLocationName.Size = new System.Drawing.Size(169, 23);
-            this.textBoxLocationName.TabIndex = 9;
+            this.textBoxLocationName.TabIndex = 2;
             // 
             // textBoxLocationId
             // 
@@ -1016,7 +1034,7 @@ namespace XPOAPITest
             this.textBoxLocationId.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxLocationId.Name = "textBoxLocationId";
             this.textBoxLocationId.Size = new System.Drawing.Size(170, 23);
-            this.textBoxLocationId.TabIndex = 8;
+            this.textBoxLocationId.TabIndex = 1;
             // 
             // label26
             // 
@@ -1154,19 +1172,16 @@ namespace XPOAPITest
             this.comboBoxStopType.Name = "comboBoxStopType";
             this.comboBoxStopType.Size = new System.Drawing.Size(288, 23);
             this.comboBoxStopType.TabIndex = 7;
+            this.comboBoxStopType.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopType_SelectedIndexChanged);
             // 
             // tabPageCustomerContacts
             // 
-            this.tabPageCustomerContacts.Controls.Add(this.comboBoxCustomerContactPhoneNumber);
             this.tabPageCustomerContacts.Controls.Add(this.groupBox4);
             this.tabPageCustomerContacts.Controls.Add(this.comboBoxCustomerConact);
-            this.tabPageCustomerContacts.Controls.Add(this.buttonAddCustomerContact);
-            this.tabPageCustomerContacts.Controls.Add(this.textBoxContactTitle);
+            this.tabPageCustomerContacts.Controls.Add(this.textBoxCustomerContactTitle);
             this.tabPageCustomerContacts.Controls.Add(this.textBoxCustomerContactEmail);
             this.tabPageCustomerContacts.Controls.Add(this.textBoxCustomerContactLastName);
             this.tabPageCustomerContacts.Controls.Add(this.textBoxCustomerContactFirstName);
-            this.tabPageCustomerContacts.Controls.Add(this.comboBoxCustomerContactPhoneNumbers);
-            this.tabPageCustomerContacts.Controls.Add(this.label45);
             this.tabPageCustomerContacts.Controls.Add(this.panel2);
             this.tabPageCustomerContacts.Controls.Add(this.label44);
             this.tabPageCustomerContacts.Controls.Add(this.label43);
@@ -1175,25 +1190,16 @@ namespace XPOAPITest
             this.tabPageCustomerContacts.Location = new System.Drawing.Point(4, 24);
             this.tabPageCustomerContacts.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageCustomerContacts.Name = "tabPageCustomerContacts";
-            this.tabPageCustomerContacts.Size = new System.Drawing.Size(936, 415);
+            this.tabPageCustomerContacts.Size = new System.Drawing.Size(936, 596);
             this.tabPageCustomerContacts.TabIndex = 4;
             this.tabPageCustomerContacts.Text = "Contact Informations";
             this.tabPageCustomerContacts.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxCustomerContactPhoneNumber
-            // 
-            this.comboBoxCustomerContactPhoneNumber.FormattingEnabled = true;
-            this.comboBoxCustomerContactPhoneNumber.Location = new System.Drawing.Point(34, 225);
-            this.comboBoxCustomerContactPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxCustomerContactPhoneNumber.Name = "comboBoxCustomerContactPhoneNumber";
-            this.comboBoxCustomerContactPhoneNumber.Size = new System.Drawing.Size(374, 23);
-            this.comboBoxCustomerContactPhoneNumber.TabIndex = 17;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.radioButtonContactPrimaryNo);
             this.groupBox4.Controls.Add(this.radioButtonContactPrimaryYes);
-            this.groupBox4.Location = new System.Drawing.Point(38, 182);
+            this.groupBox4.Location = new System.Drawing.Point(38, 165);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
@@ -1229,133 +1235,130 @@ namespace XPOAPITest
             // comboBoxCustomerConact
             // 
             this.comboBoxCustomerConact.FormattingEnabled = true;
+            this.comboBoxCustomerConact.Items.AddRange(new object[] {
+            "NEW..."});
             this.comboBoxCustomerConact.Location = new System.Drawing.Point(29, 7);
             this.comboBoxCustomerConact.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxCustomerConact.Name = "comboBoxCustomerConact";
             this.comboBoxCustomerConact.Size = new System.Drawing.Size(654, 23);
             this.comboBoxCustomerConact.TabIndex = 15;
+            this.comboBoxCustomerConact.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomerConact_SelectedIndexChanged);
             // 
-            // buttonAddCustomerContact
+            // textBoxCustomerContactTitle
             // 
-            this.buttonAddCustomerContact.Location = new System.Drawing.Point(141, 442);
-            this.buttonAddCustomerContact.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonAddCustomerContact.Name = "buttonAddCustomerContact";
-            this.buttonAddCustomerContact.Size = new System.Drawing.Size(69, 22);
-            this.buttonAddCustomerContact.TabIndex = 14;
-            this.buttonAddCustomerContact.Text = "Add";
-            this.buttonAddCustomerContact.UseVisualStyleBackColor = true;
-            this.buttonAddCustomerContact.Click += new System.EventHandler(this.buttonAddCustomerContact_Click);
-            // 
-            // textBoxContactTitle
-            // 
-            this.textBoxContactTitle.Location = new System.Drawing.Point(178, 127);
-            this.textBoxContactTitle.Margin = new System.Windows.Forms.Padding(2);
-            this.textBoxContactTitle.Name = "textBoxContactTitle";
-            this.textBoxContactTitle.Size = new System.Drawing.Size(164, 23);
-            this.textBoxContactTitle.TabIndex = 13;
+            this.textBoxCustomerContactTitle.Location = new System.Drawing.Point(134, 124);
+            this.textBoxCustomerContactTitle.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxCustomerContactTitle.Name = "textBoxCustomerContactTitle";
+            this.textBoxCustomerContactTitle.Size = new System.Drawing.Size(300, 23);
+            this.textBoxCustomerContactTitle.TabIndex = 13;
             // 
             // textBoxCustomerContactEmail
             // 
-            this.textBoxCustomerContactEmail.Location = new System.Drawing.Point(178, 103);
+            this.textBoxCustomerContactEmail.Location = new System.Drawing.Point(134, 100);
             this.textBoxCustomerContactEmail.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCustomerContactEmail.Name = "textBoxCustomerContactEmail";
-            this.textBoxCustomerContactEmail.Size = new System.Drawing.Size(164, 23);
+            this.textBoxCustomerContactEmail.Size = new System.Drawing.Size(300, 23);
             this.textBoxCustomerContactEmail.TabIndex = 12;
             // 
             // textBoxCustomerContactLastName
             // 
-            this.textBoxCustomerContactLastName.Location = new System.Drawing.Point(177, 79);
+            this.textBoxCustomerContactLastName.Location = new System.Drawing.Point(134, 76);
             this.textBoxCustomerContactLastName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCustomerContactLastName.Name = "textBoxCustomerContactLastName";
-            this.textBoxCustomerContactLastName.Size = new System.Drawing.Size(164, 23);
+            this.textBoxCustomerContactLastName.Size = new System.Drawing.Size(300, 23);
             this.textBoxCustomerContactLastName.TabIndex = 11;
             // 
             // textBoxCustomerContactFirstName
             // 
-            this.textBoxCustomerContactFirstName.Location = new System.Drawing.Point(177, 55);
+            this.textBoxCustomerContactFirstName.Location = new System.Drawing.Point(134, 52);
             this.textBoxCustomerContactFirstName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCustomerContactFirstName.Name = "textBoxCustomerContactFirstName";
-            this.textBoxCustomerContactFirstName.Size = new System.Drawing.Size(164, 23);
+            this.textBoxCustomerContactFirstName.Size = new System.Drawing.Size(300, 23);
             this.textBoxCustomerContactFirstName.TabIndex = 10;
             // 
-            // comboBoxCustomerContactPhoneNumbers
+            // panel2
             // 
-            this.comboBoxCustomerContactPhoneNumbers.FormattingEnabled = true;
-            this.comboBoxCustomerContactPhoneNumbers.Location = new System.Drawing.Point(178, 151);
-            this.comboBoxCustomerContactPhoneNumbers.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxCustomerContactPhoneNumbers.Name = "comboBoxCustomerContactPhoneNumbers";
-            this.comboBoxCustomerContactPhoneNumbers.Size = new System.Drawing.Size(188, 23);
-            this.comboBoxCustomerContactPhoneNumbers.TabIndex = 9;
+            this.panel2.Controls.Add(this.comboBoxCustomerContactPhoneNumber);
+            this.panel2.Controls.Add(this.comboBoxCustomerContactPhoneNumberType);
+            this.panel2.Controls.Add(this.buttonCustomerContactPhoneNumber);
+            this.panel2.Controls.Add(this.textBoxCustomerContactPhoneNumber);
+            this.panel2.Controls.Add(this.label41);
+            this.panel2.Controls.Add(this.label40);
+            this.panel2.Controls.Add(this.label45);
+            this.panel2.Location = new System.Drawing.Point(33, 218);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(501, 184);
+            this.panel2.TabIndex = 7;
+            // 
+            // comboBoxCustomerContactPhoneNumber
+            // 
+            this.comboBoxCustomerContactPhoneNumber.FormattingEnabled = true;
+            this.comboBoxCustomerContactPhoneNumber.Items.AddRange(new object[] {
+            "NEW..."});
+            this.comboBoxCustomerContactPhoneNumber.Location = new System.Drawing.Point(101, 11);
+            this.comboBoxCustomerContactPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxCustomerContactPhoneNumber.Name = "comboBoxCustomerContactPhoneNumber";
+            this.comboBoxCustomerContactPhoneNumber.Size = new System.Drawing.Size(374, 23);
+            this.comboBoxCustomerContactPhoneNumber.TabIndex = 17;
+            this.comboBoxCustomerContactPhoneNumber.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomerContactPhoneNumber_SelectedIndexChanged);
+            // 
+            // comboBoxCustomerContactPhoneNumberType
+            // 
+            this.comboBoxCustomerContactPhoneNumberType.Location = new System.Drawing.Point(175, 47);
+            this.comboBoxCustomerContactPhoneNumberType.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxCustomerContactPhoneNumberType.Name = "comboBoxCustomerContactPhoneNumberType";
+            this.comboBoxCustomerContactPhoneNumberType.Size = new System.Drawing.Size(300, 23);
+            this.comboBoxCustomerContactPhoneNumberType.TabIndex = 0;
+            // 
+            // buttonCustomerContactPhoneNumber
+            // 
+            this.buttonCustomerContactPhoneNumber.Location = new System.Drawing.Point(175, 118);
+            this.buttonCustomerContactPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonCustomerContactPhoneNumber.Name = "buttonCustomerContactPhoneNumber";
+            this.buttonCustomerContactPhoneNumber.Size = new System.Drawing.Size(170, 35);
+            this.buttonCustomerContactPhoneNumber.TabIndex = 16;
+            this.buttonCustomerContactPhoneNumber.Text = "Add Phone Number";
+            this.buttonCustomerContactPhoneNumber.UseVisualStyleBackColor = true;
+            this.buttonCustomerContactPhoneNumber.Click += new System.EventHandler(this.buttonCustomerContactPhoneNumber_Click);
+            // 
+            // textBoxCustomerContactPhoneNumber
+            // 
+            this.textBoxCustomerContactPhoneNumber.Location = new System.Drawing.Point(175, 77);
+            this.textBoxCustomerContactPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxCustomerContactPhoneNumber.Name = "textBoxCustomerContactPhoneNumber";
+            this.textBoxCustomerContactPhoneNumber.Size = new System.Drawing.Size(300, 23);
+            this.textBoxCustomerContactPhoneNumber.TabIndex = 0;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(70, 47);
+            this.label41.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(31, 15);
+            this.label41.TabIndex = 2;
+            this.label41.Text = "Type";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(70, 77);
+            this.label40.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(88, 15);
+            this.label40.TabIndex = 1;
+            this.label40.Text = "Phone Number";
             // 
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(33, 151);
+            this.label45.Location = new System.Drawing.Point(3, 19);
             this.label45.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(93, 15);
             this.label45.TabIndex = 8;
             this.label45.Text = "Phone Numbers";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.comboBoxCustomerContactPhoneNumberType);
-            this.panel2.Controls.Add(this.buttonCustomerContactPhoneNumber);
-            this.panel2.Controls.Add(this.textBoxContactPhoneNumber);
-            this.panel2.Controls.Add(this.label41);
-            this.panel2.Controls.Add(this.label40);
-            this.panel2.Location = new System.Drawing.Point(33, 262);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(477, 139);
-            this.panel2.TabIndex = 7;
-            // 
-            // comboBoxCustomerContactPhoneNumberType
-            // 
-            this.comboBoxCustomerContactPhoneNumberType.Location = new System.Drawing.Point(240, 28);
-            this.comboBoxCustomerContactPhoneNumberType.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxCustomerContactPhoneNumberType.Name = "comboBoxCustomerContactPhoneNumberType";
-            this.comboBoxCustomerContactPhoneNumberType.Size = new System.Drawing.Size(86, 23);
-            this.comboBoxCustomerContactPhoneNumberType.TabIndex = 0;
-            // 
-            // buttonCustomerContactPhoneNumber
-            // 
-            this.buttonCustomerContactPhoneNumber.Location = new System.Drawing.Point(211, 100);
-            this.buttonCustomerContactPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonCustomerContactPhoneNumber.Name = "buttonCustomerContactPhoneNumber";
-            this.buttonCustomerContactPhoneNumber.Size = new System.Drawing.Size(74, 34);
-            this.buttonCustomerContactPhoneNumber.TabIndex = 16;
-            this.buttonCustomerContactPhoneNumber.Text = "Add";
-            this.buttonCustomerContactPhoneNumber.UseVisualStyleBackColor = true;
-            this.buttonCustomerContactPhoneNumber.Click += new System.EventHandler(this.buttonCustomerContactPhoneNumber_Click);
-            // 
-            // textBoxContactPhoneNumber
-            // 
-            this.textBoxContactPhoneNumber.Location = new System.Drawing.Point(240, 58);
-            this.textBoxContactPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
-            this.textBoxContactPhoneNumber.Name = "textBoxContactPhoneNumber";
-            this.textBoxContactPhoneNumber.Size = new System.Drawing.Size(71, 23);
-            this.textBoxContactPhoneNumber.TabIndex = 0;
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(100, 23);
-            this.label41.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(88, 15);
-            this.label41.TabIndex = 2;
-            this.label41.Text = "Phone Number";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(100, 56);
-            this.label40.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(31, 15);
-            this.label40.TabIndex = 1;
-            this.label40.Text = "Type";
             // 
             // label44
             // 
@@ -1399,6 +1402,7 @@ namespace XPOAPITest
             // 
             // tabPageCustomerReferenceNumbers
             // 
+            this.tabPageCustomerReferenceNumbers.Controls.Add(this.label31);
             this.tabPageCustomerReferenceNumbers.Controls.Add(this.buttonAddCustomerReferenceNumber);
             this.tabPageCustomerReferenceNumbers.Controls.Add(this.comboBoxCustomerReferenceNumbers);
             this.tabPageCustomerReferenceNumbers.Controls.Add(this.comboBoxContactReferenceNumberTypeCode);
@@ -1408,17 +1412,27 @@ namespace XPOAPITest
             this.tabPageCustomerReferenceNumbers.Location = new System.Drawing.Point(4, 24);
             this.tabPageCustomerReferenceNumbers.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageCustomerReferenceNumbers.Name = "tabPageCustomerReferenceNumbers";
-            this.tabPageCustomerReferenceNumbers.Size = new System.Drawing.Size(936, 415);
+            this.tabPageCustomerReferenceNumbers.Size = new System.Drawing.Size(936, 596);
             this.tabPageCustomerReferenceNumbers.TabIndex = 5;
             this.tabPageCustomerReferenceNumbers.Text = "Reference Numbers";
             this.tabPageCustomerReferenceNumbers.UseVisualStyleBackColor = true;
             // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(20, 26);
+            this.label31.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(111, 15);
+            this.label31.TabIndex = 8;
+            this.label31.Text = "Reference Numbers";
+            // 
             // buttonAddCustomerReferenceNumber
             // 
-            this.buttonAddCustomerReferenceNumber.Location = new System.Drawing.Point(106, 137);
+            this.buttonAddCustomerReferenceNumber.Location = new System.Drawing.Point(174, 158);
             this.buttonAddCustomerReferenceNumber.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddCustomerReferenceNumber.Name = "buttonAddCustomerReferenceNumber";
-            this.buttonAddCustomerReferenceNumber.Size = new System.Drawing.Size(167, 28);
+            this.buttonAddCustomerReferenceNumber.Size = new System.Drawing.Size(170, 35);
             this.buttonAddCustomerReferenceNumber.TabIndex = 7;
             this.buttonAddCustomerReferenceNumber.Text = "Add";
             this.buttonAddCustomerReferenceNumber.UseVisualStyleBackColor = true;
@@ -1427,11 +1441,14 @@ namespace XPOAPITest
             // comboBoxCustomerReferenceNumbers
             // 
             this.comboBoxCustomerReferenceNumbers.FormattingEnabled = true;
-            this.comboBoxCustomerReferenceNumbers.Location = new System.Drawing.Point(19, 16);
+            this.comboBoxCustomerReferenceNumbers.Items.AddRange(new object[] {
+            "NEW..."});
+            this.comboBoxCustomerReferenceNumbers.Location = new System.Drawing.Point(174, 18);
             this.comboBoxCustomerReferenceNumbers.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxCustomerReferenceNumbers.Name = "comboBoxCustomerReferenceNumbers";
             this.comboBoxCustomerReferenceNumbers.Size = new System.Drawing.Size(451, 23);
             this.comboBoxCustomerReferenceNumbers.TabIndex = 6;
+            this.comboBoxCustomerReferenceNumbers.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomerReferenceNumbers_SelectedIndexChanged);
             // 
             // comboBoxContactReferenceNumberTypeCode
             // 
@@ -1470,8 +1487,67 @@ namespace XPOAPITest
             this.label46.TabIndex = 0;
             this.label46.Text = "Type Code";
             // 
+            // tabPageAdditionalServices
+            // 
+            this.tabPageAdditionalServices.Controls.Add(this.buttonAddAdditionalServices);
+            this.tabPageAdditionalServices.Controls.Add(this.comboBoxAdditionalServices);
+            this.tabPageAdditionalServices.Controls.Add(this.label86);
+            this.tabPageAdditionalServices.Controls.Add(this.comboBoxAdditionalServiceCode);
+            this.tabPageAdditionalServices.Controls.Add(this.label84);
+            this.tabPageAdditionalServices.Location = new System.Drawing.Point(4, 24);
+            this.tabPageAdditionalServices.Name = "tabPageAdditionalServices";
+            this.tabPageAdditionalServices.Size = new System.Drawing.Size(936, 596);
+            this.tabPageAdditionalServices.TabIndex = 8;
+            this.tabPageAdditionalServices.Text = "Additional Services";
+            this.tabPageAdditionalServices.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddAdditionalServices
+            // 
+            this.buttonAddAdditionalServices.Location = new System.Drawing.Point(155, 218);
+            this.buttonAddAdditionalServices.Name = "buttonAddAdditionalServices";
+            this.buttonAddAdditionalServices.Size = new System.Drawing.Size(207, 35);
+            this.buttonAddAdditionalServices.TabIndex = 6;
+            this.buttonAddAdditionalServices.Text = "AddAdditiona lServices";
+            this.buttonAddAdditionalServices.UseVisualStyleBackColor = true;
+            this.buttonAddAdditionalServices.Click += new System.EventHandler(this.buttonAddAdditionalServices_Click);
+            // 
+            // comboBoxAdditionalServices
+            // 
+            this.comboBoxAdditionalServices.FormattingEnabled = true;
+            this.comboBoxAdditionalServices.Location = new System.Drawing.Point(155, 28);
+            this.comboBoxAdditionalServices.Name = "comboBoxAdditionalServices";
+            this.comboBoxAdditionalServices.Size = new System.Drawing.Size(369, 23);
+            this.comboBoxAdditionalServices.TabIndex = 5;
+            // 
+            // label86
+            // 
+            this.label86.AutoSize = true;
+            this.label86.Location = new System.Drawing.Point(32, 31);
+            this.label86.Name = "label86";
+            this.label86.Size = new System.Drawing.Size(107, 15);
+            this.label86.TabIndex = 4;
+            this.label86.Text = "Additional Services";
+            // 
+            // comboBoxAdditionalServiceCode
+            // 
+            this.comboBoxAdditionalServiceCode.FormattingEnabled = true;
+            this.comboBoxAdditionalServiceCode.Location = new System.Drawing.Point(155, 86);
+            this.comboBoxAdditionalServiceCode.Name = "comboBoxAdditionalServiceCode";
+            this.comboBoxAdditionalServiceCode.Size = new System.Drawing.Size(223, 23);
+            this.comboBoxAdditionalServiceCode.TabIndex = 2;
+            // 
+            // label84
+            // 
+            this.label84.AutoSize = true;
+            this.label84.Location = new System.Drawing.Point(40, 87);
+            this.label84.Name = "label84";
+            this.label84.Size = new System.Drawing.Size(35, 15);
+            this.label84.TabIndex = 0;
+            this.label84.Text = "Code";
+            // 
             // tabPageItems
             // 
+            this.tabPageItems.Controls.Add(this.label79);
             this.tabPageItems.Controls.Add(this.groupBox5);
             this.tabPageItems.Controls.Add(this.groupBox3);
             this.tabPageItems.Controls.Add(this.buttonAddItem);
@@ -1518,10 +1594,20 @@ namespace XPOAPITest
             this.tabPageItems.Location = new System.Drawing.Point(4, 24);
             this.tabPageItems.Margin = new System.Windows.Forms.Padding(2);
             this.tabPageItems.Name = "tabPageItems";
-            this.tabPageItems.Size = new System.Drawing.Size(936, 461);
+            this.tabPageItems.Size = new System.Drawing.Size(936, 596);
             this.tabPageItems.TabIndex = 7;
             this.tabPageItems.Text = "Items";
             this.tabPageItems.UseVisualStyleBackColor = true;
+            // 
+            // label79
+            // 
+            this.label79.AutoSize = true;
+            this.label79.Location = new System.Drawing.Point(28, 15);
+            this.label79.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label79.Name = "label79";
+            this.label79.Size = new System.Drawing.Size(36, 15);
+            this.label79.TabIndex = 44;
+            this.label79.Text = "Items";
             // 
             // groupBox5
             // 
@@ -1599,23 +1685,26 @@ namespace XPOAPITest
             // 
             // buttonAddItem
             // 
-            this.buttonAddItem.Location = new System.Drawing.Point(503, 491);
+            this.buttonAddItem.Location = new System.Drawing.Point(510, 535);
             this.buttonAddItem.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAddItem.Name = "buttonAddItem";
-            this.buttonAddItem.Size = new System.Drawing.Size(97, 23);
+            this.buttonAddItem.Size = new System.Drawing.Size(170, 35);
             this.buttonAddItem.TabIndex = 41;
-            this.buttonAddItem.Text = "Add";
+            this.buttonAddItem.Text = "Add Item";
             this.buttonAddItem.UseVisualStyleBackColor = true;
             this.buttonAddItem.Click += new System.EventHandler(this.buttonAddItem_Click);
             // 
             // comboBoxItem
             // 
             this.comboBoxItem.FormattingEnabled = true;
+            this.comboBoxItem.Items.AddRange(new object[] {
+            "NEW..."});
             this.comboBoxItem.Location = new System.Drawing.Point(86, 7);
             this.comboBoxItem.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxItem.Name = "comboBoxItem";
-            this.comboBoxItem.Size = new System.Drawing.Size(612, 23);
+            this.comboBoxItem.Size = new System.Drawing.Size(477, 23);
             this.comboBoxItem.TabIndex = 40;
+            this.comboBoxItem.SelectedIndexChanged += new System.EventHandler(this.comboBoxItem_SelectedIndexChanged);
             // 
             // tabControlItems
             // 
@@ -1625,7 +1714,7 @@ namespace XPOAPITest
             this.tabControlItems.Margin = new System.Windows.Forms.Padding(2);
             this.tabControlItems.Name = "tabControlItems";
             this.tabControlItems.SelectedIndex = 0;
-            this.tabControlItems.Size = new System.Drawing.Size(350, 299);
+            this.tabControlItems.Size = new System.Drawing.Size(350, 349);
             this.tabControlItems.TabIndex = 39;
             // 
             // tabPage11
@@ -1654,14 +1743,14 @@ namespace XPOAPITest
             this.tabPage11.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage11.Size = new System.Drawing.Size(342, 271);
+            this.tabPage11.Size = new System.Drawing.Size(342, 321);
             this.tabPage11.TabIndex = 0;
             this.tabPage11.Text = "Hazardous";
             this.tabPage11.UseVisualStyleBackColor = true;
             // 
             // textBoxHazMatPackingGroup
             // 
-            this.textBoxHazMatPackingGroup.Location = new System.Drawing.Point(168, 33);
+            this.textBoxHazMatPackingGroup.Location = new System.Drawing.Point(168, 40);
             this.textBoxHazMatPackingGroup.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatPackingGroup.Name = "textBoxHazMatPackingGroup";
             this.textBoxHazMatPackingGroup.Size = new System.Drawing.Size(168, 23);
@@ -1669,7 +1758,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatReceptacleSize
             // 
-            this.textBoxHazMatReceptacleSize.Location = new System.Drawing.Point(168, 54);
+            this.textBoxHazMatReceptacleSize.Location = new System.Drawing.Point(168, 70);
             this.textBoxHazMatReceptacleSize.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatReceptacleSize.Name = "textBoxHazMatReceptacleSize";
             this.textBoxHazMatReceptacleSize.Size = new System.Drawing.Size(168, 23);
@@ -1677,7 +1766,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatHazardousClass
             // 
-            this.textBoxHazMatHazardousClass.Location = new System.Drawing.Point(168, 75);
+            this.textBoxHazMatHazardousClass.Location = new System.Drawing.Point(168, 100);
             this.textBoxHazMatHazardousClass.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatHazardousClass.Name = "textBoxHazMatHazardousClass";
             this.textBoxHazMatHazardousClass.Size = new System.Drawing.Size(168, 23);
@@ -1685,7 +1774,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatShippingName
             // 
-            this.textBoxHazMatShippingName.Location = new System.Drawing.Point(168, 201);
+            this.textBoxHazMatShippingName.Location = new System.Drawing.Point(168, 280);
             this.textBoxHazMatShippingName.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatShippingName.Name = "textBoxHazMatShippingName";
             this.textBoxHazMatShippingName.Size = new System.Drawing.Size(168, 23);
@@ -1693,7 +1782,7 @@ namespace XPOAPITest
             // 
             // textBoxHazardousPhoneNumber
             // 
-            this.textBoxHazardousPhoneNumber.Location = new System.Drawing.Point(168, 180);
+            this.textBoxHazardousPhoneNumber.Location = new System.Drawing.Point(168, 250);
             this.textBoxHazardousPhoneNumber.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazardousPhoneNumber.Name = "textBoxHazardousPhoneNumber";
             this.textBoxHazardousPhoneNumber.Size = new System.Drawing.Size(168, 23);
@@ -1701,7 +1790,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatHazardousDescription
             // 
-            this.textBoxHazMatHazardousDescription.Location = new System.Drawing.Point(168, 159);
+            this.textBoxHazMatHazardousDescription.Location = new System.Drawing.Point(168, 220);
             this.textBoxHazMatHazardousDescription.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatHazardousDescription.Name = "textBoxHazMatHazardousDescription";
             this.textBoxHazMatHazardousDescription.Size = new System.Drawing.Size(168, 23);
@@ -1709,7 +1798,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatNumberOfReceptacles
             // 
-            this.textBoxHazMatNumberOfReceptacles.Location = new System.Drawing.Point(168, 96);
+            this.textBoxHazMatNumberOfReceptacles.Location = new System.Drawing.Point(168, 130);
             this.textBoxHazMatNumberOfReceptacles.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatNumberOfReceptacles.Name = "textBoxHazMatNumberOfReceptacles";
             this.textBoxHazMatNumberOfReceptacles.Size = new System.Drawing.Size(168, 23);
@@ -1717,7 +1806,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatContainerType
             // 
-            this.textBoxHazMatContainerType.Location = new System.Drawing.Point(168, 138);
+            this.textBoxHazMatContainerType.Location = new System.Drawing.Point(168, 190);
             this.textBoxHazMatContainerType.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatContainerType.Name = "textBoxHazMatContainerType";
             this.textBoxHazMatContainerType.Size = new System.Drawing.Size(168, 23);
@@ -1725,7 +1814,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatUnitOfMeasure
             // 
-            this.textBoxHazMatUnitOfMeasure.Location = new System.Drawing.Point(168, 117);
+            this.textBoxHazMatUnitOfMeasure.Location = new System.Drawing.Point(168, 160);
             this.textBoxHazMatUnitOfMeasure.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatUnitOfMeasure.Name = "textBoxHazMatUnitOfMeasure";
             this.textBoxHazMatUnitOfMeasure.Size = new System.Drawing.Size(168, 23);
@@ -1733,7 +1822,7 @@ namespace XPOAPITest
             // 
             // textBoxHazMatUNNumber
             // 
-            this.textBoxHazMatUNNumber.Location = new System.Drawing.Point(168, 12);
+            this.textBoxHazMatUNNumber.Location = new System.Drawing.Point(168, 10);
             this.textBoxHazMatUNNumber.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxHazMatUNNumber.Name = "textBoxHazMatUNNumber";
             this.textBoxHazMatUNNumber.Size = new System.Drawing.Size(168, 23);
@@ -1742,7 +1831,7 @@ namespace XPOAPITest
             // label77
             // 
             this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(9, 203);
+            this.label77.Location = new System.Drawing.Point(9, 280);
             this.label77.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label77.Name = "label77";
             this.label77.Size = new System.Drawing.Size(89, 15);
@@ -1752,7 +1841,7 @@ namespace XPOAPITest
             // label76
             // 
             this.label76.AutoSize = true;
-            this.label76.Location = new System.Drawing.Point(9, 140);
+            this.label76.Location = new System.Drawing.Point(9, 190);
             this.label76.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label76.Name = "label76";
             this.label76.Size = new System.Drawing.Size(86, 15);
@@ -1762,7 +1851,7 @@ namespace XPOAPITest
             // label75
             // 
             this.label75.AutoSize = true;
-            this.label75.Location = new System.Drawing.Point(9, 161);
+            this.label75.Location = new System.Drawing.Point(9, 220);
             this.label75.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label75.Name = "label75";
             this.label75.Size = new System.Drawing.Size(126, 15);
@@ -1772,7 +1861,7 @@ namespace XPOAPITest
             // label74
             // 
             this.label74.AutoSize = true;
-            this.label74.Location = new System.Drawing.Point(9, 182);
+            this.label74.Location = new System.Drawing.Point(9, 250);
             this.label74.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label74.Name = "label74";
             this.label74.Size = new System.Drawing.Size(147, 15);
@@ -1782,7 +1871,7 @@ namespace XPOAPITest
             // label73
             // 
             this.label73.AutoSize = true;
-            this.label73.Location = new System.Drawing.Point(9, 35);
+            this.label73.Location = new System.Drawing.Point(9, 40);
             this.label73.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label73.Name = "label73";
             this.label73.Size = new System.Drawing.Size(85, 15);
@@ -1792,7 +1881,7 @@ namespace XPOAPITest
             // label72
             // 
             this.label72.AutoSize = true;
-            this.label72.Location = new System.Drawing.Point(9, 56);
+            this.label72.Location = new System.Drawing.Point(9, 70);
             this.label72.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label72.Name = "label72";
             this.label72.Size = new System.Drawing.Size(84, 15);
@@ -1802,7 +1891,7 @@ namespace XPOAPITest
             // label71
             // 
             this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(9, 77);
+            this.label71.Location = new System.Drawing.Point(9, 100);
             this.label71.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(93, 15);
@@ -1812,7 +1901,7 @@ namespace XPOAPITest
             // label70
             // 
             this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(9, 98);
+            this.label70.Location = new System.Drawing.Point(9, 130);
             this.label70.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(132, 15);
@@ -1822,7 +1911,7 @@ namespace XPOAPITest
             // label69
             // 
             this.label69.AutoSize = true;
-            this.label69.Location = new System.Drawing.Point(9, 119);
+            this.label69.Location = new System.Drawing.Point(9, 160);
             this.label69.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label69.Name = "label69";
             this.label69.Size = new System.Drawing.Size(93, 15);
@@ -1832,7 +1921,7 @@ namespace XPOAPITest
             // label68
             // 
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(9, 14);
+            this.label68.Location = new System.Drawing.Point(9, 10);
             this.label68.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(71, 15);
@@ -1853,14 +1942,14 @@ namespace XPOAPITest
             this.tabPage12.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage12.Size = new System.Drawing.Size(342, 271);
+            this.tabPage12.Size = new System.Drawing.Size(342, 321);
             this.tabPage12.TabIndex = 1;
             this.tabPage12.Text = "Temperature";
             this.tabPage12.UseVisualStyleBackColor = true;
             // 
             // textBoxTemperatureLow
             // 
-            this.textBoxTemperatureLow.Location = new System.Drawing.Point(116, 51);
+            this.textBoxTemperatureLow.Location = new System.Drawing.Point(116, 80);
             this.textBoxTemperatureLow.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTemperatureLow.Name = "textBoxTemperatureLow";
             this.textBoxTemperatureLow.Size = new System.Drawing.Size(158, 23);
@@ -1868,7 +1957,7 @@ namespace XPOAPITest
             // 
             // textBoxTemperatureHighUOM
             // 
-            this.textBoxTemperatureHighUOM.Location = new System.Drawing.Point(116, 72);
+            this.textBoxTemperatureHighUOM.Location = new System.Drawing.Point(116, 110);
             this.textBoxTemperatureHighUOM.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTemperatureHighUOM.Name = "textBoxTemperatureHighUOM";
             this.textBoxTemperatureHighUOM.Size = new System.Drawing.Size(158, 23);
@@ -1876,7 +1965,7 @@ namespace XPOAPITest
             // 
             // textBoxTemperatureLowUOM
             // 
-            this.textBoxTemperatureLowUOM.Location = new System.Drawing.Point(116, 93);
+            this.textBoxTemperatureLowUOM.Location = new System.Drawing.Point(116, 140);
             this.textBoxTemperatureLowUOM.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTemperatureLowUOM.Name = "textBoxTemperatureLowUOM";
             this.textBoxTemperatureLowUOM.Size = new System.Drawing.Size(158, 23);
@@ -1884,7 +1973,7 @@ namespace XPOAPITest
             // 
             // textBoxTemperatureHigh
             // 
-            this.textBoxTemperatureHigh.Location = new System.Drawing.Point(116, 30);
+            this.textBoxTemperatureHigh.Location = new System.Drawing.Point(116, 50);
             this.textBoxTemperatureHigh.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxTemperatureHigh.Name = "textBoxTemperatureHigh";
             this.textBoxTemperatureHigh.Size = new System.Drawing.Size(158, 23);
@@ -1893,7 +1982,7 @@ namespace XPOAPITest
             // label82
             // 
             this.label82.AutoSize = true;
-            this.label82.Location = new System.Drawing.Point(9, 53);
+            this.label82.Location = new System.Drawing.Point(9, 80);
             this.label82.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label82.Name = "label82";
             this.label82.Size = new System.Drawing.Size(29, 15);
@@ -1903,7 +1992,7 @@ namespace XPOAPITest
             // label81
             // 
             this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(9, 74);
+            this.label81.Location = new System.Drawing.Point(9, 110);
             this.label81.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label81.Name = "label81";
             this.label81.Size = new System.Drawing.Size(64, 15);
@@ -1913,7 +2002,7 @@ namespace XPOAPITest
             // label80
             // 
             this.label80.AutoSize = true;
-            this.label80.Location = new System.Drawing.Point(9, 95);
+            this.label80.Location = new System.Drawing.Point(9, 140);
             this.label80.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label80.Name = "label80";
             this.label80.Size = new System.Drawing.Size(60, 15);
@@ -1923,7 +2012,7 @@ namespace XPOAPITest
             // label78
             // 
             this.label78.AutoSize = true;
-            this.label78.Location = new System.Drawing.Point(9, 32);
+            this.label78.Location = new System.Drawing.Point(9, 50);
             this.label78.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label78.Name = "label78";
             this.label78.Size = new System.Drawing.Size(33, 15);
@@ -1932,7 +2021,7 @@ namespace XPOAPITest
             // 
             // textBoxItemNMFCCode
             // 
-            this.textBoxItemNMFCCode.Location = new System.Drawing.Point(547, 66);
+            this.textBoxItemNMFCCode.Location = new System.Drawing.Point(568, 66);
             this.textBoxItemNMFCCode.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemNMFCCode.Name = "textBoxItemNMFCCode";
             this.textBoxItemNMFCCode.Size = new System.Drawing.Size(152, 23);
@@ -1940,7 +2029,7 @@ namespace XPOAPITest
             // 
             // textBoxItemDeclaredValueAmount
             // 
-            this.textBoxItemDeclaredValueAmount.Location = new System.Drawing.Point(547, 96);
+            this.textBoxItemDeclaredValueAmount.Location = new System.Drawing.Point(568, 96);
             this.textBoxItemDeclaredValueAmount.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemDeclaredValueAmount.Name = "textBoxItemDeclaredValueAmount";
             this.textBoxItemDeclaredValueAmount.Size = new System.Drawing.Size(152, 23);
@@ -1948,7 +2037,7 @@ namespace XPOAPITest
             // 
             // textBoxItemWidth
             // 
-            this.textBoxItemWidth.Location = new System.Drawing.Point(196, 426);
+            this.textBoxItemWidth.Location = new System.Drawing.Point(196, 450);
             this.textBoxItemWidth.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemWidth.Name = "textBoxItemWidth";
             this.textBoxItemWidth.Size = new System.Drawing.Size(152, 23);
@@ -1956,7 +2045,7 @@ namespace XPOAPITest
             // 
             // textBoxSKU
             // 
-            this.textBoxSKU.Location = new System.Drawing.Point(196, 491);
+            this.textBoxSKU.Location = new System.Drawing.Point(196, 510);
             this.textBoxSKU.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxSKU.Name = "textBoxSKU";
             this.textBoxSKU.Size = new System.Drawing.Size(152, 23);
@@ -1964,7 +2053,7 @@ namespace XPOAPITest
             // 
             // textBoxItemClass
             // 
-            this.textBoxItemClass.Location = new System.Drawing.Point(547, 32);
+            this.textBoxItemClass.Location = new System.Drawing.Point(568, 33);
             this.textBoxItemClass.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemClass.Name = "textBoxItemClass";
             this.textBoxItemClass.Size = new System.Drawing.Size(152, 23);
@@ -1972,7 +2061,7 @@ namespace XPOAPITest
             // 
             // textBoxPackageUnits
             // 
-            this.textBoxPackageUnits.Location = new System.Drawing.Point(196, 186);
+            this.textBoxPackageUnits.Location = new System.Drawing.Point(196, 200);
             this.textBoxPackageUnits.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPackageUnits.Name = "textBoxPackageUnits";
             this.textBoxPackageUnits.Size = new System.Drawing.Size(152, 23);
@@ -1980,7 +2069,7 @@ namespace XPOAPITest
             // 
             // textBoxItemWeight
             // 
-            this.textBoxItemWeight.Location = new System.Drawing.Point(196, 246);
+            this.textBoxItemWeight.Location = new System.Drawing.Point(196, 260);
             this.textBoxItemWeight.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemWeight.Name = "textBoxItemWeight";
             this.textBoxItemWeight.Size = new System.Drawing.Size(152, 23);
@@ -1988,7 +2077,7 @@ namespace XPOAPITest
             // 
             // textBoxItemHeight
             // 
-            this.textBoxItemHeight.Location = new System.Drawing.Point(196, 306);
+            this.textBoxItemHeight.Location = new System.Drawing.Point(196, 320);
             this.textBoxItemHeight.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemHeight.Name = "textBoxItemHeight";
             this.textBoxItemHeight.Size = new System.Drawing.Size(152, 23);
@@ -1996,7 +2085,7 @@ namespace XPOAPITest
             // 
             // textBoxItemLength
             // 
-            this.textBoxItemLength.Location = new System.Drawing.Point(196, 366);
+            this.textBoxItemLength.Location = new System.Drawing.Point(196, 380);
             this.textBoxItemLength.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemLength.Name = "textBoxItemLength";
             this.textBoxItemLength.Size = new System.Drawing.Size(152, 23);
@@ -2005,7 +2094,7 @@ namespace XPOAPITest
             // comboBoxItemWidthUOMCode
             // 
             this.comboBoxItemWidthUOMCode.FormattingEnabled = true;
-            this.comboBoxItemWidthUOMCode.Location = new System.Drawing.Point(196, 456);
+            this.comboBoxItemWidthUOMCode.Location = new System.Drawing.Point(196, 480);
             this.comboBoxItemWidthUOMCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxItemWidthUOMCode.Name = "comboBoxItemWidthUOMCode";
             this.comboBoxItemWidthUOMCode.Size = new System.Drawing.Size(154, 23);
@@ -2014,7 +2103,7 @@ namespace XPOAPITest
             // comboBoxItemLengthUOMCode
             // 
             this.comboBoxItemLengthUOMCode.FormattingEnabled = true;
-            this.comboBoxItemLengthUOMCode.Location = new System.Drawing.Point(196, 396);
+            this.comboBoxItemLengthUOMCode.Location = new System.Drawing.Point(196, 410);
             this.comboBoxItemLengthUOMCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxItemLengthUOMCode.Name = "comboBoxItemLengthUOMCode";
             this.comboBoxItemLengthUOMCode.Size = new System.Drawing.Size(154, 23);
@@ -2023,7 +2112,7 @@ namespace XPOAPITest
             // comboBoxProductTypeCode
             // 
             this.comboBoxProductTypeCode.FormattingEnabled = true;
-            this.comboBoxProductTypeCode.Location = new System.Drawing.Point(196, 216);
+            this.comboBoxProductTypeCode.Location = new System.Drawing.Point(196, 230);
             this.comboBoxProductTypeCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxProductTypeCode.Name = "comboBoxProductTypeCode";
             this.comboBoxProductTypeCode.Size = new System.Drawing.Size(154, 23);
@@ -2032,7 +2121,7 @@ namespace XPOAPITest
             // comboBoxItemWeightUOMCode
             // 
             this.comboBoxItemWeightUOMCode.FormattingEnabled = true;
-            this.comboBoxItemWeightUOMCode.Location = new System.Drawing.Point(196, 276);
+            this.comboBoxItemWeightUOMCode.Location = new System.Drawing.Point(196, 290);
             this.comboBoxItemWeightUOMCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxItemWeightUOMCode.Name = "comboBoxItemWeightUOMCode";
             this.comboBoxItemWeightUOMCode.Size = new System.Drawing.Size(154, 23);
@@ -2041,7 +2130,7 @@ namespace XPOAPITest
             // comboBoxItemHeightUOMCode
             // 
             this.comboBoxItemHeightUOMCode.FormattingEnabled = true;
-            this.comboBoxItemHeightUOMCode.Location = new System.Drawing.Point(196, 336);
+            this.comboBoxItemHeightUOMCode.Location = new System.Drawing.Point(196, 350);
             this.comboBoxItemHeightUOMCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxItemHeightUOMCode.Name = "comboBoxItemHeightUOMCode";
             this.comboBoxItemHeightUOMCode.Size = new System.Drawing.Size(154, 23);
@@ -2050,7 +2139,7 @@ namespace XPOAPITest
             // comboBoxItemUnitTypeCode
             // 
             this.comboBoxItemUnitTypeCode.FormattingEnabled = true;
-            this.comboBoxItemUnitTypeCode.Location = new System.Drawing.Point(196, 156);
+            this.comboBoxItemUnitTypeCode.Location = new System.Drawing.Point(196, 170);
             this.comboBoxItemUnitTypeCode.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxItemUnitTypeCode.Name = "comboBoxItemUnitTypeCode";
             this.comboBoxItemUnitTypeCode.Size = new System.Drawing.Size(154, 23);
@@ -2058,7 +2147,7 @@ namespace XPOAPITest
             // 
             // textBoxItemDescription
             // 
-            this.textBoxItemDescription.Location = new System.Drawing.Point(196, 66);
+            this.textBoxItemDescription.Location = new System.Drawing.Point(196, 80);
             this.textBoxItemDescription.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemDescription.Name = "textBoxItemDescription";
             this.textBoxItemDescription.Size = new System.Drawing.Size(152, 23);
@@ -2066,7 +2155,7 @@ namespace XPOAPITest
             // 
             // textBoxItemNumber
             // 
-            this.textBoxItemNumber.Location = new System.Drawing.Point(196, 96);
+            this.textBoxItemNumber.Location = new System.Drawing.Point(196, 110);
             this.textBoxItemNumber.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemNumber.Name = "textBoxItemNumber";
             this.textBoxItemNumber.Size = new System.Drawing.Size(152, 23);
@@ -2074,7 +2163,7 @@ namespace XPOAPITest
             // 
             // textBoxItemUnits
             // 
-            this.textBoxItemUnits.Location = new System.Drawing.Point(196, 126);
+            this.textBoxItemUnits.Location = new System.Drawing.Point(196, 140);
             this.textBoxItemUnits.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemUnits.Name = "textBoxItemUnits";
             this.textBoxItemUnits.Size = new System.Drawing.Size(152, 23);
@@ -2103,7 +2192,7 @@ namespace XPOAPITest
             // label65
             // 
             this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(28, 396);
+            this.label65.Location = new System.Drawing.Point(28, 410);
             this.label65.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(106, 15);
@@ -2113,7 +2202,7 @@ namespace XPOAPITest
             // label64
             // 
             this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(28, 426);
+            this.label64.Location = new System.Drawing.Point(28, 450);
             this.label64.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(39, 15);
@@ -2123,7 +2212,7 @@ namespace XPOAPITest
             // label63
             // 
             this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(28, 456);
+            this.label63.Location = new System.Drawing.Point(28, 480);
             this.label63.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(101, 15);
@@ -2133,7 +2222,7 @@ namespace XPOAPITest
             // label62
             // 
             this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(28, 491);
+            this.label62.Location = new System.Drawing.Point(28, 510);
             this.label62.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(28, 15);
@@ -2153,7 +2242,7 @@ namespace XPOAPITest
             // label60
             // 
             this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(28, 66);
+            this.label60.Location = new System.Drawing.Point(28, 80);
             this.label60.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(94, 15);
@@ -2163,7 +2252,7 @@ namespace XPOAPITest
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(28, 96);
+            this.label59.Location = new System.Drawing.Point(28, 110);
             this.label59.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(78, 15);
@@ -2173,7 +2262,7 @@ namespace XPOAPITest
             // label58
             // 
             this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(28, 126);
+            this.label58.Location = new System.Drawing.Point(28, 140);
             this.label58.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(34, 15);
@@ -2183,7 +2272,7 @@ namespace XPOAPITest
             // label57
             // 
             this.label57.AutoSize = true;
-            this.label57.Location = new System.Drawing.Point(28, 156);
+            this.label57.Location = new System.Drawing.Point(28, 170);
             this.label57.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(87, 15);
@@ -2193,7 +2282,7 @@ namespace XPOAPITest
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(28, 186);
+            this.label56.Location = new System.Drawing.Point(28, 200);
             this.label56.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(81, 15);
@@ -2203,7 +2292,7 @@ namespace XPOAPITest
             // label55
             // 
             this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(28, 216);
+            this.label55.Location = new System.Drawing.Point(28, 230);
             this.label55.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(107, 15);
@@ -2213,7 +2302,7 @@ namespace XPOAPITest
             // label54
             // 
             this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(28, 246);
+            this.label54.Location = new System.Drawing.Point(28, 260);
             this.label54.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(45, 15);
@@ -2223,7 +2312,7 @@ namespace XPOAPITest
             // label53
             // 
             this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(28, 276);
+            this.label53.Location = new System.Drawing.Point(28, 290);
             this.label53.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(107, 15);
@@ -2233,7 +2322,7 @@ namespace XPOAPITest
             // label52
             // 
             this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(28, 306);
+            this.label52.Location = new System.Drawing.Point(28, 320);
             this.label52.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(43, 15);
@@ -2243,7 +2332,7 @@ namespace XPOAPITest
             // label51
             // 
             this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(28, 336);
+            this.label51.Location = new System.Drawing.Point(28, 350);
             this.label51.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(105, 15);
@@ -2253,7 +2342,7 @@ namespace XPOAPITest
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(28, 366);
+            this.label50.Location = new System.Drawing.Point(28, 380);
             this.label50.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(44, 15);
@@ -2262,7 +2351,7 @@ namespace XPOAPITest
             // 
             // textBoxItemProductCode
             // 
-            this.textBoxItemProductCode.Location = new System.Drawing.Point(196, 36);
+            this.textBoxItemProductCode.Location = new System.Drawing.Point(196, 50);
             this.textBoxItemProductCode.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxItemProductCode.Name = "textBoxItemProductCode";
             this.textBoxItemProductCode.Size = new System.Drawing.Size(152, 23);
@@ -2271,7 +2360,7 @@ namespace XPOAPITest
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(28, 36);
+            this.label49.Location = new System.Drawing.Point(28, 50);
             this.label49.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(80, 15);
@@ -2280,8 +2369,6 @@ namespace XPOAPITest
             // 
             // tabPageQuotes
             // 
-            this.tabPageQuotes.Controls.Add(this.textBoxTrackingNumber);
-            this.tabPageQuotes.Controls.Add(this.label31);
             this.tabPageQuotes.Controls.Add(this.button3);
             this.tabPageQuotes.Controls.Add(this.tabQuotes);
             this.tabPageQuotes.Location = new System.Drawing.Point(4, 24);
@@ -2294,9 +2381,9 @@ namespace XPOAPITest
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(235, 550);
+            this.button3.Location = new System.Drawing.Point(335, 548);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(220, 34);
+            this.button3.Size = new System.Drawing.Size(170, 35);
             this.button3.TabIndex = 1;
             this.button3.Text = "Convert To Order";
             this.button3.UseVisualStyleBackColor = true;
@@ -2308,7 +2395,7 @@ namespace XPOAPITest
             this.tabQuotes.Margin = new System.Windows.Forms.Padding(2);
             this.tabQuotes.Name = "tabQuotes";
             this.tabQuotes.SelectedIndex = 0;
-            this.tabQuotes.Size = new System.Drawing.Size(915, 493);
+            this.tabQuotes.Size = new System.Drawing.Size(915, 519);
             this.tabQuotes.TabIndex = 0;
             // 
             // tabPageOrder
@@ -2324,7 +2411,7 @@ namespace XPOAPITest
             this.tabPageOrder.Location = new System.Drawing.Point(4, 24);
             this.tabPageOrder.Name = "tabPageOrder";
             this.tabPageOrder.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOrder.Size = new System.Drawing.Size(936, 418);
+            this.tabPageOrder.Size = new System.Drawing.Size(936, 596);
             this.tabPageOrder.TabIndex = 1;
             this.tabPageOrder.Text = "Order";
             this.tabPageOrder.UseVisualStyleBackColor = true;
@@ -2358,7 +2445,7 @@ namespace XPOAPITest
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 108);
+            this.label3.Location = new System.Drawing.Point(23, 108);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 15);
             this.label3.TabIndex = 5;
@@ -2375,7 +2462,7 @@ namespace XPOAPITest
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 143);
+            this.label4.Location = new System.Drawing.Point(23, 143);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(94, 15);
             this.label4.TabIndex = 6;
@@ -2476,26 +2563,12 @@ namespace XPOAPITest
             this.tabPage9.Size = new System.Drawing.Size(200, 100);
             this.tabPage9.TabIndex = 0;
             // 
-            // buttonAddAdditionalServices
-            // 
-            this.buttonAddAdditionalServices.Location = new System.Drawing.Point(0, 0);
-            this.buttonAddAdditionalServices.Name = "buttonAddAdditionalServices";
-            this.buttonAddAdditionalServices.Size = new System.Drawing.Size(75, 23);
-            this.buttonAddAdditionalServices.TabIndex = 0;
-            // 
             // comboBoxAdditionalServicesCode
             // 
             this.comboBoxAdditionalServicesCode.Location = new System.Drawing.Point(0, 0);
             this.comboBoxAdditionalServicesCode.Name = "comboBoxAdditionalServicesCode";
             this.comboBoxAdditionalServicesCode.Size = new System.Drawing.Size(121, 23);
             this.comboBoxAdditionalServicesCode.TabIndex = 0;
-            // 
-            // textBoxAdditionalServiceCode
-            // 
-            this.textBoxAdditionalServiceCode.Location = new System.Drawing.Point(0, 0);
-            this.textBoxAdditionalServiceCode.Name = "textBoxAdditionalServiceCode";
-            this.textBoxAdditionalServiceCode.Size = new System.Drawing.Size(100, 23);
-            this.textBoxAdditionalServiceCode.TabIndex = 0;
             // 
             // label48
             // 
@@ -2506,30 +2579,14 @@ namespace XPOAPITest
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(225, 668);
+            this.button1.Location = new System.Drawing.Point(365, 668);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(186, 34);
+            this.button1.Size = new System.Drawing.Size(170, 35);
             this.button1.TabIndex = 1;
             this.button1.Text = "Get Quote";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(53, 517);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(98, 15);
-            this.label31.TabIndex = 2;
-            this.label31.Text = "Tracking Number";
-            // 
-            // textBoxTrackingNumber
-            // 
-            this.textBoxTrackingNumber.Location = new System.Drawing.Point(169, 513);
-            this.textBoxTrackingNumber.Name = "textBoxTrackingNumber";
-            this.textBoxTrackingNumber.Size = new System.Drawing.Size(186, 23);
-            this.textBoxTrackingNumber.TabIndex = 3;
             // 
             // FormUserInterface
             // 
@@ -2569,6 +2626,8 @@ namespace XPOAPITest
             this.panel2.PerformLayout();
             this.tabPageCustomerReferenceNumbers.ResumeLayout(false);
             this.tabPageCustomerReferenceNumbers.PerformLayout();
+            this.tabPageAdditionalServices.ResumeLayout(false);
+            this.tabPageAdditionalServices.PerformLayout();
             this.tabPageItems.ResumeLayout(false);
             this.tabPageItems.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -2581,7 +2640,6 @@ namespace XPOAPITest
             this.tabPage12.ResumeLayout(false);
             this.tabPage12.PerformLayout();
             this.tabPageQuotes.ResumeLayout(false);
-            this.tabPageQuotes.PerformLayout();
             this.tabPageOrder.ResumeLayout(false);
             this.tabPageOrder.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -2610,7 +2668,6 @@ namespace XPOAPITest
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.Button buttonAddStop;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ComboBox comboBoxStops;
         private System.Windows.Forms.DateTimePicker dateTimePickerScheduledTimeFrom;
@@ -2626,7 +2683,6 @@ namespace XPOAPITest
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.RichTextBox richTextBoxNote;
-        private System.Windows.Forms.Button buttonAddStopContact;
         private System.Windows.Forms.ComboBox comboBoxStopContactPhoneNumber;
         private System.Windows.Forms.TextBox textBoxStopContactEmail;
         private System.Windows.Forms.TextBox textBoxStopContactLastName;
@@ -2648,7 +2704,7 @@ namespace XPOAPITest
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.RadioButton radioButtonStopContactPhoneNumberPrimaryYes;
         private System.Windows.Forms.RadioButton radioButtonStopContactPhoneNumberPrimaryNo;
-        private System.Windows.Forms.ComboBox comboBoxStopReefernceTypeCode;
+        private System.Windows.Forms.ComboBox comboBoxStopRefernceTypeCode;
 
 
         private System.Windows.Forms.TabControl tabQuotes1;
@@ -2697,14 +2753,13 @@ namespace XPOAPITest
         private System.Windows.Forms.ComboBox comboBoxSpecialRequirementCode;
 
         private System.Windows.Forms.TabPage tabPageCustomerContacts;
-        private System.Windows.Forms.TextBox textBoxContactTitle;
+        private System.Windows.Forms.TextBox textBoxCustomerContactTitle;
         private System.Windows.Forms.TextBox textBoxCustomerContactEmail;
         private System.Windows.Forms.TextBox textBoxCustomerContactLastName;
         private System.Windows.Forms.TextBox textBoxCustomerContactFirstName;
-        private System.Windows.Forms.ComboBox comboBoxCustomerContactPhoneNumbers;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBoxContactPhoneNumber;
+        private System.Windows.Forms.TextBox textBoxCustomerContactPhoneNumber;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label44;
@@ -2718,10 +2773,7 @@ namespace XPOAPITest
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.ComboBox comboBoxContactReferenceNumberTypeCode;
         private System.Windows.Forms.ComboBox comboBoxAdditionalServicesCode;
-        private System.Windows.Forms.TextBox textBoxAdditionalServiceCode;
         private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.Button buttonAddCustomerContact;
-        private System.Windows.Forms.Button buttonAddAdditionalServices;
 
         private System.Windows.Forms.TextBox textBoxItemNMFCCode;
         private System.Windows.Forms.TextBox textBoxItemDeclaredValueAmount;
@@ -2801,7 +2853,6 @@ namespace XPOAPITest
         private System.Windows.Forms.ComboBox comboBoxCustomerContactPhoneNumberType;
         private System.Windows.Forms.ComboBox comboBoxItem;
         private System.Windows.Forms.Button buttonStopReferenceTypeCodeAdd;
-        private System.Windows.Forms.ComboBox comboBoxStopReferenceNumber;
         private System.Windows.Forms.Button buttonStopSpecialRequirement;
         private System.Windows.Forms.ComboBox comboBoxStopSpecialRequirement;
         private System.Windows.Forms.Button buttonAddItem;
@@ -2821,6 +2872,16 @@ namespace XPOAPITest
         private System.Windows.Forms.TabPage tabPage12;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBoxTrackingNumber;
+        private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label79;
+        private System.Windows.Forms.ComboBox comboBoxStopRefernceNumbers;
+        private System.Windows.Forms.Label label83;
+        private System.Windows.Forms.TabPage tabPageAdditionalServices;
+        private System.Windows.Forms.ComboBox comboBoxAdditionalServiceCode;
+        private System.Windows.Forms.Label label84;
+        private System.Windows.Forms.ComboBox comboBoxAdditionalServices;
+        private System.Windows.Forms.Label label86;
+        private System.Windows.Forms.Button buttonAddAdditionalServices;
     }
 }

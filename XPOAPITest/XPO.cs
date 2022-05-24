@@ -783,7 +783,7 @@ JsonSerializer.Deserialize<OrderResponse>(response.Content);
             return null;
 
         }
-        public async Task<OrderResponse> convertToOrder(TabPage tabPage, QuoteRequest quoteRequest)
+        public async Task<OrderResponse> convertToOrder(TabPage tabPage, QuoteRequest quoteRequest,String trackingNumber)
         {
             OrderRequest orderRequest = new();
             orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
@@ -795,11 +795,11 @@ JsonSerializer.Deserialize<OrderResponse>(response.Content);
             //IList<ContactInformation> contacts = quoteRequest.contactInformations;
             //orderRequest.orderContactInformations= quoteRequest.contactInformations;
 
-            //OrderReferenceNumber referenceNumber = new();
-            //referenceNumber.code = "PRO";
-            //referenceNumber.type = "PRO";
-            //referenceNumber.value = "887551205";
-            //orderRequest.addReferenceNumber(referenceNumber);
+            OrderReferenceNumber referenceNumber = new();
+            referenceNumber.code = "PRO";
+            referenceNumber.type = "PRO";
+            referenceNumber.value = trackingNumber;
+            orderRequest.addReferenceNumber(referenceNumber);
 
             //IList<Stop> stops = quoteRequest.stops;
             //foreach (Stop stop in stops)

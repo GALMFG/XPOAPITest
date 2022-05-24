@@ -13,6 +13,7 @@ namespace XPOAPITest
         {
             customerRefereneTypeCodes = new ArrayList();
             stopRefereneTypeCodes = customerRefereneTypeCodes;
+            customerAdditionalServices =new ArrayList();
             equipmentCatagoryCodes = new ArrayList();
             typeOfStops = new ArrayList();
             paymentMethods = new ArrayList();
@@ -42,6 +43,7 @@ namespace XPOAPITest
             InitializeUnitTypeCodes();
             InitializeStopSpecialRequirements();
             InitializeCustomerReferenceNumbers();
+            InitializeAdditionalServices();
         }
         void InitializeequipmentCatagoryCodes()
         {
@@ -278,7 +280,8 @@ namespace XPOAPITest
         }
         void InitializeAdditionalServices()
         {
-
+            customerAdditionalServices.Add("Single");
+            customerAdditionalServices.Add("Team");
         }
         
         void InitializeCustomerReferenceNumbers()
@@ -614,6 +617,7 @@ namespace XPOAPITest
             stopSpecialRequirements.Add("RSP: Residential Pickup");
         }
         public ArrayList customerRefereneTypeCodes;
+        public ArrayList customerAdditionalServices;
         public ArrayList stopRefereneTypeCodes;
         public ArrayList equipmentCatagoryCodes;
         public ArrayList typeOfStops;

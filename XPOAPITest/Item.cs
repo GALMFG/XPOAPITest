@@ -32,18 +32,18 @@ namespace XPOAPITest
         public int width{ get; set; }
         public string widthUomCode{ get; set; }
 
-        //public bool isHazmat{ get; set; }
-        //public HazardousItemInfo hazardousItemInfo{ get; set; }
+        public bool isHazmat { get; set; }
+        public HazardousItemInfo hazardousItemInfo { get; set; }
 
-        //public bool isTemperatureControlled{ get; set; }
-
-
-        //public TemperatureInformation temperatureInformation{ get; set; }
-        //public string sku{ get; set; }
+        public bool isTemperatureControlled { get; set; }
 
 
+        public TemperatureInformation temperatureInformation { get; set; }
+        public string sku { get; set; }
 
-        //public string nmfcCode{ get; set; }
+
+
+        public string nmfcCode { get; set; }
 
 
     }

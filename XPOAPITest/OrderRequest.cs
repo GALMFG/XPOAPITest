@@ -21,7 +21,7 @@ namespace XPOAPITest
         public string transportationMode { get; set; }
         //public string contractId { get; set; }
 
-        //public IList<OrderReferenceNumber> orderReferenceNumbers { get; set; }
+        public IList<OrderReferenceNumber> orderReferenceNumbers { get; set; }
         //public IList<Note> orderNotes { get; set; }
 
         //public IList<ContactInformation> orderContactInformations { get; set; }
@@ -103,12 +103,12 @@ namespace XPOAPITest
         //        items = new List<OrderItem>();
         //    items.Add(item);
         //}
-        //public void addReferenceNumber(OrderReferenceNumber referenceNumber)
-        //{
-        //    if (orderReferenceNumbers is null)
-        //        orderReferenceNumbers = new List<OrderReferenceNumber>();
-        //    orderReferenceNumbers.Add(referenceNumber);
-        //}
+        public void addReferenceNumber(OrderReferenceNumber referenceNumber)
+        {
+            if (orderReferenceNumbers is null)
+                orderReferenceNumbers = new List<OrderReferenceNumber>();
+            orderReferenceNumbers.Add(referenceNumber);
+        }
 
     }
 }
