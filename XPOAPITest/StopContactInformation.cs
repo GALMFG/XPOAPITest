@@ -13,11 +13,7 @@ namespace XPOAPITest
         {
             phoneNumbers = new  List<StopContactPhoneNumber> ();
     }
-        public IList<StopContactPhoneNumber> phoneNumbers;
-        public IList<StopContactPhoneNumber>  PhoneNumbers {
-            get { return phoneNumbers; }
-            set { phoneNumbers = value; }
-        }
+        public IList<StopContactPhoneNumber> phoneNumbers { get; set; }
         public void addPhoneNumber(StopContactPhoneNumber phoneNumber)
         {
             if (phoneNumbers is null)
