@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace XPOAPITest
 {
@@ -18,24 +13,7 @@ namespace XPOAPITest
             specialRequirement= new List<StopSpecialRequirement>();
 
             stopReferenceNumbers = new List<StopReferenceTypeCode> ();
-    }
-        //private AddressInformation addressInformations;
-
-        //private string type;
-
-        //private string scheduledTimeFrom;
-
-        //private string scheduledTimeTo;
-
-        //private IList<StopContactInformation> stopContactInformations;
-
-        //private IList<StopSpecialRequirement> specialRequirements;
-
-        //private IList<StopReferenceTypeCode> stopReferenceTypeCodes;
-
-        //private string note;
-
-        //public int sequenceNo;
+        }
         public AddressInformation addressInformations { get; set; }
 
         public string type { get; set; }

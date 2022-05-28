@@ -1,0 +1,128 @@
+{
+    "partnerOrderCode": "56789-21",
+    "partnerIdentifierCode": "2-1-GALMNENY",
+    "equipmentCategoryCode": "VN",
+    "equipmentTypeCode": "V",
+    "transportationMode": [
+        "LTL"
+    ],
+    "bolNumber": "3322333",
+    "shipmentId": "56789-21",
+    "contactInformations": [
+        {
+            "PhoneNumbers": [
+                {
+                    "type": "MOBILE",
+                    "number": "7892929001"
+                }
+            ],
+            "firstName": "JACOB",
+            "lastName": "CHERIAN",
+            "email": "JACOBCM@GMAIL.COM",
+            "title": "T",
+            "isPrimary": true
+        }
+    ],
+    "referenceNumbers": [],
+    "applicationSource": "GPAPI",
+    "stops": [
+        {
+            "addressInformations": {
+                "locationId": "",
+                "locationName": "GAL MANUFACTURING",
+                "addressLine1": "50E 153RD STREET",
+                "addressLine2": "",
+                "cityName": "BRONX",
+                "stateCode": "NY",
+                "country": "USA",
+                "zipCode": "10451"
+            },
+            "type": "PICKUP",
+            "scheduledTimeFrom": "2022-06-01T08:00:01-04:00",
+            "scheduledTimeTo": "2022-06-01T17:00:01-04:00",
+            "stopContactInformations": [
+                {
+                    "phoneNumbers": [
+                        {
+                            "isPrimary": false,
+                            "type": "MOBILE",
+                            "number": "9087642051"
+                        }
+                    ],
+                    "firstName": "ANDREW",
+                    "lastName": "COHEN",
+                    "email": "ANDREW.SHOPRITE.COM",
+                    "title": "T",
+                    "isPrimary": true
+                }
+            ],
+            "specialRequirement": [],
+            "stopReferenceNumbers": [],
+            "note": "",
+            "sequenceNo": 1
+        },
+        {
+            "addressInformations": {
+                "locationId": "",
+                "locationName": "55 STRATFORD CIRCLE",
+                "addressLine1": "55 STRATFORD CIRCLE",
+                "addressLine2": "",
+                "cityName": "EDISON",
+                "stateCode": "NJ",
+                "country": "USA",
+                "zipCode": "08820"
+            },
+            "type": "DELIVERY",
+            "scheduledTimeFrom": "2022-06-06T08:00:01-04:00",
+            "scheduledTimeTo": "2022-06-06T17:00:01-04:00",
+            "stopContactInformations": [
+                {
+                    "phoneNumbers": [
+                        {
+                            "isPrimary": false,
+                            "type": "MOBILE",
+                            "number": "7182929001"
+                        }
+                    ],
+                    "firstName": "VICTOR",
+                    "lastName": "COOK",
+                    "email": "VICTOR@AOL.COM",
+                    "title": "T",
+                    "isPrimary": true
+                }
+            ],
+            "specialRequirement": [],
+            "stopReferenceNumbers": [],
+            "note": "",
+            "sequenceNo": 2
+        }
+    ],
+    "items": [
+        {
+            "declaredValueAmount": 1000,
+            "productCode": "1 OPERATOR ETC",
+            "classcode": "",
+            "itemDescription": "1 OPERATOR ETC",
+            "itemNumber": "1",
+            "units": 1,
+            "unitTypeCode": "CRTS",
+            "packageUnits": 1,
+            "packageTypeCode": "CRTS",
+            "weight": 650,
+            "weightUomCode": "LB",
+            "height": 85,
+            "heightUomCode": "IN",
+            "length": 48,
+            "lengthUomCode": "IN",
+            "width": 42,
+            "widthUomCode": "IN",
+            "isHazmat": false,
+            "hazardousItemInfo": null,
+            "isTemperatureControlled": false,
+            "temperatureInformation": null,
+            "sku": "456-T",
+            "nmfcCode": ""
+        }
+    ],
+    "additionalServices": []
+}

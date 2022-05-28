@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace XPOAPITest
 {
@@ -21,15 +23,35 @@ namespace XPOAPITest
 
 
         FixedLists fixedLists;
-
         public FormUserInterface()
         {
             InitializeComponent();
         }
 
+        private void FormUserInterfaceCopy_Load(object sender, EventArgs e)
+        {
+            quoteRequest = new QuoteRequest();
+            IntializeDropdownLists();
+            getConfigData();
+        }
+
         public void ApplyConfigSettings()
         {
             quoteRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
+        }
+        public void LoadSampleJSONData()
+        {
+            if (quoteRequest is null)
+            {
+                MessageBox.Show("File Did not contain valid JSON data");
+                return;
+            }
+            loadGeneralControls();
+            loadStopControls();
+            loadCustomerContactInformationControls();
+            loadCustomerReferenceControls();
+            loadCustomerAdditionalServicesControls();
+            loadItemsControls();
         }
         public void IntializeDropdownLists()
         {
@@ -51,39 +73,340 @@ namespace XPOAPITest
             fillCustomerReferenceTypeCodeDropDownList();
             fillStopReferencTypeCodeDropDownList();
             fillAdditionalServicesDropDownList();
+            comboBoxStops.Items.Add("NEW...");
+            comboBoxStopContact.Items.Add("NEW...");
+            comboBoxStopContactPhoneNumber.Items.Add("NEW...");
+            comboBoxCustomerConact.Items.Add("NEW...");
+            comboBoxCustomerContactPhoneNumber.Items.Add("NEW...");
             ApplyConfigSettings();
         }
-        public void resetStopContactInformationControls() {
-            resetStopContactPhoneNumberControls();
-            textBoxStopContactEmail.Text = "";
-            textBoxStopContactFirstName.Text = "";
-            textBoxStopContactLastName.Text = "";
-            textBoxStopContactTitle.Text = "";
-            radioButtonStopContactPrimaryYes.Checked = false;
-            comboBoxStopContactPhoneNumber.Items.Clear();
-            comboBoxStopContactPhoneNumber.Items.Add("NEW...");
-            comboBoxStopContactPhoneNumber.Text = "";
+        public void loadCustomerContactInformationControls()
+        {
+            IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
+            int counterCustomerContactInformation = 0;
+            foreach (ContactInformation contactInformation in quoteRequest.contactInformations)
+            {
+                counterCustomerContactInformation++;
+                comboBoxCustomerConact.Items.Add(contactInformation.firstName + "," + contactInformation.lastName + "," + contactInformation.email);
+                if (counterCustomerContactInformation == 1)
+                {
+                    textBoxCustomerContactFirstName.Text = contactInformation.firstName;
+
+                    textBoxCustomerContactLastName.Text = contactInformation.lastName;
+                    textBoxCustomerContactEmail.Text = contactInformation.email;
+                    textBoxCustomerContactTitle.Text = contactInformation.title;
+
+                    if (contactInformation.isPrimary)
+                        radioButtonContactPrimaryYes.Checked = true;
+                    loadCustomerContactPhoneNumberControls();
+                }
+            }
+            if (counterCustomerContactInformation >= 1)
+                comboBoxCustomerConact.SelectedIndex = 0;
 
         }
-        public void resetStopContactPhoneNumberControls()
+        public void loadCustomerContactPhoneNumberControls()
         {
-            textBoxStopContactPhoneNumber.Text = "";
-            comboBoxStopContactPhoneNumberType.SelectedIndex = -1;
+            IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
+
+            ContactInformation contactInformation = customerContactInformations.Where(s => s.email == textBoxCustomerContactEmail.Text).FirstOrDefault();
+
+            if (contactInformation is not null)
+            {
+                int counterCustomerContactPhoneNumber = 0;
+                foreach (PhoneNumber customerContactPhoneNumber in contactInformation.phoneNumbers)
+                {
+                    counterCustomerContactPhoneNumber++;
+                    if (counterCustomerContactPhoneNumber == 1)
+                    {
+                        comboBoxCustomerContactPhoneNumberType.Text = customerContactPhoneNumber.number;
+                        textBoxCustomerContactPhoneNumber.Text = customerContactPhoneNumber.type;
+                    }
+                    comboBoxCustomerContactPhoneNumber.Items.Add(customerContactPhoneNumber.number + "," + customerContactPhoneNumber.type);
+                }
+                if (counterCustomerContactPhoneNumber >= 1)
+                    comboBoxCustomerContactPhoneNumber.SelectedIndex = 0;
+            }
         }
-        public void resetStopAddressControls()
+        public void loadCustomerAdditionalServicesControls()
         {
-            textBoxLocationId.Text = "";
-            textBoxLocationName.Text = "";
-            textBoxAddress1.Text = "";
-            textBoxAddress2.Text = "";
-            textBoxCity.Text = "";
-            textBoxState.Text = "";
-            textBoxCountry.Text = "";
-            textBoxZipCode.Text = "";
+            int counterCustomerAdditionalService = 0;
+            foreach (AdditionalService additionalService in quoteRequest.additionalServices)
+            {
+                counterCustomerAdditionalService++;
+                comboBoxAdditionalServices.Items.Add(additionalService.code);
+                if (counterCustomerAdditionalService == 1)
+                {
+
+                    comboBoxAdditionalServiceCode.SelectedItem = additionalService.code;
+                }
+            }
+            if (counterCustomerAdditionalService >= 1)
+                comboBoxAdditionalServices.SelectedIndex = 0;
+        }
+        public void loadCustomerReferenceControls()
+        {
+            int counterCustomerReference = 0;
+            foreach (CustomerReferenceNumber customerReferenceNumber in quoteRequest.referenceNumbers)
+            {
+                counterCustomerReference++;
+                comboBoxCustomerReferenceNumbers.Items.Add(customerReferenceNumber.typeCode);
+                if (counterCustomerReference == 1)
+                {
+                    comboBoxCustomerReferenceNumberTypeCode.SelectedItem = customerReferenceNumber.typeCode;
+                    textBoxContactReferenceNumberValue.Text = customerReferenceNumber.value;
+                }
+            }
+            if (counterCustomerReference >= 1)
+                comboBoxCustomerReferenceNumbers.SelectedIndex = 0;
+
+        }
+        public void loadItemsControls()
+        {
+            int counterItems = 0;
+            foreach (QuoteItem item in quoteRequest.items)
+            {
+                counterItems++;
+                comboBoxItem.Items.Add(item.itemNumber + "," + item.itemDescription);
+                if (counterItems == 1)
+                {
+                    textBoxItemProductCode.Text = item.productCode;
+                    textBoxItemDescription.Text = item.itemDescription;
+                    textBoxItemNumber.Text = item.itemNumber;
+                    textBoxItemUnits.Text = item.units.ToString();
+                    comboBoxItemUnitTypeCode.Text = item.unitTypeCode;
+                    textBoxPackageUnits.Text = item.packageUnits.ToString();
+                    comboBoxPackageTypeCode.Text = item.packageTypeCode.ToString();
+                    textBoxItemWeight.Text = item.weight.ToString();
+                    comboBoxItemWeightUOMCode.Text = item.weightUomCode;
+
+                    textBoxItemHeight.Text = item.height.ToString();
+                    comboBoxItemHeightUOMCode.Text = item.heightUomCode;
+
+                    textBoxItemLength.Text = item.length.ToString();
+                    comboBoxItemLengthUOMCode.SelectedItem = item.lengthUomCode;
+                    textBoxItemWidth.Text = item.width.ToString();
+                    comboBoxItemWidthUOMCode.SelectedItem = item.widthUomCode;
+                    loadHazardousMaterials(item);
+                    loadTemperatureInformation(item);
+                }
+            }
+        }
+        public void loadStopAddressControls()
+        {
+
+            IList<Stop> stops = quoteRequest.stops;
+
+
+            Stop stop = stops.Where(s => s.type == "PICKUP").FirstOrDefault();
+            if (stop is null)
+            {
+                MessageBox.Show("File does not have a PICKUP stop");
+                return;
+            }
+            if (stop is not null)
+            {
+                AddressInformation addressInformations = stop.addressInformations;
+                if (addressInformations is not null)
+                {
+                    textBoxStopAddress1.Text = addressInformations.addressLine1;
+                    textBoxStopAddress2.Text = addressInformations.addressLine2;
+                    textBoxStopCity.Text = addressInformations.cityName;
+                    textBoxStopState.Text = addressInformations.stateCode;
+                    textBoxStopCountry.Text = addressInformations.country;
+                    textBoxStopZipCode.Text = addressInformations.zipCode;
+                    textBoxStopLocationId.Text = addressInformations.locationId;
+                    textBoxStopLocationName.Text = addressInformations.locationName;
+                }
+            }
+        }
+        public void loadStopContactInformationControls()
+        {
+            IList<Stop> stops = quoteRequest.stops;
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
+            {
+                int counterStopContactInformation = 0;
+                comboBoxStopContact.Items.Clear();
+                comboBoxStopContact.Items.Add("NEW...");
+                foreach (StopContactInformation stopContactInformation in stop.stopContactInformations)
+                {
+                    counterStopContactInformation++;
+                    if (counterStopContactInformation == 1)
+                    {
+                        textBoxStopContactFirstName.Text = stopContactInformation.firstName;
+                        textBoxStopContactLastName.Text = stopContactInformation.lastName;
+                        textBoxStopContactEmail.Text = stopContactInformation.email;
+                        textBoxStopContactTitle.Text = stopContactInformation.title;
+
+                        if (stopContactInformation.isPrimary)
+                            radioButtonStopContactPrimaryYes.Checked = true;
+                        IList<StopContactPhoneNumber> phoneNumbers = stopContactInformation.phoneNumbers;
+                        loadStopContactPhoneNumberControls();
+                    }
+                    comboBoxStopContact.Items.Add(stopContactInformation.firstName + "," + stopContactInformation.lastName + "," + stopContactInformation.email);
+                }
+                if (counterStopContactInformation >= 1)
+                    comboBoxStopContact.SelectedIndex = 1;
+            }
+
+        }
+        public void loadStopContactPhoneNumberControls()
+        {
+            IList<Stop> stops = quoteRequest.stops;
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
+            {
+                IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
+                StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
+
+                if (stopContactInformation is not null)
+                {
+                    int counterStopContactPhoneNumber = 0;
+                    comboBoxStopContactPhoneNumber.Items.Clear();
+                    comboBoxStopContactPhoneNumber.Items.Add("NEW...");
+                    foreach (StopContactPhoneNumber stopContactPhoneNumber in stopContactInformation.phoneNumbers)
+                    {
+                        counterStopContactPhoneNumber++;
+                        if (counterStopContactPhoneNumber == 1)
+                        {
+                            textBoxStopContactPhoneNumber.Text = stopContactPhoneNumber.number;
+                            comboBoxStopContactPhoneNumberType.Text = stopContactPhoneNumber.type;
+                        }
+                        comboBoxStopContactPhoneNumber.Items.Add(stopContactPhoneNumber.number + "," + stopContactPhoneNumber.type);
+                    }
+                    if (counterStopContactPhoneNumber >= 1)
+                        comboBoxStopContactPhoneNumber.SelectedIndex = 1;
+                }
+            }
+        }
+        public void loadGeneralControls()
+        {
+
+            textBoxPartnerOrderCode.Text = quoteRequest.partnerOrderCode;
+
+            comboBoxEquipmentCategoryCode.Text = quoteRequest.equipmentCategoryCode;
+
+            comboBoxEquipmentTypeCode.Text = quoteRequest.equipmentTypeCode;
+
+            textBoxBOLNumber.Text = quoteRequest.bolNumber;
+
+            textBoxShipmentId.Text = quoteRequest.shipmentId;
+
+            comboBoxApplicationSource.Text = quoteRequest.applicationSource;
+        }
+        public void loadStopControls()
+        {
+            comboBoxStops.Items.Clear();
+            comboBoxStops.Items.Add("NEW...");
+            IList<Stop> stops = quoteRequest.stops;
+            int counterStops = 0;
+            String stopType = "";
+            DateTime TimeRangeFrom = new DateTime();
+            DateTime TimeRangeTo = new DateTime();
+            foreach (Stop stop in stops)
+            {
+                counterStops++;
+                AddressInformation addressInformation = stop.addressInformations;
+                comboBoxStops.Items.Add(addressInformation.cityName + "," + addressInformation.stateCode + "," + addressInformation.country + "," + addressInformation.zipCode);
+                if (counterStops == 1)
+                {
+                    loadStopAddressControls();
+                    loadStopContactInformationControls();
+                    loadStopReferenceControls();
+                    loadStopSpecialRequirementsControls();
+                    stopType = stop.type;
+                    numericUpDownSequenceNo.Value = stop.sequenceNo;
+                    TimeRangeTo = DateTime.Parse(stop.scheduledTimeTo);
+                    TimeRangeFrom = DateTime.Parse(stop.scheduledTimeFrom);
+                }
+
+            }
+            if (counterStops >= 1)
+                comboBoxStops.SelectedIndex = 1;
+
+            comboBoxStopType.SelectedItem = stopType;
+            dateTimePickerScheduledTimeTo.Value = TimeRangeTo;
+            dateTimePickerScheduledTimeFrom.Value = TimeRangeFrom;
+
+
+        }
+        public void loadStopReferenceControls()
+        {
+            IList<Stop> stops = quoteRequest.stops;
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
+            {
+                int counterStopReferenceTypeCode = 0;
+                comboBoxStopRefernceNumbers.Items.Clear();
+                comboBoxStopRefernceNumbers.Text = "";
+                foreach (StopReferenceTypeCode stopReferenceTypeCode in stop.stopReferenceNumbers)
+                {
+                    counterStopReferenceTypeCode++;
+                    if (counterStopReferenceTypeCode == 1)
+                    {
+                        comboBoxStopRefernceTypeCode.SelectedItem = stopReferenceTypeCode.typeCode;
+                        textBoxStopReferenceTypeCodeValue.Text = stopReferenceTypeCode.value;
+                    }
+                    comboBoxStopRefernceNumbers.Items.Add(stopReferenceTypeCode.typeCode);
+                }
+            }
+
+        }
+        public void loadStopSpecialRequirementsControls()
+        {
+            IList<Stop> stops = quoteRequest.stops;
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
+            {
+                int counterStopSpecialRequirement = 0;
+                comboBoxStopSpecialRequirement.Items.Clear();
+                comboBoxStopSpecialRequirement.Text = "";
+                foreach (StopSpecialRequirement stopSpecialRequirement in stop.specialRequirement)
+                {
+                    counterStopSpecialRequirement++;
+                    if (counterStopSpecialRequirement == 1)
+                    {
+                        comboBoxSpecialRequirementCode.SelectedItem = stopSpecialRequirement.code;
+                        textBoxSpecialRequirementValue.Text = stopSpecialRequirement.value;
+                    }
+                    comboBoxStopSpecialRequirement.Items.Add(stopSpecialRequirement.code);
+                }
+            }
+        }
+        public void loadHazardousMaterials(Item item)
+        {
+            if (item.isHazmat)
+            {
+                HazardousItemInfo hazardousItemInfo = item.hazardousItemInfo;
+                radioButtonHazardousMaterialYes.Checked = true;
+                textBoxHazMatUNNumber.Text = item.hazardousItemInfo.unNumber.ToString();
+                textBoxHazMatPackingGroup.Text = hazardousItemInfo.packingGroup.ToString();
+                textBoxHazMatReceptacleSize.Text = hazardousItemInfo.receptacleSize.ToString();
+                textBoxHazMatHazardousClass.Text = hazardousItemInfo.hazardousClass;
+                textBoxHazMatNumberOfReceptacles.Text = hazardousItemInfo.numberofReceptacles.ToString();
+                textBoxHazMatUnitOfMeasure.Text = hazardousItemInfo.unitofMeasure;
+                textBoxHazMatContainerType.Text = hazardousItemInfo.containerType;
+                textBoxHazMatHazardousDescription.Text = hazardousItemInfo.hazardousDescription;
+                textBoxHazardousPhoneNumber.Text = hazardousItemInfo.hazardousPhoneNumber;
+                textBoxHazMatShippingName.Text = hazardousItemInfo.shippingName;
+            }
+        }
+        public void loadTemperatureInformation(Item item)
+        {
+
+            if (item.isTemperatureControlled)
+            {
+                radioButtonTemperatureControlledYes.Checked = true;
+                TemperatureInformation temperatureInformation = item.temperatureInformation;
+                textBoxTemperatureHigh.Text = temperatureInformation.high;
+                textBoxTemperatureLow.Text = temperatureInformation.low;
+                textBoxTemperatureHighUOM.Text = temperatureInformation.highUom;
+                textBoxTemperatureLowUOM.Text = temperatureInformation.lowUom;
+            }
         }
         public void resetCustomerContactInformationControls()
         {
-            textBoxStopContactEmail.Text = "";
             textBoxCustomerContactFirstName.Text = "";
             textBoxCustomerContactLastName.Text = "";
             textBoxCustomerContactEmail.Text = "";
@@ -99,27 +422,13 @@ namespace XPOAPITest
             comboBoxCustomerContactPhoneNumberType.SelectedIndex = -1;
             textBoxCustomerContactPhoneNumber.Text = "";
         }
-        public void resetStopReferenceControls()
-        {
-            comboBoxStopRefernceNumbers.Items.Clear();
-            comboBoxStopRefernceNumbers.Items.Add("NEW...");
-            textBoxStopReferenceTypeCodeValue.Text = "";
-            comboBoxStopRefernceTypeCode.SelectedIndex = -1;
-        }
-        public void resetStopSpecialRequirementsControls()
-        {
-            comboBoxStopSpecialRequirement.Items.Clear();
-            comboBoxStopSpecialRequirement.Items.Add("NEW...");
-            textBoxSpecialRequirementValue.Text = "";
-            comboBoxSpecialRequirementCode.SelectedIndex = -1;
-        }
         public void resetHazardousMaterials()
         {
             textBoxHazMatUNNumber.Text = "";
             textBoxHazMatPackingGroup.Text = "";
             textBoxHazMatReceptacleSize.Text = "";
-            textBoxHazMatHazardousClass.Text ="";
-            textBoxHazMatNumberOfReceptacles.Text ="";
+            textBoxHazMatHazardousClass.Text = "";
+            textBoxHazMatNumberOfReceptacles.Text = "";
             textBoxHazMatUnitOfMeasure.Text = "";
             textBoxHazMatContainerType.Text = "";
             textBoxHazMatHazardousDescription.Text = "";
@@ -156,7 +465,7 @@ namespace XPOAPITest
             textBoxItemNMFCCode.Text = "";
 
             comboBoxItemUnitTypeCode.SelectedIndex = -1;
-            comboBoxProductTypeCode.SelectedIndex = -1;
+            comboBoxPackageTypeCode.SelectedIndex = -1;
             comboBoxItemWeightUOMCode.SelectedIndex = -1;
             comboBoxItemHeightUOMCode.SelectedIndex = -1;
             comboBoxItemLengthUOMCode.SelectedIndex = -1;
@@ -175,19 +484,61 @@ namespace XPOAPITest
         public void resetCustomerAdditionalServicesControls()
         {
         }
+        public void resetStopContactInformationControls()
+        {
+            resetStopContactPhoneNumberControls();
+            textBoxStopContactEmail.Text = "";
+            textBoxStopContactFirstName.Text = "";
+            textBoxStopContactLastName.Text = "";
+            textBoxStopContactTitle.Text = "";
+            radioButtonStopContactPrimaryYes.Checked = false;
+            comboBoxStopContactPhoneNumber.Items.Clear();
+            comboBoxStopContactPhoneNumber.Items.Add("NEW...");
+            comboBoxStopContactPhoneNumber.Text = "";
+
+        }
+        public void resetStopContactPhoneNumberControls()
+        {
+            textBoxStopContactPhoneNumber.Text = "";
+            comboBoxStopContactPhoneNumberType.SelectedIndex = -1;
+        }
+        public void resetStopAddressControls()
+        {
+            textBoxStopLocationId.Text = "";
+            textBoxStopLocationName.Text = "";
+            textBoxStopAddress1.Text = "";
+            textBoxStopAddress2.Text = "";
+            textBoxStopCity.Text = "";
+            textBoxStopState.Text = "";
+            textBoxStopCountry.Text = "";
+            textBoxStopZipCode.Text = "";
+        }
+
+        public void resetStopReferenceControls()
+        {
+            comboBoxStopRefernceNumbers.Items.Clear();
+            textBoxStopReferenceTypeCodeValue.Text = "";
+            comboBoxStopRefernceTypeCode.SelectedIndex = -1;
+        }
+        public void resetStopSpecialRequirementsControls()
+        {
+            comboBoxStopSpecialRequirement.Items.Clear();
+            textBoxSpecialRequirementValue.Text = "";
+            comboBoxSpecialRequirementCode.SelectedIndex = -1;
+        }
+
         public void resetStopControls()
         {
             comboBoxStopContact.Items.Clear();
             comboBoxStopContact.Items.Add("NEW...");
             comboBoxStopContact.Text = "";
-            resetStopContactInformationControls();
             resetStopAddressControls();
+            resetStopContactInformationControls();
+
             comboBoxStopRefernceNumbers.Items.Clear();
-            comboBoxStopRefernceNumbers.Items.Add("NEW...");
-            comboBoxStopRefernceNumbers.Text = "";            
+            comboBoxStopRefernceNumbers.Text = "";
             resetStopReferenceControls();
             comboBoxStopSpecialRequirement.Items.Clear();
-            comboBoxStopSpecialRequirement.Items.Add("NEW...");
             comboBoxStopSpecialRequirement.Text = "";
             resetStopSpecialRequirementsControls();
             comboBoxStopType.SelectedIndex = -1;
@@ -205,7 +556,7 @@ namespace XPOAPITest
         public void fillCustomerReferenceTypeCodeDropDownList()
         {
             foreach (String item in fixedLists.customerRefereneTypeCodes)
-                comboBoxContactReferenceNumberTypeCode.Items.Add(item);
+                comboBoxCustomerReferenceNumberTypeCode.Items.Add(item);
         }
         public void fillStopReferencTypeCodeDropDownList()
         {
@@ -280,7 +631,7 @@ namespace XPOAPITest
         public void fillPackageTypeCodeDropDownList()
         {
             foreach (String item in fixedLists.packageTypeCodes)
-                comboBoxProductTypeCode.Items.Add(item);
+                comboBoxPackageTypeCode.Items.Add(item);
         }
         private async void buttonGetQuote_Click(object sender, EventArgs e)
         {
@@ -299,22 +650,23 @@ namespace XPOAPITest
             IList<PriceResponse> priceSearchResponse = quoteResponse.priceSearchResponse;
             if (priceSearchResponse != null)
             {
-                tabControlMain.SelectedIndex = 2;
+                tabControlQuotes.TabPages.Clear();
+                tabControlMain.SelectedIndex = 7;
                 foreach (PriceResponse priceResponse in priceSearchResponse)
                 {
                     Quote lowestpriceQuote = priceResponse.lowestPriceQuote;
 
                     TabPage lowestPriceTabPage = lowestpriceQuote.addTab("Lowest Price Quote");
-                    tabQuotes.TabPages.Add(lowestPriceTabPage);
+                    tabControlQuotes.TabPages.Add(lowestPriceTabPage);
                     Quote lowestGuranteedpriceQuote = priceResponse.lowestGuaranteedQuotePrice;
 
                     TabPage lowestGuranteedPriceTabPage = lowestpriceQuote.addTab("Lowest Guaranteed Price Quote");
-                    tabQuotes.TabPages.Add(lowestGuranteedPriceTabPage);
+                    tabControlQuotes.TabPages.Add(lowestGuranteedPriceTabPage);
                     IList<Quote> quotes = priceResponse.quoteDetails;
                     foreach (Quote quote in quotes)
                     {
                         TabPage tabPageQuote = quote.addTab(quote.carrierName);
-                        tabQuotes.TabPages.Add(tabPageQuote);
+                        tabControlQuotes.TabPages.Add(tabPageQuote);
                     }
 
                 }
@@ -323,12 +675,6 @@ namespace XPOAPITest
 
         }
 
-        private void FormUserInterface_Load(object sender, EventArgs e)
-        {
-            quoteRequest = new QuoteRequest();
-            IntializeDropdownLists();
-            getConfigData();
-        }
 
         void getConfigData()
         {
@@ -358,11 +704,55 @@ namespace XPOAPITest
             dateTimePickerScheduledTimeTo.Width = 100;
             Controls.Add(dateTimePickerScheduledTimeTo);
         }
+        private bool ValidateQuoteGeneralSettings()
+        {
+            if (textBoxPartnerOrderCode.Text.Trim() == "")
+            {
+                MessageBox.Show("Please provide Partner Order Code");
+                return false;
+            }
+
+            if (comboBoxEquipmentCategoryCode.Text.Trim() == "")
+            {
+                MessageBox.Show("Please provide EquipmentCategoryCode");
+                return false;
+            }
+
+            if (comboBoxEquipmentTypeCode.Text.Trim() == "")
+            {
+                MessageBox.Show("Please provide Equipment Type Code");
+                return false;
+            }
+
+
+            if (textBoxBOLNumber.Text.Trim() == "")
+            {
+                MessageBox.Show("Please provide BOL Number");
+                return false;
+            }
+
+            if (textBoxShipmentId.Text.Trim() == "")
+            {
+                MessageBox.Show("Please provide Shipment Id");
+                return false;
+            }
+
+            if (comboBoxApplicationSource.Text.Trim() == "")
+            {
+                MessageBox.Show("Please provide Application Source");
+                return false;
+            }
+            return true;
+        }
         private bool ValidateQuoteRequestObject()
         {
-
+            if (!ValidateQuoteGeneralSettings())
+            {
+                return false;
+            }
             quoteRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
-            quoteRequest.transportationMode.Add(XPOSettings.TransportationMode);
+            if (!quoteRequest.transportationMode.Contains(XPOSettings.TransportationMode))
+                quoteRequest.transportationMode.Add(XPOSettings.TransportationMode);
             if (textBoxPartnerOrderCode.Text != "")
                 quoteRequest.partnerOrderCode = textBoxPartnerOrderCode.Text;
 
@@ -422,31 +812,27 @@ namespace XPOAPITest
             }
             return true;
         }
-        private Stop addStop(QuoteRequest quoteRequest)
+        private Stop addStop()
         {
-
             IList<Stop> stops = quoteRequest.stops;
             // Stop stop = null;
 
             //stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.cityName == textBoxState.Text && s.addressInformations.cityName == textBoxCountry.Text && s.addressInformations.cityName == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
             if (stop is null)
             {
                 stop = new Stop();
                 quoteRequest.AddStop(stop);
+                comboBoxStops.Items.Add(textBoxStopCity.Text + "," + textBoxStopState.Text + "," + textBoxStopCountry.Text + "," + textBoxStopZipCode.Text);
             }
             stop.type = comboBoxStopType.Text;
             //   MessageBox.Show(dateTimePickerScheduledTimeFrom.Value.ToString());
-            stop.scheduledTimeTo = dateTimePickerScheduledTimeTo.Value.ToString("yyyy-MM-ddTHH:mm:ss")+"-04:00";
+            stop.scheduledTimeTo = dateTimePickerScheduledTimeTo.Value.ToString("yyyy-MM-ddTHH:mm:ss") + "-04:00";
             stop.scheduledTimeFrom = dateTimePickerScheduledTimeFrom.Value.ToString("yyyy-MM-ddTHH:mm:ss") + "-04:00";
             stop.sequenceNo = Convert.ToInt32(numericUpDownSequenceNo.Value);
 
             stop.note = richTextBoxNote.Text;
 
-
-            AddressInformation addressInformations = stop.addressInformations;
-            addStopAddressInformation(stop);
-            comboBoxStops.Items.Add(textBoxCity.Text + "," + textBoxState.Text + "," + textBoxCountry.Text + "," + textBoxZipCode.Text);
 
             return stop;
         }
@@ -462,6 +848,7 @@ namespace XPOAPITest
             {
                 item = new QuoteItem();
                 quoteItems.Add(item);
+                comboBoxItem.Items.Add(textBoxItemNumber.Text + "," + textBoxItemDescription.Text);
             }
             item.productCode = textBoxItemProductCode.Text;
             item.itemDescription = textBoxItemDescription.Text;
@@ -469,7 +856,7 @@ namespace XPOAPITest
             item.units = Convert.ToInt32(textBoxItemUnits.Text);
             item.unitTypeCode = comboBoxItemUnitTypeCode.Text;
             item.packageUnits = Convert.ToInt32(textBoxPackageUnits.Text);
-            item.packageTypeCode = comboBoxProductTypeCode.Text;
+            item.packageTypeCode = comboBoxPackageTypeCode.Text;
             item.weight = Convert.ToInt32(textBoxItemWeight.Text);
             item.weightUomCode = comboBoxItemWeightUOMCode.Text;
 
@@ -513,31 +900,58 @@ namespace XPOAPITest
 
             //   MessageBox.Show(dateTimePickerScheduledTimeFrom.Value.ToString());
 
-            comboBoxItem.Items.Add(textBoxItemNumber.Text + "," + textBoxItemDescription.Text);
+
         }
         private void addStopAddressInformation(Stop stop)
         {
+            if (!ValidateStopAddress())
+            {
+                return;
+            }
             AddressInformation addressInformations = stop.addressInformations;
             if (addressInformations is null)
                 addressInformations = new AddressInformation();
-            addressInformations.addressLine1 = textBoxAddress1.Text;
-            addressInformations.addressLine2 = textBoxAddress2.Text;
-            addressInformations.cityName = textBoxCity.Text;
-            addressInformations.stateCode = textBoxState.Text;
-            addressInformations.country = textBoxCountry.Text;
-            addressInformations.zipCode = textBoxZipCode.Text;
-            addressInformations.locationId = textBoxLocationId.Text;
-            addressInformations.locationName = textBoxLocationName.Text;
+            addressInformations.addressLine1 = textBoxStopAddress1.Text;
+            addressInformations.addressLine2 = textBoxStopAddress2.Text;
+            addressInformations.cityName = textBoxStopCity.Text;
+            addressInformations.stateCode = textBoxStopState.Text;
+            addressInformations.country = textBoxStopCountry.Text;
+            addressInformations.zipCode = textBoxStopZipCode.Text;
+            addressInformations.locationId = textBoxStopLocationId.Text;
+            addressInformations.locationName = textBoxStopLocationName.Text;
         }
-        private StopContactInformation addStopContactInformation(Stop stop)
+
+        public Stop getStop()
+        {
+            IList<Stop> stops = quoteRequest.stops;
+
+            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            return stop;
+        }
+        public StopContactInformation getStopContactInformation(Stop stop)
         {
             IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
             StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
+            return stopContactInformation;
+        }
+        public StopContactPhoneNumber getStopContactPhoneNumber(StopContactInformation stopContactInformation)
+        {
+            IList<StopContactPhoneNumber> stopContactPhoneNumbers = stopContactInformation.phoneNumbers;
+
+            StopContactPhoneNumber phoneNumber = stopContactPhoneNumbers.Where(s => s.number == textBoxCustomerContactPhoneNumber.Text).FirstOrDefault();
+            return phoneNumber;
+        }
+
+        private StopContactInformation addStopContactInformation(Stop stop)
+        {
+            StopContactInformation stopContactInformation = getStopContactInformation(stop);
 
             if (stopContactInformation is null)
             {
                 stopContactInformation = new StopContactInformation();
-                stopContactInformations.Add(stopContactInformation);
+                stop.stopContactInformations.Add(stopContactInformation);
+                comboBoxStopContact.Items.Add(textBoxStopContactFirstName.Text + "," + textBoxStopContactLastName.Text + "," + textBoxStopContactEmail.Text);
             }
 
             stopContactInformation.firstName = textBoxStopContactFirstName.Text;
@@ -548,11 +962,10 @@ namespace XPOAPITest
 
             if (radioButtonStopContactPrimaryYes.Checked)
                 stopContactInformation.isPrimary = true;
-            AddStopContactPhoneNumber(stopContactInformation);
-            comboBoxStopContact.Items.Add(textBoxStopContactFirstName.Text + "," + textBoxStopContactLastName.Text + "," + textBoxStopContactEmail.Text);
+            //           AddStopContactPhoneNumber(stopContactInformation);
             return stopContactInformation;
         }
-        private ContactInformation AddCustomerContactInformation(QuoteRequest quoteRequest)
+        private ContactInformation AddCustomerContactInformation()
         {
 
             IList<ContactInformation> contactInformations = quoteRequest.contactInformations;
@@ -563,6 +976,7 @@ namespace XPOAPITest
             {
                 contactInformation = new ContactInformation();
                 contactInformations.Add(contactInformation);
+                comboBoxCustomerConact.Items.Add(textBoxCustomerContactFirstName.Text + "," + textBoxCustomerContactLastName.Text + "," + textBoxCustomerContactEmail.Text);
             }
 
             contactInformation.firstName = textBoxCustomerContactFirstName.Text;
@@ -575,7 +989,6 @@ namespace XPOAPITest
                 contactInformation.isPrimary = true;
             AddCustomerContactPhoneNumber(contactInformation);
 
-            comboBoxCustomerConact.Items.Add(textBoxCustomerContactFirstName.Text + "," + textBoxCustomerContactLastName.Text + "," + textBoxCustomerContactEmail.Text);
             return contactInformation;
         }
 
@@ -588,11 +1001,12 @@ namespace XPOAPITest
             {
                 phoneNumber = new PhoneNumber();
                 ContactPhoneNumbers.Add(phoneNumber);
+                comboBoxCustomerContactPhoneNumber.Items.Add(textBoxCustomerContactPhoneNumber.Text + "," + comboBoxCustomerContactPhoneNumberType.Text);
             }
             phoneNumber.number = textBoxCustomerContactPhoneNumber.Text;
             phoneNumber.type = comboBoxCustomerContactPhoneNumberType.Text;
 
-            comboBoxCustomerContactPhoneNumber.Items.Add(textBoxCustomerContactPhoneNumber.Text + "," + comboBoxCustomerContactPhoneNumberType.Text);
+
 
             return phoneNumber;
         }
@@ -601,12 +1015,9 @@ namespace XPOAPITest
         {
             IList<StopContactPhoneNumber> stopContactPhoneNumbers = stopContactInformation.phoneNumbers;
 
-            StopContactPhoneNumber phoneNumber = stopContactPhoneNumbers.Where(s => s.number == textBoxCustomerContactPhoneNumber.Text).FirstOrDefault();
-            if (phoneNumber is null)
-            {
-                phoneNumber = new StopContactPhoneNumber();
-                stopContactPhoneNumbers.Add(phoneNumber);
-            }
+            StopContactPhoneNumber phoneNumber = new StopContactPhoneNumber();
+            stopContactPhoneNumbers.Add(phoneNumber);
+
             phoneNumber.number = textBoxStopContactPhoneNumber.Text;
             phoneNumber.type = comboBoxStopContactPhoneNumberType.Text;
             if (radioButtonStopContactPhoneNumberPrimaryYes.Checked)
@@ -627,6 +1038,12 @@ namespace XPOAPITest
                 MessageBox.Show("Contact First Name cannot be empty");
                 return false;
             }
+            if (textBoxStopContactEmail.Text.Trim() == "")
+            {
+                MessageBox.Show("Contact Email cannot be empty");
+                return false;
+            }
+
             return true;
         }
         bool validateCustomerContact()
@@ -646,31 +1063,26 @@ namespace XPOAPITest
                 MessageBox.Show("Contact Email cannot be empty");
                 return false;
             }
-            if (textBoxCustomerContactPhoneNumber.Text.Trim() == "")
-            {
-                MessageBox.Show("Contact Phone Number cannot be empty");
-                return false;
-            }
             return true;
         }
         bool ValidateStopAddress()
         {
-            if (textBoxCity.Text.Trim() == "")
+            if (textBoxStopCity.Text.Trim() == "")
             {
                 MessageBox.Show("City cannot be empty");
                 return false;
             }
-            if (textBoxState.Text.Trim() == "")
+            if (textBoxStopState.Text.Trim() == "")
             {
                 MessageBox.Show(" State cannot be empty");
                 return false;
             }
-            if (textBoxCountry.Text.Trim() == "")
+            if (textBoxStopCountry.Text.Trim() == "")
             {
                 MessageBox.Show("Country cannot be empty");
                 return false;
             }
-            if (textBoxZipCode.Text.Trim() == "")
+            if (textBoxStopZipCode.Text.Trim() == "")
             {
                 MessageBox.Show("Zip Code cannot be empty");
                 return false;
@@ -716,48 +1128,21 @@ namespace XPOAPITest
                 return;
             }
 
-            if (textBoxStopContactFirstName.Text.Trim() == "")
+            if (textBoxStopContactPhoneNumber.Text.Trim() == "")
             {
-                MessageBox.Show("Contact First Name cannot be empty");
-                return;
-            }
-            if (textBoxStopContactLastName.Text.Trim() == "")
-            {
-                MessageBox.Show("Contact First Name cannot be empty");
+                MessageBox.Show("Contact Phone Number cannot be empty");
                 return;
             }
 
-
-            IList<Stop> stops = quoteRequest.stops;
-
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-
-
-            if (stop is null)
-            {
-                stop = addStop(quoteRequest);
-            }
-            IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
-
-            StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
-            //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-
+            Stop stop = getStop();
+            StopContactInformation stopContactInformation = getStopContactInformation(stop);
             if (stopContactInformation is null)
-            {
                 stopContactInformation = addStopContactInformation(stop);
-                return;
-            }
 
-            IList<StopContactPhoneNumber> stopContactPhoneNumbers = stopContactInformation.phoneNumbers;
+            StopContactPhoneNumber stopContactPhoneNumber = getStopContactPhoneNumber(stopContactInformation);
 
-            StopContactPhoneNumber phoneNumber = stopContactPhoneNumbers.Where(s => s.number == textBoxStopContactPhoneNumber.Text).FirstOrDefault();
-            if (phoneNumber is null)
-            {
-                phoneNumber = AddStopContactPhoneNumber(stopContactInformation);
-            }
-            //IList<StopContactPhoneNumber> stopContactPhoneNumbers = stopContact.phoneNumbers;
+            if (stopContactPhoneNumber is null)
+                AddStopContactPhoneNumber(stopContactInformation);
 
         }
 
@@ -798,31 +1183,23 @@ namespace XPOAPITest
 
         private void buttonstopReferenceTypeCodeAdd_Click(object sender, EventArgs e)
         {
-            IList<Stop> stops = quoteRequest.stops;
-
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-
+            Stop stop = addStop();
 
             if (stop is null)
             {
-                stop = addStop(quoteRequest);
+                stop = addStop();
             }
-            IList<StopReferenceTypeCode> stopReferenceTypeCodes = stop.stopReferenceNumbers;
-
-            StopReferenceTypeCode stopReferenceTypeCode = stopReferenceTypeCodes.Where(s => s.typeCode == comboBoxStopRefernceTypeCode.Text).FirstOrDefault();
-            //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-
-            if (stopReferenceTypeCode is null)
-            {
-                stopReferenceTypeCode = AddStopReferenceTypeCode(stop);
-                return;
-            }
+            AddStopReferenceTypeCode();
         }
 
-        private StopReferenceTypeCode AddStopReferenceTypeCode(Stop stop)
+        private void AddStopReferenceTypeCode()
         {
+            Stop stop = addStop();
+
+            if (stop is null)
+            {
+                stop = addStop();
+            }
 
             IList<StopReferenceTypeCode> stopReferenceTypeCodes = stop.stopReferenceNumbers;
 
@@ -839,41 +1216,23 @@ namespace XPOAPITest
             stopReferenceTypeCode.value = textBoxStopReferenceTypeCodeValue.Text;
 
             comboBoxStopRefernceNumbers.Items.Add(comboBoxStopRefernceTypeCode.Text);
-            return stopReferenceTypeCode;
         }
 
         private void buttonStopSpecialRequirement_Click(object sender, EventArgs e)
         {
-            if (!ValidateStopAddress())
-            {
-                return;
-            }
+
+            AddStopSpecialRequirement();
+        }
+
+
+        private void AddStopSpecialRequirement()
+        {
             IList<Stop> stops = quoteRequest.stops;
 
 
             // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
 
-
-            if (stop is null)
-            {
-                stop = addStop(quoteRequest);
-            }
-            IList<StopSpecialRequirement> stopSpecialRequirements = stop.specialRequirement;
-
-            StopSpecialRequirement stopSpecialRequirement = stopSpecialRequirements.Where(s => s.code == comboBoxSpecialRequirementCode.Text).FirstOrDefault();
-            //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-
-            if (stopSpecialRequirement is null)
-            {
-                stopSpecialRequirement = AddStopSpecialRequirement(stop);
-                return;
-            }
-        }
-
-
-        private StopSpecialRequirement AddStopSpecialRequirement(Stop stop)
-        {
             IList<StopSpecialRequirement> stopSpecialRequirements = stop.specialRequirement;
 
             StopSpecialRequirement stopSpecialRequirement = stopSpecialRequirements.Where(s => s.code == textBoxCustomerContactEmail.Text).FirstOrDefault();
@@ -889,7 +1248,6 @@ namespace XPOAPITest
             stopSpecialRequirement.value = textBoxSpecialRequirementValue.Text;
 
             comboBoxStopSpecialRequirement.Items.Add(comboBoxSpecialRequirementCode.Text);
-            return stopSpecialRequirement;
         }
 
         private void buttonAddItem_Click(object sender, EventArgs e)
@@ -911,6 +1269,11 @@ namespace XPOAPITest
         private void buttonCustomerContactPhoneNumber_Click(object sender, EventArgs e)
         {
             if (!validateCustomerContact()) return;
+            if (textBoxCustomerContactPhoneNumber.Text.Trim() == "")
+            {
+                MessageBox.Show("Contact Phone Number cannot be empty");
+                return;
+            }
             IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
 
 
@@ -920,18 +1283,9 @@ namespace XPOAPITest
 
             if (customerContactInformation is null)
             {
-                customerContactInformation = AddCustomerContactInformation(quoteRequest);
+                customerContactInformation = AddCustomerContactInformation();
             }
-            else
-            {
-                IList<PhoneNumber> ContactPhoneNumbers = customerContactInformation.phoneNumbers;
-
-                PhoneNumber phoneNumber = ContactPhoneNumbers.Where(s => s.number == textBoxCustomerContactPhoneNumber.Text).FirstOrDefault();
-                if (phoneNumber is null)
-                {
-                    phoneNumber = AddCustomerContactPhoneNumber(customerContactInformation);
-                }
-            }
+            AddCustomerContactPhoneNumber(customerContactInformation);
             //IList<StopContactPhoneNumber> stopContactPhoneNumbers = stopContact.phoneNumbers;
 
         }
@@ -947,7 +1301,7 @@ namespace XPOAPITest
 
             if (customerContactInformation is null)
             {
-                customerContactInformation = AddCustomerContactInformation(quoteRequest);
+                customerContactInformation = AddCustomerContactInformation();
             }
         }
 
@@ -958,43 +1312,33 @@ namespace XPOAPITest
 
         private void buttonAddAdditionalServices_Click(object sender, EventArgs e)
         {
-            IList<AdditionalService> additionalServices = quoteRequest.additionalServices;
-
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-
             addAdditionalService();
 
         }
 
         private void buttonAddCustomerReferenceNumber_Click(object sender, EventArgs e)
         {
-            IList<CustomerReferenceNumber> referenceNumbers = quoteRequest.referenceNumbers;
-
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            CustomerReferenceNumber referenceNumber = referenceNumbers.Where(s => s.typeCode == comboBoxContactReferenceNumberTypeCode.Text).FirstOrDefault();
-
             addCustomerReferenceNumber();
         }
 
-        private void  addCustomerReferenceNumber()
+        private void addCustomerReferenceNumber()
         {
             IList<CustomerReferenceNumber> customerReferenceNumbers = quoteRequest.referenceNumbers;
 
-            CustomerReferenceNumber customerReferenceNumber = customerReferenceNumbers.Where(s => s.typeCode == comboBoxContactReferenceNumberTypeCode.Text).FirstOrDefault();
+            CustomerReferenceNumber customerReferenceNumber = customerReferenceNumbers.Where(s => s.typeCode == comboBoxCustomerReferenceNumberTypeCode.Text).FirstOrDefault();
 
             if (customerReferenceNumber is null)
             {
                 customerReferenceNumber = new CustomerReferenceNumber();
                 customerReferenceNumbers.Add(customerReferenceNumber);
+                comboBoxCustomerReferenceNumbers.Items.Add(comboBoxCustomerReferenceNumberTypeCode.Text);
             }
 
-            customerReferenceNumber.typeCode = comboBoxContactReferenceNumberTypeCode.Text;
+            customerReferenceNumber.typeCode = comboBoxCustomerReferenceNumberTypeCode.Text;
             customerReferenceNumber.value = textBoxContactReferenceNumberValue.Text;
 
 
-            comboBoxCustomerReferenceNumbers.Items.Add(comboBoxContactReferenceNumberTypeCode.Text);
+
         }
         private void addAdditionalService()
         {
@@ -1015,31 +1359,7 @@ namespace XPOAPITest
 
         private void buttonStopReferenceTypeCodeAdd_Click_1(object sender, EventArgs e)
         {
-            if (!ValidateStopAddress())
-            {
-                return;
-            }
-            IList<Stop> stops = quoteRequest.stops;
-
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-
-
-            if (stop is null)
-            {
-                stop = addStop(quoteRequest);
-            }
-            IList<StopReferenceTypeCode> stopReferenceTypeCodes = stop.stopReferenceNumbers;
-
-            StopReferenceTypeCode stopReferenceTypeCode = stopReferenceTypeCodes.Where(s => s.typeCode == comboBoxSpecialRequirementCode.Text).FirstOrDefault();
-            //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-
-            if (stopReferenceTypeCode is null)
-            {
-                stopReferenceTypeCode = AddStopReferenceTypeCode(stop);
-                return;
-            }
+           
         }
 
         private void buttonAddStopContactPhoneNumber_Click_1(object sender, EventArgs e)
@@ -1076,13 +1396,13 @@ namespace XPOAPITest
         private async void button1_Click(object sender, EventArgs e)
         {
             if (!ValidateQuoteRequestObject())
-            {
                 return;
-            }
+            //    updateGeneralQuoteInfo();
+
             XPO xpo = new XPO();
             //xpo.createToken();
             quoteResponse = await xpo.getQuote(quoteRequest);
-           // quoteResponse = await xpo.getQuote();
+            //quoteResponse = await xpo.getQuote();
 
 
 
@@ -1096,13 +1416,13 @@ namespace XPOAPITest
                     if (lowestpriceQuote is not null)
                     {
                         TabPage lowestPriceTabPage = lowestpriceQuote.addTab("Lowest Price Quote");
-                        tabQuotes.TabPages.Add(lowestPriceTabPage);
+                        tabControlQuotes.TabPages.Add(lowestPriceTabPage);
                     }
                     Quote lowestGuranteedpriceQuote = priceResponse.lowestGuaranteedQuotePrice;
                     if (lowestGuranteedpriceQuote is not null)
                     {
                         TabPage lowestGuranteedPriceTabPage = lowestpriceQuote.addTab("Lowest Guaranteed Price Quote");
-                        tabQuotes.TabPages.Add(lowestGuranteedPriceTabPage);
+                        tabControlQuotes.TabPages.Add(lowestGuranteedPriceTabPage);
                     }
                     IList<Quote> quotes = priceResponse.quoteDetails;
                     if (quotes.Count > 0)
@@ -1110,24 +1430,24 @@ namespace XPOAPITest
                         foreach (Quote quote in quotes)
                         {
                             TabPage tabPageQuote = quote.addTab(quote.carrierName);
-                            tabQuotes.TabPages.Add(tabPageQuote);
+                            tabControlQuotes.TabPages.Add(tabPageQuote);
                         }
                     }
                 }
-                tabControlMain.SelectedIndex = 6;
+                tabControlMain.SelectedIndex = 7;
             }
             else
             {
-                    TabPage tabPageException = new TabPage("Exception");
-                    tabPageException.Name = "tabQuoteException";
+                TabPage tabPageException = new TabPage("Exception");
+                tabPageException.Name = "tabQuoteException";
 
-                    Label lblException = new Label();
-                    lblException.Name = "lblException";
-                    lblException.AutoSize = true;
-                    lblException.Location = new Point(20, 20);
-                    lblException.Text = quoteResponse.message;
-                    tabPageException.Controls.Add(lblException);
-                    tabQuotes.TabPages.Add(tabPageException);
+                Label lblException = new Label();
+                lblException.Name = "lblException";
+                lblException.AutoSize = true;
+                lblException.Location = new Point(20, 20);
+                lblException.Text = quoteResponse.message;
+                tabPageException.Controls.Add(lblException);
+                tabControlQuotes.TabPages.Add(tabPageException);
             }
         }
 
@@ -1139,29 +1459,28 @@ namespace XPOAPITest
         private async void button3_Click(object sender, EventArgs e)
         {
             XPO xpo = new XPO();
-            //xpo.createToken();
-            // orderResponse = await xpo.convertToOrder(tabQuotes.SelectedTab);
+
             TextBox txtTrackingNumber = tabPageGeneral.Controls["textBoxTrackingNumber"] as TextBox;
             if (txtTrackingNumber.Text.Trim() == "")
             {
                 MessageBox.Show("Please provide the tracking Number");
-                tabControlMain.SelectedIndex = 0;
+                tabControlMain.SelectedIndex = 1;
                 txtTrackingNumber.Focus();
                 return;
             }
-            orderResponse = await xpo.convertToOrder(tabQuotes.SelectedTab, quoteRequest, txtTrackingNumber.Text);
+            orderResponse = await xpo.convertToOrder(tabControlQuotes.SelectedTab, quoteRequest, txtTrackingNumber.Text);
             if (orderResponse is not null)
             {
-                Label lblQuoteIdValue = tabQuotes.SelectedTab.Controls["lblQuoteIdValue"] as Label;
+                Label lblQuoteIdValue = tabControlQuotes.SelectedTab.Controls["lblQuoteIdValue"] as Label;
                 lblQuoteId.Text = lblQuoteIdValue.Text;
-                Label lblCarrierValue = tabQuotes.SelectedTab.Controls["lblCarrierNameValue"] as Label;
+                Label lblCarrierValue = tabControlQuotes.SelectedTab.Controls["lblCarrierNameValue"] as Label;
                 lblCarrier.Text = lblCarrierValue.Text;
-                Label lblQuotedAmountValue = tabQuotes.SelectedTab.Controls["lblTotalCostValue"] as Label;
+                Label lblQuotedAmountValue = tabControlQuotes.SelectedTab.Controls["lblTotalCostValue"] as Label;
                 lblQuotedAmount.Text = lblQuotedAmountValue.Text;
 
                 int orderId = orderResponse.orderId;
                 lblOrderId.Text = orderId.ToString();
-                tabControlMain.SelectedIndex = 7;
+                tabControlMain.SelectedIndex = 8;
                 if (orderId == 0)
                 {
                     labelExceptionConvertToOrder.Visible = true;
@@ -1181,41 +1500,42 @@ namespace XPOAPITest
 
         private void comboBoxStops_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String selectedStopValue=comboBoxStops.SelectedItem.ToString();
+            String selectedStopValue = comboBoxStops.SelectedItem.ToString();
             if (selectedStopValue == "NEW...")
             {
                 resetStopControls();
             }
-            else { 
+            else
+            {
                 String[] stopsValues = selectedStopValue.Split(",");
                 IList<Stop> stops = quoteRequest.stops;
 
-
-                // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
                 Stop stop = stops.Where(s => s.addressInformations.cityName == stopsValues[0] && s.addressInformations.stateCode == stopsValues[1] && s.addressInformations.country == stopsValues[2] && s.addressInformations.zipCode == stopsValues[3]).FirstOrDefault();
 
 
                 if (stop is not null)
                 {
-                    textBoxCity.Text = stopsValues[0];
-                    textBoxState.Text = stopsValues[1];
-                    textBoxCountry.Text = stopsValues[2];
-                    textBoxZipCode.Text = stopsValues[3];
-
+                    textBoxStopCity.Text = stopsValues[0];
+                    textBoxStopState.Text = stopsValues[1];
+                    textBoxStopCountry.Text = stopsValues[2];
+                    textBoxStopZipCode.Text = stopsValues[3];
+                    dateTimePickerScheduledTimeTo.Value = DateTime.Parse(stop.scheduledTimeTo);
+                    dateTimePickerScheduledTimeFrom.Value = DateTime.Parse(stop.scheduledTimeFrom);
                     comboBoxStopType.SelectedItem = stop.type;
+                    numericUpDownSequenceNo.Value = stop.sequenceNo;
                     AddressInformation addressInformation = stop.addressInformations;
-                    if(addressInformation is not null)
+                    if (addressInformation is not null)
                     {
-                        textBoxLocationId.Text = addressInformation.locationId;
-                        textBoxLocationName.Text = addressInformation.locationName;
-                        textBoxAddress1.Text = addressInformation.addressLine1;
-                        textBoxAddress2.Text = addressInformation.addressLine2;
-                        textBoxCity.Text = addressInformation.cityName;
-                        textBoxState.Text = addressInformation.stateCode;
-                        textBoxCountry.Text = addressInformation.country;
-                        textBoxZipCode.Text = addressInformation.zipCode;
+                        textBoxStopLocationId.Text = addressInformation.locationId;
+                        textBoxStopLocationName.Text = addressInformation.locationName;
+                        textBoxStopAddress1.Text = addressInformation.addressLine1;
+                        textBoxStopAddress2.Text = addressInformation.addressLine2;
+                        textBoxStopCity.Text = addressInformation.cityName;
+                        textBoxStopState.Text = addressInformation.stateCode;
+                        textBoxStopCountry.Text = addressInformation.country;
+                        textBoxStopZipCode.Text = addressInformation.zipCode;
                     }
-                    IList<StopSpecialRequirement>  stopSpecialRequirements = stop.specialRequirement;
+                    IList<StopSpecialRequirement> stopSpecialRequirements = stop.specialRequirement;
                     int indexSpecialRequirements = 0;
                     foreach (StopSpecialRequirement stopSpecialRequirement in stopSpecialRequirements)
                     {
@@ -1246,20 +1566,20 @@ namespace XPOAPITest
                     foreach (StopContactInformation contactInformation in stopContactInformations)
                     {
                         indexContacts++;
-                        comboBoxStopContact.Items.Add(contactInformation.firstName+","+ contactInformation.lastName +","+ contactInformation.email);
+                        comboBoxStopContact.Items.Add(contactInformation.firstName + "," + contactInformation.lastName + "," + contactInformation.email);
                         if (indexContacts == 1)
                         {
                             textBoxStopContactFirstName.Text = contactInformation.firstName;
                             textBoxStopContactLastName.Text = contactInformation.lastName;
                             textBoxStopContactEmail.Text = contactInformation.email;
                             textBoxStopContactTitle.Text = contactInformation.title;
-    
+
                             if (contactInformation.isPrimary)
                                 radioButtonStopContactPrimaryYes.Checked = true;
                             IList<StopContactPhoneNumber> phoneNumbers = contactInformation.phoneNumbers;
                             comboBoxStopContactPhoneNumber.Items.Clear();
                             comboBoxStopContactPhoneNumber.Items.Add("NEW...");
-                            int indexPhoneNumbers=0;
+                            int indexPhoneNumbers = 0;
                             foreach (StopContactPhoneNumber phoneNumber in phoneNumbers)
                             {
                                 indexPhoneNumbers++;
@@ -1270,7 +1590,7 @@ namespace XPOAPITest
                                 }
                             }
                         }
-                    }                    
+                    }
                 }
             }
         }
@@ -1280,16 +1600,13 @@ namespace XPOAPITest
             String selectedCustomerRefernceNumberValue = comboBoxStopRefernceNumbers.SelectedValue.ToString();
             IList<Stop> stops = quoteRequest.stops;
 
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
 
 
             if (stop is not null)
             {
                 IList<StopReferenceTypeCode> stopReferenceTypeCodes = stop.stopReferenceNumbers;
                 StopReferenceTypeCode stopReferenceTypeCode = stopReferenceTypeCodes.Where(s => s.typeCode == selectedCustomerRefernceNumberValue).FirstOrDefault();
-                //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
                 if (stopReferenceTypeCode is not null)
                 {
@@ -1312,7 +1629,7 @@ namespace XPOAPITest
                 IList<Stop> stops = quoteRequest.stops;
 
 
-                Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+                Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
 
 
                 if (stop is not null)
@@ -1320,7 +1637,6 @@ namespace XPOAPITest
                     String[] selectedStopContactInformationValues = selectedStopContactInformation.Split(",");
                     IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
                     StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == selectedStopContactInformationValues[2]).FirstOrDefault();
-                    //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
                     if (stopContactInformation is not null)
                     {
@@ -1343,7 +1659,6 @@ namespace XPOAPITest
                                 textBoxStopContactPhoneNumber.Text = phoneNumber.number;
                             }
                         }
-                        comboBoxStopContactPhoneNumber.Text = "";
 
                     }
                 }
@@ -1360,36 +1675,37 @@ namespace XPOAPITest
             }
             else
             {
-                
-                    String[] selectedCustomerContactInformationValues = selectedCustomerContactInformation.Split(",");
-                    IList<ContactInformation> contactInformations = quoteRequest.contactInformations;
-                    ContactInformation contactInformation = contactInformations.Where(s => s.email == selectedCustomerContactInformationValues[2]).FirstOrDefault();
-                    //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
-                    if (contactInformation is not null)
+                String[] selectedCustomerContactInformationValues = selectedCustomerContactInformation.Split(",");
+                IList<ContactInformation> contactInformations = quoteRequest.contactInformations;
+                ContactInformation contactInformation = contactInformations.Where(s => s.email == selectedCustomerContactInformationValues[2]).FirstOrDefault();
+
+                if (contactInformation is not null)
+                {
+                    textBoxCustomerContactEmail.Text = contactInformation.email;
+                    textBoxCustomerContactFirstName.Text = contactInformation.firstName;
+                    textBoxCustomerContactLastName.Text = contactInformation.lastName;
+                    textBoxCustomerContactTitle.Text = contactInformation.title;
+                    if (contactInformation.isPrimary)
+                        radioButtonContactPrimaryYes.Checked = true;
+                    IList<PhoneNumber> phoneNumbers = contactInformation.PhoneNumbers;
+                    comboBoxCustomerContactPhoneNumber.Items.Clear();
+                    comboBoxCustomerContactPhoneNumber.Items.Add("NEW...");
+                    int indexPhoneNumbers = 0;
+                    foreach (PhoneNumber phoneNumber in phoneNumbers)
                     {
-                        textBoxCustomerContactEmail.Text = contactInformation.email;
-                        textBoxCustomerContactFirstName.Text = contactInformation.firstName;
-                        textBoxCustomerContactLastName.Text = contactInformation.lastName;
-                        textBoxCustomerContactTitle.Text = contactInformation.title;
-                        if (contactInformation.isPrimary)
-                            radioButtonContactPrimaryYes.Checked = true;
-                        IList<PhoneNumber> phoneNumbers = contactInformation.PhoneNumbers;
-                        comboBoxCustomerContactPhoneNumber.Items.Clear();
-                        comboBoxCustomerContactPhoneNumber.Items.Add("NEW...");
-                        int indexPhoneNumbers = 0;
-                        foreach (PhoneNumber phoneNumber in phoneNumbers)
+                        indexPhoneNumbers++;
+                        comboBoxCustomerContactPhoneNumber.Items.Add(phoneNumber.number + "," + phoneNumber.type);
+                        if (indexPhoneNumbers == 1)
                         {
-                            indexPhoneNumbers++;
-                            comboBoxCustomerContactPhoneNumber.Items.Add(phoneNumber.number + "," + phoneNumber.type);
-                            if (indexPhoneNumbers == 1)
-                            {
-                                textBoxCustomerContactPhoneNumber.Text = phoneNumber.number;
-                                comboBoxCustomerContactPhoneNumberType.SelectedItem = phoneNumber.type;
-                            }
+                            textBoxCustomerContactPhoneNumber.Text = phoneNumber.number;
+                            comboBoxCustomerContactPhoneNumberType.SelectedItem = phoneNumber.type;
                         }
-                    comboBoxCustomerContactPhoneNumber.Text = "";
                     }
+                    if (indexPhoneNumbers >= 1)
+                        comboBoxCustomerContactPhoneNumber.SelectedIndex = 1;
+
+                }
             }
         }
 
@@ -1406,7 +1722,6 @@ namespace XPOAPITest
 
                 IList<ContactInformation> contactInformations = quoteRequest.contactInformations;
                 ContactInformation contactInformation = contactInformations.Where(s => s.email == textBoxCustomerContactEmail.Text).FirstOrDefault();
-                //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
                 if (contactInformation is not null)
                 {
@@ -1436,14 +1751,13 @@ namespace XPOAPITest
                 IList<Stop> stops = quoteRequest.stops;
 
 
-                Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+                Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
 
 
                 if (stop is not null)
                 {
                     IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
                     StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
-                    //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
                     if (stopContactInformation is not null)
                     {
@@ -1470,8 +1784,7 @@ namespace XPOAPITest
 
                 String[] selectedItemValues = selectedItem.Split(",");
                 IList<QuoteItem> items = quoteRequest.items;
-                QuoteItem item = items.Where(s => s.itemNumber == selectedItemValues[0]  && s.itemDescription == selectedItemValues[1]).FirstOrDefault();
-                //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+                QuoteItem item = items.Where(s => s.itemNumber == selectedItemValues[0] && s.itemDescription == selectedItemValues[1]).FirstOrDefault();
 
                 if (item is not null)
                 {
@@ -1494,12 +1807,12 @@ namespace XPOAPITest
                     comboBoxItemLengthUOMCode.SelectedItem = item.lengthUomCode;
                     comboBoxItemWidthUOMCode.SelectedItem = item.widthUomCode;
 
-                    if(item.isHazmat)
-                    radioButtonHazardousMaterialYes.Checked = true;
-                    if(item.isTemperatureControlled)
-                    radioButtonTemperatureControlledYes.Checked = true;
-                    HazardousItemInfo hazardousItemInfo =item.hazardousItemInfo;
-                    if(hazardousItemInfo is not null)
+                    if (item.isHazmat)
+                        radioButtonHazardousMaterialYes.Checked = true;
+                    if (item.isTemperatureControlled)
+                        radioButtonTemperatureControlledYes.Checked = true;
+                    HazardousItemInfo hazardousItemInfo = item.hazardousItemInfo;
+                    if (hazardousItemInfo is not null)
                     {
                         textBoxHazMatUNNumber.Text = hazardousItemInfo.unNumber.ToString();
                         textBoxHazMatPackingGroup.Text = hazardousItemInfo.packingGroup.ToString();
@@ -1527,36 +1840,6 @@ namespace XPOAPITest
 
         private void comboBoxStopType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            textBoxStopContactFirstName.Text = "";
-            textBoxStopContactLastName.Text = "";
-            textBoxStopContactEmail.Text = "";
-            textBoxStopContactTitle.Text = "";
-            radioButtonStopContactPrimaryYes.Checked = false;
-            numericUpDownSequenceNo.Value = 1;
-            textBoxStopContactPhoneNumber.Text = "";
-
-            comboBoxStopContact.Items.Clear();
-            comboBoxStopContact.Items.Add("NEW...");
-            comboBoxStopContactPhoneNumber.Items.Clear();
-            comboBoxStopContactPhoneNumber.Items.Add("NEW...");
-            comboBoxStopRefernceNumbers.Items.Clear();
-            comboBoxStopRefernceNumbers.Items.Add("NEW...");
-            comboBoxStopSpecialRequirement.Items.Clear();
-            comboBoxStopSpecialRequirement.Items.Add("NEW...");
-
-            textBoxSpecialRequirementValue.Text = "";
-            textBoxStopReferenceTypeCodeValue.Text = "";
-
-
-            textBoxLocationId.Text = "";
-            textBoxLocationName.Text = "";
-            textBoxAddress1.Text = "";
-            textBoxAddress2.Text = "";
-            textBoxCity.Text = "";
-            textBoxState.Text = "";
-            textBoxCountry.Text = "";
-            textBoxZipCode.Text = "";
-            textBoxLocationId.Text = "";
         }
 
         private void comboBoxCustomerReferenceNumbers_SelectedIndexChanged(object sender, EventArgs e)
@@ -1574,7 +1857,7 @@ namespace XPOAPITest
                 if (customerReferenceNumber is not null)
                 {
                     textBoxContactReferenceNumberValue.Text = customerReferenceNumber.value;
-                    comboBoxContactReferenceNumberTypeCode.SelectedItem = customerReferenceNumber.typeCode;
+                    comboBoxCustomerReferenceNumberTypeCode.SelectedItem = customerReferenceNumber.typeCode;
 
                 }
             }
@@ -1586,14 +1869,12 @@ namespace XPOAPITest
             IList<Stop> stops = quoteRequest.stops;
 
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
             if (stop is not null)
             {
                 IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
 
                 StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
-                //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
 
                 IList<StopContactPhoneNumber> stopContactPhoneNumbers = stopContactInformation.phoneNumbers;
@@ -1612,14 +1893,12 @@ namespace XPOAPITest
         {
             IList<Stop> stops = quoteRequest.stops;
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
             if (stop is not null)
             {
                 IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
 
                 StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
-                //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
                 if (stopContactInformation is not null)
                 {
@@ -1635,12 +1914,11 @@ namespace XPOAPITest
             IList<Stop> stops = quoteRequest.stops;
 
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
-            if(stop is not null)
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
             {
                 stops.Remove(stop);
-                comboBoxStops.Items.Remove(textBoxCity.Text + "," + textBoxState.Text + "," + textBoxCountry.Text + "," + textBoxZipCode.Text);
+                comboBoxStops.Items.Remove(textBoxStopCity.Text + "," + textBoxStopState.Text + "," + textBoxStopCountry.Text + "," + textBoxStopZipCode.Text);
                 resetStopControls();
             }
         }
@@ -1650,8 +1928,6 @@ namespace XPOAPITest
 
             IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
 
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
             ContactInformation customerContactInformation = customerContactInformations.Where(s => s.firstName == textBoxCustomerContactFirstName.Text && s.lastName == textBoxCustomerContactLastName.Text && s.email == textBoxCustomerContactEmail.Text).FirstOrDefault();
             IList<PhoneNumber> ContactPhoneNumbers = customerContactInformation.phoneNumbers;
 
@@ -1670,9 +1946,8 @@ namespace XPOAPITest
             IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
 
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
             ContactInformation customerContactInformation = customerContactInformations.Where(s => s.firstName == textBoxCustomerContactFirstName.Text && s.lastName == textBoxCustomerContactLastName.Text && s.email == textBoxCustomerContactEmail.Text).FirstOrDefault();
-            if(customerContactInformation is not null)
+            if (customerContactInformation is not null)
             {
                 customerContactInformations.Remove(customerContactInformation);
                 comboBoxCustomerConact.Items.Remove(textBoxCustomerContactFirstName.Text + "," + textBoxCustomerContactLastName.Text + "," + textBoxCustomerContactEmail.Text);
@@ -1684,12 +1959,11 @@ namespace XPOAPITest
         {
             IList<CustomerReferenceNumber> referenceNumbers = quoteRequest.referenceNumbers;
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            CustomerReferenceNumber referenceNumber = referenceNumbers.Where(s => s.typeCode == comboBoxContactReferenceNumberTypeCode.Text).FirstOrDefault();
-            if(referenceNumber is not null)
+            CustomerReferenceNumber referenceNumber = referenceNumbers.Where(s => s.typeCode == comboBoxCustomerReferenceNumberTypeCode.Text).FirstOrDefault();
+            if (referenceNumber is not null)
             {
                 referenceNumbers.Remove(referenceNumber);
-                comboBoxCustomerReferenceNumbers.Items.Remove(comboBoxContactReferenceNumberTypeCode.Text);
+                comboBoxCustomerReferenceNumbers.Items.Remove(comboBoxCustomerReferenceNumberTypeCode.Text);
             }
         }
 
@@ -1697,8 +1971,6 @@ namespace XPOAPITest
         {
             IList<QuoteItem> items = quoteRequest.items;
 
-
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
             QuoteItem item = items.Where(s => s.productCode == textBoxItemProductCode.Text && s.itemNumber == textBoxItemNumber.Text && s.itemDescription == textBoxItemDescription.Text).FirstOrDefault();
 
 
@@ -1714,13 +1986,11 @@ namespace XPOAPITest
             IList<Stop> stops = quoteRequest.stops;
 
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
 
             IList<StopSpecialRequirement> stopSpecialRequirements = stop.specialRequirement;
 
             StopSpecialRequirement stopSpecialRequirement = stopSpecialRequirements.Where(s => s.code == comboBoxSpecialRequirementCode.Text).FirstOrDefault();
-            //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
             if (stopSpecialRequirement is null)
             {
@@ -1734,14 +2004,12 @@ namespace XPOAPITest
             IList<Stop> stops = quoteRequest.stops;
 
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
-            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
 
 
             IList<StopReferenceTypeCode> stopReferenceTypeCodes = stop.stopReferenceNumbers;
 
             StopReferenceTypeCode stopReferenceTypeCode = stopReferenceTypeCodes.Where(s => s.typeCode == comboBoxSpecialRequirementCode.Text).FirstOrDefault();
-            //   Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text).FirstOrDefault();
 
             if (stopReferenceTypeCode is null)
             {
@@ -1768,13 +2036,13 @@ namespace XPOAPITest
             IList<AdditionalService> additionalServices = quoteRequest.additionalServices;
 
 
-            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
             AdditionalService additionalService = additionalServices.Where(s => s.code == comboBoxAdditionalServiceCode.Text).FirstOrDefault();
             if (additionalService is not null)
             {
                 additionalServices.Remove(additionalService);
                 comboBoxAdditionalServices.Items.Remove(comboBoxAdditionalServiceCode);
-;            }
+                ;
+            }
         }
 
         private void radioButtonHazardousMaterialNo_CheckedChanged(object sender, EventArgs e)
@@ -1785,6 +2053,169 @@ namespace XPOAPITest
         private void radioButtonTemperatureControlledNo_CheckedChanged(object sender, EventArgs e)
         {
             resetTemperatureInformation();
+        }
+
+        private void buttonSelectJSONFile_Click(object sender, EventArgs e)
+        {
+
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.SelectedPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                DialogResult result = fbd.ShowDialog();
+                labelSelectedJSONSampleDataFolder.Text = fbd.SelectedPath;
+                labelSelectedJSONSampleDataFolder.BackColor = Color.Aqua;
+                labelSelectedFileCaption.Visible = true;
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    string[] files = Directory.GetFiles(fbd.SelectedPath);
+                    foreach (String fileName in files)
+                    {
+                        listBoxSampleJSONFiles.Items.Add(Path.GetFileName(fileName));
+                    }
+                }
+            }
+        }
+
+        private void buttonLoadSampleJSONFile_Click(object sender, EventArgs e)
+        {
+
+            TextReader tr = File.OpenText(labelSelectedJSONSampleDataFolder.Text + "\\" + listBoxSampleJSONFiles.SelectedItem);
+            JsonTextReader reader = new JsonTextReader(tr);
+            JsonSerializer jseri = new JsonSerializer();
+
+            quoteRequest = jseri.Deserialize<QuoteRequest>(reader);
+            LoadSampleJSONData();
+
+        }
+
+        private void tabPageStops_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSaveCustomerContact_Click(object sender, EventArgs e)
+        {
+            if (!validateCustomerContact()) return;
+            AddCustomerContactInformation();
+        }
+
+        private void buttonSaveStopContact_Click(object sender, EventArgs e)
+        {
+            if (!ValidateStopAddress())
+            {
+                return;
+            }
+            if (!validateStopContact())
+            {
+                return;
+            }
+
+
+            Stop stop = getStop();
+            addStopContactInformation(stop);
+        }
+
+        private void buttonSaveGeneralQuoteInfo_Click(object sender, EventArgs e)
+        {
+            if (!ValidateQuoteGeneralSettings())
+                return;
+            updateGeneralQuoteInfo();
+        }
+
+        private void updateGeneralQuoteInfo()
+        {
+            quoteRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
+
+            quoteRequest.partnerOrderCode = textBoxPartnerOrderCode.Text;
+
+            quoteRequest.equipmentCategoryCode = comboBoxEquipmentCategoryCode.Text;
+
+            quoteRequest.equipmentTypeCode = comboBoxEquipmentTypeCode.Text;
+
+
+            quoteRequest.bolNumber = textBoxBOLNumber.Text;
+
+            quoteRequest.shipmentId = textBoxShipmentId.Text;
+
+            quoteRequest.applicationSource = comboBoxApplicationSource.Text;
+        }
+
+        private void buttonSaveStopAddress_Click(object sender, EventArgs e)
+        {
+            Stop stop = getStop();
+            if (stop is null)
+            {
+                stop = addStop();
+            }
+            addStopAddressInformation(stop);
+        }
+
+        private void buttonUpdateStop_Click(object sender, EventArgs e)
+        {
+            addStop();
+        }
+
+        private void buttonSelectJSONFile_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSaveStopReferenceTypeCode_Click(object sender, EventArgs e)
+        {
+            Stop stop = addStop();
+
+            if (stop is null)
+            {
+                stop = addStop();
+            }
+            AddStopReferenceTypeCode();
+        }
+
+        private void buttonLoadSampleJSONFile_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonGetQuote_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private  async void buttonConvertToOrder_Click(object sender, EventArgs e)
+        {
+            XPO xpo = new XPO();
+
+            TextBox txtTrackingNumber = tabPageGeneral.Controls["textBoxTrackingNumber"] as TextBox;
+            if (txtTrackingNumber.Text.Trim() == "")
+            {
+                MessageBox.Show("Please provide the tracking Number");
+                tabControlMain.SelectedIndex = 1;
+                txtTrackingNumber.Focus();
+                return;
+            }
+            orderResponse = await xpo.convertToOrder(tabControlQuotes.SelectedTab, quoteRequest, txtTrackingNumber.Text);
+            if (orderResponse is not null)
+            {
+                Label lblQuoteIdValue = tabControlQuotes.SelectedTab.Controls["lblQuoteIdValue"] as Label;
+                lblQuoteId.Text = lblQuoteIdValue.Text;
+                Label lblCarrierValue = tabControlQuotes.SelectedTab.Controls["lblCarrierNameValue"] as Label;
+                lblCarrier.Text = lblCarrierValue.Text;
+                Label lblQuotedAmountValue = tabControlQuotes.SelectedTab.Controls["lblTotalCostValue"] as Label;
+                lblQuotedAmount.Text = lblQuotedAmountValue.Text;
+
+                int orderId = orderResponse.orderId;
+                lblOrderId.Text = orderId.ToString();
+                tabControlMain.SelectedIndex = 8;
+                if (orderId == 0)
+                {
+                    labelExceptionConvertToOrder.Visible = true;
+                    labelExceptionConvertToOrder.Text = orderResponse.message;
+                }
+                else
+                {
+                    labelExceptionConvertToOrder.Visible = false;
+                }
+            }
         }
     }
 }

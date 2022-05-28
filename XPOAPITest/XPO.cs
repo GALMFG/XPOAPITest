@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,24 +6,6 @@ using RestSharp;
 
 namespace XPOAPITest
 {
-    //public Enum EquipmentCatagoryCode
-    //{
-    //    DB, 
-    //        CTN,
-    //        VN,
-    //        FB, 
-    //        CS, 
-    //        RF, 
-    //        TRACTORONL, 
-    //        OTH, 
-    //        Sprinter, 
-    //        Cargo, 
-    //        Van, 
-    //        LS, 
-    //        LSR, 
-    //        TRR
-    //}
-
     enum EquipmentCatagoryCode
     {
         DB,
@@ -333,29 +310,17 @@ namespace XPOAPITest
             xpoToken = await Token.getToken(xpoToken);
 
             var client = new RestClient("https://" + XPOSettings.XPOConnectURL + "/quoteAPI/rest/v1/Create");
-            //client.Timeout = -1;
-
-            var request = new RestRequest();
+            var request = new RestRequest(Method.Post.ToString());
             request.AddHeader("x-api-key", XPOSettings.XAPIKeyRequest);
-
-            //request.AddHeader("Content-Type", "application/json");
-
             request.AddHeader("Accept", "*/*");
             request.Method = Method.Post;
             request.AddHeader("xpoauthorization", xpoToken);
-            //request.AddHeader("Content-Type", "text/plain");
-            //request.AddParameter("text/plain", body, ParameterType.RequestBody);
             request.AddHeader("Content-Type", "application/json");
-
-            //var TokenBody = new TokenBody { client_id = "xpo-galvantage-integration", client_secret = "6ywFMhLijCn1CpzAlTX0CWtc6m4xT0nxcZfliDyIfJ9rX6gSvl74FMX1vgh59enh", scope = "xpo-rates-api", grant_type = "client_credentials" };
-
-            //body= "{ \"partnerOrderCode\":\"718956-22\",\"partnerIdentifierCode\":\"2-1-GALMNENY\",\"equipmentCategoryCode\":\"VN\",\"equipmentTypeCode\":\"V\",\"transportationMode\":[\"LTL\"],\"applicationSource\":\"GPAPI\",\"contactInformations\":[{ \"firstName\":\"Leslie\",\"email\":\"leslie.rivera@gal.com\",\"phoneNumbers\":[{ \"type\":\"WORK\",\"number\":\"718 292 9000 x 527\"}]}],\"stops\":[{ \"type\":\"PICKUP\",\"scheduledTimeFrom\":\"2022-05-11T18:00:00-04:00\",\"scheduledTimeTo\":\"2022-05-11T20:30:00-04:00\",\"sequenceNo\":1,\"addressInformations\":{ \"locationName\":\"GAL Manufacturing Company LLC.\",\"addressLine1\":\"50 East 153rd Street\",\"cityName\":\"Bronx\",\"stateCode\":\"NY\",\"country\":\"USA\",\"zipCode\":\"10451\"},\"stopContactInformations\":[{ \"firstName\":\"Leslie\",\"lastName\":\"Rivera\",\"email\":\"leslie.rivera@gal.com\",\"phoneNumbers\":[{ \"Type\":\"MOBILE\",\"number\":\"6463373449\",\"isPrimary\":true}]}]},{ \"type\":\"DELIVERY\",\"scheduledTimeFrom\":\"2022-05-14T08:00:00-04:00\",\"scheduledTimeTo\":\"2022-05-14T15:00:00-04:00\",\"sequenceNo\":2,\"addressInformations\":{ \"locationName\":\"SCHUMACHER ELEVATOR CO., INC. \",\"addressLine1\":\"ONE SCHUMACHER WAY            \",\"cityName\":\"DENVER              \",\"stateCode\":\"IA\",\"country\":\"USA\",\"zipCode\":\"50622\"},\"stopContactInformations\":[{ \"firstName\":\"Derek\",\"lastName\":\"Gielau\",\"email\":\"derek.gielau@schumacherelevator.com\",\"phoneNumbers\":[{ \"Type\":\"MOBILE\",\"number\":\"6463373449\",\"isPrimary\":true},{ \"Type\":\"WORK\",\"number\":\"319-984-5676\",\"isPrimary\":true}]}]}],\"items\":[{ \"productCode\":\"1 CONTROLLER ETC  1\",\"units\":1,\"unitTypeCode\":\"CRTS\",\"packageUnits\":1,\"packageTypeCode\":\"CRTS\",\"weight\":331,\"weightUomCode\":\"LB\",\"height\":35,\"heightUomCode\":\"IN\",\"length\":48,\"lengthUomCode\":\"IN\",\"width\":42,\"widthUomCode\":\"IN\",\"class\":\"55\"}]}";
-
             QuoteResponse? quoteResponse;
             try
             {
                 request.AddJsonBody(quoteRequest);
-                //request.AddBody(body);
+
                 var response = await client.ExecuteAsync(request);
                 quoteResponse =
 JsonSerializer.Deserialize<QuoteResponse>(response.Content);
@@ -365,29 +330,19 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             {
 
             }
-            return null;
-
-            
+            return null;            
         }
         public  async Task<QuoteResponse> getQuote()
         {
             QuoteRequest quoteRequest = new();
-        //    quoteRequest.x_mode = "LTL";
             quoteRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
             quoteRequest.partnerOrderCode = "45565555";
             quoteRequest.equipmentCategoryCode = EquipmentCatagoryCode.VN.ToString(); ;
             quoteRequest.equipmentTypeCode =equipmentTypeCode.V.ToString();
             quoteRequest.AddTransportationMode("LTL");
-
-
             quoteRequest.bolNumber = "45567";
-
             quoteRequest.shipmentId = "45565555";
-
-            //List<QuoteContactInformation> QuoteContactInformation = new List<QuoteContactInformation>();
             ContactInformation contactInformation = new();
-
-
             contactInformation.firstName = "Leslie";
             contactInformation.lastName = "Rivera";
             contactInformation.isPrimary = true;
@@ -396,7 +351,6 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             phoneNumber.number = "718 292 9000 x 527";
             phoneNumber.type = PhoneNumberType.WORK.ToString();
             contactInformation.addPhoneNumber(phoneNumber);
-            // contacts.Add(contactInformation);
             quoteRequest.AddContact(contactInformation);
 
             CustomerReferenceNumber referenceNumber = new();
@@ -408,8 +362,8 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
 
             Stop pickup = new ();
             pickup.type = TypeOfStop.PICKUP.ToString();
-            pickup.scheduledTimeFrom = "2022-05-24T18:00:00-04:00";
-            pickup.scheduledTimeTo = "2022-05-24T20:30:00-04:00";
+            pickup.scheduledTimeFrom = "2022-05-31T18:00:00-04:00";
+            pickup.scheduledTimeTo = "2022-05-31T20:30:00-04:00";
             pickup.sequenceNo = 1;
             pickup.note = "This is a note";
 
@@ -448,8 +402,8 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
 
             Stop delivery = new ();
             delivery.type = TypeOfStop.DELIVERY.ToString();
-            delivery.scheduledTimeFrom = "2022-05-27T18:00:00-04:00";
-            delivery.scheduledTimeTo = "2022-05-27T20:30:00-04:00";
+            delivery.scheduledTimeFrom = "2022-06-02T18:00:00-04:00";
+            delivery.scheduledTimeTo = "2022-06-02T20:30:00-04:00";
             delivery.sequenceNo = 2;
             delivery.note = "This is a note";
 
@@ -469,11 +423,8 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             stopPhoneNumber.isPrimary = false;
             stopContactInformation.addPhoneNumber(stopPhoneNumber);
             delivery.addContact(stopContactInformation);
-
-
-
             srt = SpecialRequirementType.LFD;
-             sr = new StopSpecialRequirement();
+            sr = new StopSpecialRequirement();
             sr.code = srt.GetString();
             sr.value = "2334";
             delivery.addSpecialRequirement(sr);
@@ -504,7 +455,6 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
             item.unitTypeCode = UnitTypeCode.CRTS.ToString();
             item.packageUnits = 5;
             item.packageTypeCode = PackageTypeCode.CRTS.ToString();
-        //    item.declaredValueAmount = 400;
             item.weight = 340;
             item.weightUomCode = WeightUomCode.LB.ToString();
             item.height = 35;
@@ -591,9 +541,9 @@ JsonSerializer.Deserialize<QuoteResponse>(response.Content);
         {
             OrderRequest orderRequest = new();
             orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
-         //   orderRequest.equipmentCategoryCode = EquipmentCatagoryCode.VN.ToString(); ;
-         //   orderRequest.equipmentTypeCode = equipmentTypeCode.V.ToString();
-            orderRequest.transportationMode="LTL";
+            //   orderRequest.equipmentCategoryCode = EquipmentCatagoryCode.VN.ToString(); ;
+            //   orderRequest.equipmentTypeCode = equipmentTypeCode.V.ToString();
+            orderRequest.transportationMode = XPOSettings.TransportationMode;
             orderRequest.applicationSource = ApplicationSource.GPAPI.ToString();
             Label lblQuoteId = tabPage.Controls["lblQuoteIdValue"] as Label;
             orderRequest.quoteId = lblQuoteId.Text;
@@ -787,7 +737,7 @@ JsonSerializer.Deserialize<OrderResponse>(response.Content);
         {
             OrderRequest orderRequest = new();
             orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
-            orderRequest.transportationMode = "LTL";
+            orderRequest.transportationMode = XPOSettings.TransportationMode;
             orderRequest.applicationSource = ApplicationSource.GPAPI.ToString();
             Label lblQuoteId = tabPage.Controls["lblQuoteIdValue"] as Label;
             orderRequest.quoteId = lblQuoteId.Text;

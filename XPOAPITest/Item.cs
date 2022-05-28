@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace XPOAPITest
 {
     public class Item
@@ -13,7 +8,7 @@ namespace XPOAPITest
             //hazardousItemInfo= new  HazardousItemInfo ();
 
             //temperatureInformation= new TemperatureInformation ();
-    }
+        }
 
         public string itemDescription{ get; set; }
         public string itemNumber{ get; set; }
