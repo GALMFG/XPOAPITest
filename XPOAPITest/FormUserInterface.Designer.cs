@@ -833,6 +833,7 @@ namespace XPOAPITest
             this.comboBoxStopContactPhoneNumber.Name = "comboBoxStopContactPhoneNumber";
             this.comboBoxStopContactPhoneNumber.Size = new System.Drawing.Size(208, 23);
             this.comboBoxStopContactPhoneNumber.TabIndex = 2;
+            this.comboBoxStopContactPhoneNumber.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopContactPhoneNumber_SelectedIndexChanged_1);
             // 
             // label12
             // 
@@ -905,6 +906,7 @@ namespace XPOAPITest
             this.comboBoxStopContact.Name = "comboBoxStopContact";
             this.comboBoxStopContact.Size = new System.Drawing.Size(311, 23);
             this.comboBoxStopContact.TabIndex = 1;
+            this.comboBoxStopContact.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopContact_SelectedIndexChanged_1);
             // 
             // groupBox1
             // 
@@ -1181,49 +1183,49 @@ namespace XPOAPITest
             this.textBoxStopZipCode.Location = new System.Drawing.Point(171, 260);
             this.textBoxStopZipCode.Name = "textBoxStopZipCode";
             this.textBoxStopZipCode.Size = new System.Drawing.Size(250, 23);
-            this.textBoxStopZipCode.TabIndex = 12;
+            this.textBoxStopZipCode.TabIndex = 7;
             // 
             // textBoxStopState
             // 
             this.textBoxStopState.Location = new System.Drawing.Point(171, 200);
             this.textBoxStopState.Name = "textBoxStopState";
             this.textBoxStopState.Size = new System.Drawing.Size(250, 23);
-            this.textBoxStopState.TabIndex = 11;
+            this.textBoxStopState.TabIndex = 5;
             // 
             // textBoxStopCountry
             // 
             this.textBoxStopCountry.Location = new System.Drawing.Point(171, 230);
             this.textBoxStopCountry.Name = "textBoxStopCountry";
             this.textBoxStopCountry.Size = new System.Drawing.Size(250, 23);
-            this.textBoxStopCountry.TabIndex = 10;
+            this.textBoxStopCountry.TabIndex = 6;
             // 
             // textBoxStopLocationName
             // 
             this.textBoxStopLocationName.Location = new System.Drawing.Point(171, 80);
             this.textBoxStopLocationName.Name = "textBoxStopLocationName";
             this.textBoxStopLocationName.Size = new System.Drawing.Size(250, 23);
-            this.textBoxStopLocationName.TabIndex = 9;
+            this.textBoxStopLocationName.TabIndex = 1;
             // 
             // textBoxStopAddress1
             // 
             this.textBoxStopAddress1.Location = new System.Drawing.Point(171, 110);
             this.textBoxStopAddress1.Name = "textBoxStopAddress1";
             this.textBoxStopAddress1.Size = new System.Drawing.Size(250, 23);
-            this.textBoxStopAddress1.TabIndex = 8;
+            this.textBoxStopAddress1.TabIndex = 2;
             // 
             // textBoxStopAddress2
             // 
             this.textBoxStopAddress2.Location = new System.Drawing.Point(171, 140);
             this.textBoxStopAddress2.Name = "textBoxStopAddress2";
             this.textBoxStopAddress2.Size = new System.Drawing.Size(250, 23);
-            this.textBoxStopAddress2.TabIndex = 7;
+            this.textBoxStopAddress2.TabIndex = 3;
             // 
             // textBoxStopCity
             // 
             this.textBoxStopCity.Location = new System.Drawing.Point(171, 170);
             this.textBoxStopCity.Name = "textBoxStopCity";
             this.textBoxStopCity.Size = new System.Drawing.Size(250, 23);
-            this.textBoxStopCity.TabIndex = 6;
+            this.textBoxStopCity.TabIndex = 4;
             // 
             // labeBoxStopLocationName
             // 
@@ -1419,7 +1421,7 @@ namespace XPOAPITest
             this.textBoxCustomerContactPhoneNumber.Location = new System.Drawing.Point(140, 90);
             this.textBoxCustomerContactPhoneNumber.Name = "textBoxCustomerContactPhoneNumber";
             this.textBoxCustomerContactPhoneNumber.Size = new System.Drawing.Size(218, 23);
-            this.textBoxCustomerContactPhoneNumber.TabIndex = 2;
+            this.textBoxCustomerContactPhoneNumber.TabIndex = 6;
             // 
             // comboBoxCustomerContactPhoneNumberType
             // 
@@ -1436,34 +1438,35 @@ namespace XPOAPITest
             this.comboBoxCustomerContactPhoneNumber.Name = "comboBoxCustomerContactPhoneNumber";
             this.comboBoxCustomerContactPhoneNumber.Size = new System.Drawing.Size(290, 23);
             this.comboBoxCustomerContactPhoneNumber.TabIndex = 0;
+            this.comboBoxCustomerContactPhoneNumber.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomerContactPhoneNumber_SelectedIndexChanged_1);
             // 
             // textBoxCustomerContactLastName
             // 
             this.textBoxCustomerContactLastName.Location = new System.Drawing.Point(136, 100);
             this.textBoxCustomerContactLastName.Name = "textBoxCustomerContactLastName";
             this.textBoxCustomerContactLastName.Size = new System.Drawing.Size(250, 23);
-            this.textBoxCustomerContactLastName.TabIndex = 10;
+            this.textBoxCustomerContactLastName.TabIndex = 2;
             // 
             // textBoxCustomerContactEmail
             // 
             this.textBoxCustomerContactEmail.Location = new System.Drawing.Point(136, 130);
             this.textBoxCustomerContactEmail.Name = "textBoxCustomerContactEmail";
             this.textBoxCustomerContactEmail.Size = new System.Drawing.Size(250, 23);
-            this.textBoxCustomerContactEmail.TabIndex = 9;
+            this.textBoxCustomerContactEmail.TabIndex = 3;
             // 
             // textBoxCustomerContactTitle
             // 
             this.textBoxCustomerContactTitle.Location = new System.Drawing.Point(136, 160);
             this.textBoxCustomerContactTitle.Name = "textBoxCustomerContactTitle";
             this.textBoxCustomerContactTitle.Size = new System.Drawing.Size(250, 23);
-            this.textBoxCustomerContactTitle.TabIndex = 7;
+            this.textBoxCustomerContactTitle.TabIndex = 4;
             // 
             // textBoxCustomerContactFirstName
             // 
             this.textBoxCustomerContactFirstName.Location = new System.Drawing.Point(136, 70);
             this.textBoxCustomerContactFirstName.Name = "textBoxCustomerContactFirstName";
             this.textBoxCustomerContactFirstName.Size = new System.Drawing.Size(250, 23);
-            this.textBoxCustomerContactFirstName.TabIndex = 6;
+            this.textBoxCustomerContactFirstName.TabIndex = 1;
             // 
             // labelCustomerContactTitle
             // 
@@ -1504,10 +1507,11 @@ namespace XPOAPITest
             // comboBoxCustomerConact
             // 
             this.comboBoxCustomerConact.FormattingEnabled = true;
-            this.comboBoxCustomerConact.Location = new System.Drawing.Point(174, 18);
+            this.comboBoxCustomerConact.Location = new System.Drawing.Point(136, 17);
             this.comboBoxCustomerConact.Name = "comboBoxCustomerConact";
             this.comboBoxCustomerConact.Size = new System.Drawing.Size(266, 23);
             this.comboBoxCustomerConact.TabIndex = 0;
+            this.comboBoxCustomerConact.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomerConact_SelectedIndexChanged_1);
             // 
             // tabPageReferenceNumbers
             // 
@@ -1595,6 +1599,7 @@ namespace XPOAPITest
             this.comboBoxCustomerReferenceNumbers.Name = "comboBoxCustomerReferenceNumbers";
             this.comboBoxCustomerReferenceNumbers.Size = new System.Drawing.Size(269, 23);
             this.comboBoxCustomerReferenceNumbers.TabIndex = 0;
+            this.comboBoxCustomerReferenceNumbers.SelectedIndexChanged += new System.EventHandler(this.comboBoxCustomerReferenceNumbers_SelectedIndexChanged_1);
             // 
             // tabPageAdditionalServices
             // 
