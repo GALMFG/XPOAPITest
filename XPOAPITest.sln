@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPOAPITest", "XPOAPITest\XPOAPITest.csproj", "{36571ECF-13C5-4531-A02F-05F8850E9F35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XPOAPITest", "XPOAPITest\XPOAPITest.csproj", "{36571ECF-13C5-4531-A02F-05F8850E9F35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{203CDCF2-4428-42D6-9B49-B5914E20EA46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject1", "TestProject1\TestProject1.csproj", "{203CDCF2-4428-42D6-9B49-B5914E20EA46}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XPOLib", "XPOLib\XPOLib.shproj", "{FF49082F-6297-4A3C-9E77-55FA6A19F8DC}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		XPOLib\XPOLib.projitems*{36571ecf-13c5-4531-a02f-05f8850e9f35}*SharedItemsImports = 5
+		XPOLib\XPOLib.projitems*{ff49082f-6297-4a3c-9e77-55fa6a19f8dc}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

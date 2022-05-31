@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>ff49082f-6297-4a3c-9e77-55fa6a19f8dc</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>XPOLib</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Accessorial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AdditionalService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AddressInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contact.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ContactInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomerContactInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CustomerReferenceNumber.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FixedLists.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HazardousItemInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Item.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ItemReferenceNumber.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Note.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OrderDocument.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OrderItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OrderReferenceNumber.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OrderRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OrderResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PhoneNumber.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PriceResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Quote.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QuoteItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QuoteRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QuoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Rate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RatedQuoteResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Response.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SpecialRequirementType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Stop.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StopContactInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StopContactPhoneNumber.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StopReferenceTypeCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StopSpecialRequirement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemperatureInformation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Token.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TokenBody.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TokenResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XPO.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XPOSettings.cs" />
+  </ItemGroup>
+</Project>

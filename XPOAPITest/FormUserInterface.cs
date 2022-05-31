@@ -28,11 +28,12 @@ namespace XPOAPITest
             InitializeComponent();
         }
 
-        private void FormUserInterfaceCopy_Load(object sender, EventArgs e)
+        private void FormUserInterface_Load(object sender, EventArgs e)
         {
             quoteRequest = new QuoteRequest();
             IntializeDropdownLists();
             getConfigData();
+            InitializeTimePicker();
         }
 
         public void ApplyConfigSettings()
@@ -164,19 +165,22 @@ namespace XPOAPITest
         public void loadItemsControls()
         {
             int counterItems = 0;
+            comboBoxItem.Items.Clear();
+            comboBoxItem.Items.Add("NEW...");
             foreach (QuoteItem item in quoteRequest.items)
             {
                 counterItems++;
                 comboBoxItem.Items.Add(item.itemNumber + "," + item.itemDescription);
                 if (counterItems == 1)
                 {
+                    textBoxItemClass.Text = item.classcode;
                     textBoxItemProductCode.Text = item.productCode;
                     textBoxItemDescription.Text = item.itemDescription;
                     textBoxItemNumber.Text = item.itemNumber;
                     textBoxItemUnits.Text = item.units.ToString();
                     comboBoxItemUnitTypeCode.Text = item.unitTypeCode;
                     textBoxPackageUnits.Text = item.packageUnits.ToString();
-                    comboBoxPackageTypeCode.Text = item.packageTypeCode.ToString();
+                    comboBoxPackageTypeCode.Text = item.packageTypeCode;
                     textBoxItemWeight.Text = item.weight.ToString();
                     comboBoxItemWeightUOMCode.Text = item.weightUomCode;
 
@@ -190,6 +194,10 @@ namespace XPOAPITest
                     loadHazardousMaterials(item);
                     loadTemperatureInformation(item);
                 }
+            }
+            if (counterItems >= 1)
+            {
+                comboBoxItem.SelectedIndex = 1;
             }
         }
         public void loadStopAddressControls()
@@ -690,19 +698,11 @@ namespace XPOAPITest
         }
         private void InitializeTimePicker()
         {
-            dateTimePickerScheduledTimeFrom = new DateTimePicker();
-            dateTimePickerScheduledTimeFrom.Format = DateTimePickerFormat.Time;
-            dateTimePickerScheduledTimeFrom.ShowUpDown = true;
-            dateTimePickerScheduledTimeFrom.Location = new Point(10, 10);
-            dateTimePickerScheduledTimeFrom.Width = 100;
-            Controls.Add(dateTimePickerScheduledTimeFrom);
+            dateTimePickerScheduledTimeFrom.Format = DateTimePickerFormat.Custom;
+            dateTimePickerScheduledTimeFrom.CustomFormat = "yyyy-MM-ddTHH:mm:ss";
 
-            dateTimePickerScheduledTimeTo = new DateTimePicker();
-            dateTimePickerScheduledTimeTo.Format = DateTimePickerFormat.Time;
-            dateTimePickerScheduledTimeTo.ShowUpDown = true;
-            dateTimePickerScheduledTimeTo.Location = new Point(10, 10);
-            dateTimePickerScheduledTimeTo.Width = 100;
-            Controls.Add(dateTimePickerScheduledTimeTo);
+            dateTimePickerScheduledTimeTo.Format = DateTimePickerFormat.Custom;
+            dateTimePickerScheduledTimeTo.CustomFormat = "yyyy-MM-ddTHH:mm:ss";
         }
         private bool ValidateQuoteGeneralSettings()
         {
@@ -2155,31 +2155,20 @@ namespace XPOAPITest
             addStop();
         }
 
-        private void buttonSelectJSONFile_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonSaveStopReferenceTypeCode_Click(object sender, EventArgs e)
         {
+            if (!ValidateStopAddress())
+            {
+                return;
+            }
             Stop stop = addStop();
-
             if (stop is null)
             {
-                stop = addStop();
+                return;
             }
             AddStopReferenceTypeCode();
         }
 
-        private void buttonLoadSampleJSONFile_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonGetQuote_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
         private  async void buttonConvertToOrder_Click(object sender, EventArgs e)
         {
@@ -2216,6 +2205,297 @@ namespace XPOAPITest
                     labelExceptionConvertToOrder.Visible = false;
                 }
             }
+        }
+
+        private void comboBoxStopType_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSaveAdditionalServices_Click(object sender, EventArgs e)
+        {
+            addAdditionalService();
+        }
+
+        private void buttonSaveCustomerReferenceNumber_Click(object sender, EventArgs e)
+        {
+            addCustomerReferenceNumber();
+        }
+
+        private void buttonSaveCustomerContact_Click_1(object sender, EventArgs e)
+        {
+            IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
+
+
+            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
+            ContactInformation customerContactInformation = customerContactInformations.Where(s => s.firstName == textBoxCustomerContactFirstName.Text && s.lastName == textBoxCustomerContactLastName.Text && s.email == textBoxCustomerContactEmail.Text).FirstOrDefault();
+
+
+            if (customerContactInformation is null)
+            {
+                customerContactInformation = AddCustomerContactInformation();
+            }
+        }
+
+        private void buttonSaveCustomerContactPhoneNumber_Click(object sender, EventArgs e)
+        {
+            if (!ValidateStopAddress())
+            {
+                return;
+            }
+            if (!validateStopContact())
+            {
+                return;
+            }
+
+            if (textBoxStopContactPhoneNumber.Text.Trim() == "")
+            {
+                MessageBox.Show("Contact Phone Number cannot be empty");
+                return;
+            }
+
+            Stop stop = getStop();
+            StopContactInformation stopContactInformation = getStopContactInformation(stop);
+            if (stopContactInformation is null)
+                stopContactInformation = addStopContactInformation(stop);
+
+            StopContactPhoneNumber stopContactPhoneNumber = getStopContactPhoneNumber(stopContactInformation);
+
+            if (stopContactPhoneNumber is null)
+                AddStopContactPhoneNumber(stopContactInformation);
+        }
+
+        private void buttonAddStopSpecialRequirement_Click(object sender, EventArgs e)
+        {
+            AddStopSpecialRequirement();
+        }
+
+        private void buttonSaveItem_Click(object sender, EventArgs e)
+        {
+            IList<QuoteItem> items = quoteRequest.items;
+
+
+            // Stop stop = stops.Single(s => s.addressInformations.cityName == textBoxCity.Text && s.addressInformations.stateCode == textBoxState.Text && s.addressInformations.country == textBoxCountry.Text && s.addressInformations.zipCode == textBoxZipCode.Text);
+            QuoteItem item = items.Where(s => s.productCode == textBoxItemProductCode.Text && s.itemNumber == textBoxItemNumber.Text && s.itemDescription == textBoxItemDescription.Text).FirstOrDefault();
+
+
+            if (item is null)
+            {
+                addItem(quoteRequest);
+            }
+        }
+
+
+        private void buttonDeleteStopContactPhoneNumber_Click_1(object sender, EventArgs e)
+        {
+
+            IList<Stop> stops = quoteRequest.stops;
+
+
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
+            {
+                IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
+
+                StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
+
+
+                IList<StopContactPhoneNumber> stopContactPhoneNumbers = stopContactInformation.phoneNumbers;
+
+                StopContactPhoneNumber phoneNumber = stopContactPhoneNumbers.Where(s => s.number == textBoxStopContactPhoneNumber.Text).FirstOrDefault();
+                if (phoneNumber is not null)
+                {
+                    stopContactPhoneNumbers.Remove(phoneNumber);
+                    comboBoxStopContactPhoneNumber.Items.Remove(textBoxStopContactPhoneNumber.Text + "," + comboBoxStopContactPhoneNumberType.Text);
+                    resetStopContactPhoneNumberControls();
+                }
+            }
+        }
+
+        private void buttonDeleteStopContact_Click_1(object sender, EventArgs e)
+        {
+            IList<Stop> stops = quoteRequest.stops;
+
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
+            {
+                IList<StopContactInformation> stopContactInformations = stop.stopContactInformations;
+
+                StopContactInformation stopContactInformation = stopContactInformations.Where(s => s.email == textBoxStopContactEmail.Text).FirstOrDefault();
+
+                if (stopContactInformation is not null)
+                {
+                    stopContactInformations.Remove(stopContactInformation);
+                    comboBoxStopContact.Items.Remove(textBoxStopContactFirstName.Text + "," + textBoxStopContactLastName.Text + "," + textBoxStopContactEmail.Text);
+                    resetStopContactInformationControls();
+                }
+            }
+        }
+
+        private void buttonDeleteStop_Click_1(object sender, EventArgs e)
+        {
+            IList<Stop> stops = quoteRequest.stops;
+
+
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+            if (stop is not null)
+            {
+                stops.Remove(stop);
+                comboBoxStops.Items.Remove(textBoxStopCity.Text + "," + textBoxStopState.Text + "," + textBoxStopCountry.Text + "," + textBoxStopZipCode.Text);
+                resetStopControls();
+            }
+        }
+
+        private void buttonDeleteCustomerContactPhoneNumber_Click_1(object sender, EventArgs e)
+        {
+            IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
+
+            ContactInformation customerContactInformation = customerContactInformations.Where(s => s.firstName == textBoxCustomerContactFirstName.Text && s.lastName == textBoxCustomerContactLastName.Text && s.email == textBoxCustomerContactEmail.Text).FirstOrDefault();
+            IList<PhoneNumber> ContactPhoneNumbers = customerContactInformation.phoneNumbers;
+
+            PhoneNumber phoneNumber = ContactPhoneNumbers.Where(s => s.number == textBoxCustomerContactPhoneNumber.Text).FirstOrDefault();
+            if (phoneNumber is not null)
+            {
+                ContactPhoneNumbers.Remove(phoneNumber);
+                comboBoxCustomerContactPhoneNumber.Items.Remove(textBoxCustomerContactPhoneNumber.Text + "," + comboBoxCustomerContactPhoneNumberType.Text);
+                resetCustomerContactPhoneNumberControls();
+            }
+        }
+
+        private void buttonDeleteCustomerContact_Click_1(object sender, EventArgs e)
+        {
+            IList<ContactInformation> customerContactInformations = quoteRequest.contactInformations;
+
+
+            ContactInformation customerContactInformation = customerContactInformations.Where(s => s.firstName == textBoxCustomerContactFirstName.Text && s.lastName == textBoxCustomerContactLastName.Text && s.email == textBoxCustomerContactEmail.Text).FirstOrDefault();
+            if (customerContactInformation is not null)
+            {
+                customerContactInformations.Remove(customerContactInformation);
+                comboBoxCustomerConact.Items.Remove(textBoxCustomerContactFirstName.Text + "," + textBoxCustomerContactLastName.Text + "," + textBoxCustomerContactEmail.Text);
+                resetCustomerContactInformationControls();
+            }
+        }
+
+        private void buttonDeleteCustomerReferenceNumber_Click_1(object sender, EventArgs e)
+        {
+            IList<CustomerReferenceNumber> referenceNumbers = quoteRequest.referenceNumbers;
+
+            CustomerReferenceNumber referenceNumber = referenceNumbers.Where(s => s.typeCode == comboBoxCustomerReferenceNumberTypeCode.Text).FirstOrDefault();
+            if (referenceNumber is not null)
+            {
+                referenceNumbers.Remove(referenceNumber);
+                comboBoxCustomerReferenceNumbers.Items.Remove(comboBoxCustomerReferenceNumberTypeCode.Text);
+            }
+        }
+
+        private void buttonDeleteItem_Click_1(object sender, EventArgs e)
+        {
+            IList<QuoteItem> items = quoteRequest.items;
+
+            QuoteItem item = items.Where(s => s.productCode == textBoxItemProductCode.Text && s.itemNumber == textBoxItemNumber.Text && s.itemDescription == textBoxItemDescription.Text).FirstOrDefault();
+
+
+            if (item is not null)
+            {
+                items.Remove(item);
+                comboBoxItem.Items.Remove(textBoxItemNumber.Text + "," + textBoxItemDescription.Text);
+            }
+        }
+
+        private void buttonDeleteStopSpecialRequirement_Click_1(object sender, EventArgs e)
+        {
+            IList<Stop> stops = quoteRequest.stops;
+
+
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+
+            IList<StopSpecialRequirement> stopSpecialRequirements = stop.specialRequirement;
+
+            StopSpecialRequirement stopSpecialRequirement = stopSpecialRequirements.Where(s => s.code == comboBoxSpecialRequirementCode.Text).FirstOrDefault();
+
+            if (stopSpecialRequirement is null)
+            {
+                stopSpecialRequirements.Remove(stopSpecialRequirement);
+                comboBoxStopSpecialRequirement.Items.Remove(comboBoxSpecialRequirementCode.Text);
+            }
+        }
+
+        private void buttonDeleteStopReferenceTypeCode_Click(object sender, EventArgs e)
+        {
+            IList<Stop> stops = quoteRequest.stops;
+
+
+            Stop stop = stops.Where(s => s.addressInformations.cityName == textBoxStopCity.Text && s.addressInformations.stateCode == textBoxStopState.Text && s.addressInformations.country == textBoxStopCountry.Text && s.addressInformations.zipCode == textBoxStopZipCode.Text).FirstOrDefault();
+
+
+            IList<StopReferenceTypeCode> stopReferenceTypeCodes = stop.stopReferenceNumbers;
+
+            StopReferenceTypeCode stopReferenceTypeCode = stopReferenceTypeCodes.Where(s => s.typeCode == comboBoxSpecialRequirementCode.Text).FirstOrDefault();
+
+            if (stopReferenceTypeCode is null)
+            {
+                stopReferenceTypeCodes.Remove(stopReferenceTypeCode);
+                comboBoxStopRefernceNumbers.Items.Remove(comboBoxStopRefernceTypeCode.Text);
+            }
+        }
+
+        private void buttonSaveGeneralQuoteInfo_Click_1(object sender, EventArgs e)
+        {
+            if (!ValidateQuoteGeneralSettings())
+                return;
+            updateGeneralQuoteInfo();
+        }
+
+        private void comboBoxAdditionalServices_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            String selectedAdditionalService = comboBoxAdditionalServices.SelectedItem.ToString();
+
+            IList<AdditionalService> additionalServices = quoteRequest.additionalServices;
+            AdditionalService additionalService = additionalServices.Where(s => s.code == selectedAdditionalService).FirstOrDefault();
+
+            if (additionalService is not null)
+            {
+                comboBoxAdditionalServiceCode.SelectedItem = selectedAdditionalService;
+            }
+        }
+
+        private void buttonDeleteAdditionalServices_Click_1(object sender, EventArgs e)
+        {
+            IList<AdditionalService> additionalServices = quoteRequest.additionalServices;
+
+
+            AdditionalService additionalService = additionalServices.Where(s => s.code == comboBoxAdditionalServiceCode.Text).FirstOrDefault();
+            if (additionalService is not null)
+            {
+                additionalServices.Remove(additionalService);
+                comboBoxAdditionalServices.Items.Remove(comboBoxAdditionalServiceCode);
+                ;
+            }
+        }
+
+        private void radioButtonHazardousMaterialNo_CheckedChanged_1(object sender, EventArgs e)
+        {
+            resetHazardousMaterials();
+        }
+
+        private void radioButtonTemperatureControlledNo_CheckedChanged_1(object sender, EventArgs e)
+        {
+            resetTemperatureInformation();
+        }
+
+        private void buttonSaveStop_Click(object sender, EventArgs e)
+        {
+            addStop();
+        }
+
+        private void buttonSaveStopAddress_Click_1(object sender, EventArgs e)
+        {
+            Stop stop = getStop();
+            if (stop is null)
+            {
+                stop = addStop();
+            }
+            addStopAddressInformation(stop);
         }
     }
 }

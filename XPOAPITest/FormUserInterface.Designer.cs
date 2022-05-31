@@ -53,6 +53,8 @@ namespace XPOAPITest
             this.textBoxPartnerOrderCode = new System.Windows.Forms.TextBox();
             this.buttonSaveGeneralQuoteInfo = new System.Windows.Forms.Button();
             this.tabPageStops = new System.Windows.Forms.TabPage();
+            this.buttonDeleteStop = new System.Windows.Forms.Button();
+            this.buttonSaveStop = new System.Windows.Forms.Button();
             this.labelNotes = new System.Windows.Forms.Label();
             this.richTextBoxNote = new System.Windows.Forms.RichTextBox();
             this.labelStops = new System.Windows.Forms.Label();
@@ -162,12 +164,10 @@ namespace XPOAPITest
             this.comboBoxCustomerReferenceNumberTypeCode = new System.Windows.Forms.ComboBox();
             this.comboBoxCustomerReferenceNumbers = new System.Windows.Forms.ComboBox();
             this.tabPageAdditionalServices = new System.Windows.Forms.TabPage();
-            this.label21 = new System.Windows.Forms.Label();
-            this.labelAdditionalServices = new System.Windows.Forms.Label();
             this.labelAdditionalServiceCode = new System.Windows.Forms.Label();
+            this.labelAdditionalServices = new System.Windows.Forms.Label();
             this.buttonDeleteAdditionalServices = new System.Windows.Forms.Button();
             this.buttonSaveAdditionalServices = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBoxAdditionalServiceCode = new System.Windows.Forms.ComboBox();
             this.comboBoxAdditionalServices = new System.Windows.Forms.ComboBox();
             this.tabPageItems = new System.Windows.Forms.TabPage();
@@ -307,7 +307,7 @@ namespace XPOAPITest
             this.tabControlMain.Location = new System.Drawing.Point(19, 19);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(1029, 725);
+            this.tabControlMain.Size = new System.Drawing.Size(1029, 757);
             this.tabControlMain.TabIndex = 0;
             // 
             // tabPageLoadSamples
@@ -320,7 +320,7 @@ namespace XPOAPITest
             this.tabPageLoadSamples.Location = new System.Drawing.Point(4, 24);
             this.tabPageLoadSamples.Name = "tabPageLoadSamples";
             this.tabPageLoadSamples.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLoadSamples.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageLoadSamples.Size = new System.Drawing.Size(1021, 729);
             this.tabPageLoadSamples.TabIndex = 0;
             this.tabPageLoadSamples.Text = "Load Samples";
             this.tabPageLoadSamples.UseVisualStyleBackColor = true;
@@ -395,7 +395,7 @@ namespace XPOAPITest
             this.tabPageGeneral.Location = new System.Drawing.Point(4, 24);
             this.tabPageGeneral.Name = "tabPageGeneral";
             this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageGeneral.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageGeneral.Size = new System.Drawing.Size(1021, 729);
             this.tabPageGeneral.TabIndex = 1;
             this.tabPageGeneral.Text = "General";
             this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -523,9 +523,12 @@ namespace XPOAPITest
             this.buttonSaveGeneralQuoteInfo.TabIndex = 0;
             this.buttonSaveGeneralQuoteInfo.Text = "Save";
             this.buttonSaveGeneralQuoteInfo.UseVisualStyleBackColor = true;
+            this.buttonSaveGeneralQuoteInfo.Click += new System.EventHandler(this.buttonSaveGeneralQuoteInfo_Click_1);
             // 
             // tabPageStops
             // 
+            this.tabPageStops.Controls.Add(this.buttonDeleteStop);
+            this.tabPageStops.Controls.Add(this.buttonSaveStop);
             this.tabPageStops.Controls.Add(this.labelNotes);
             this.tabPageStops.Controls.Add(this.richTextBoxNote);
             this.tabPageStops.Controls.Add(this.labelStops);
@@ -541,10 +544,30 @@ namespace XPOAPITest
             this.tabPageStops.Controls.Add(this.tabControlStop);
             this.tabPageStops.Location = new System.Drawing.Point(4, 24);
             this.tabPageStops.Name = "tabPageStops";
-            this.tabPageStops.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageStops.Size = new System.Drawing.Size(1021, 729);
             this.tabPageStops.TabIndex = 2;
             this.tabPageStops.Text = "Stops";
             this.tabPageStops.UseVisualStyleBackColor = true;
+            // 
+            // buttonDeleteStop
+            // 
+            this.buttonDeleteStop.Location = new System.Drawing.Point(380, 690);
+            this.buttonDeleteStop.Name = "buttonDeleteStop";
+            this.buttonDeleteStop.Size = new System.Drawing.Size(150, 30);
+            this.buttonDeleteStop.TabIndex = 15;
+            this.buttonDeleteStop.Text = "Delete Stop";
+            this.buttonDeleteStop.UseVisualStyleBackColor = true;
+            this.buttonDeleteStop.Click += new System.EventHandler(this.buttonDeleteStop_Click_1);
+            // 
+            // buttonSaveStop
+            // 
+            this.buttonSaveStop.Location = new System.Drawing.Point(223, 690);
+            this.buttonSaveStop.Name = "buttonSaveStop";
+            this.buttonSaveStop.Size = new System.Drawing.Size(150, 30);
+            this.buttonSaveStop.TabIndex = 14;
+            this.buttonSaveStop.Text = "Save Stop";
+            this.buttonSaveStop.UseVisualStyleBackColor = true;
+            this.buttonSaveStop.Click += new System.EventHandler(this.buttonSaveStop_Click);
             // 
             // labelNotes
             // 
@@ -584,7 +607,7 @@ namespace XPOAPITest
             // labelSequence
             // 
             this.labelSequence.AutoSize = true;
-            this.labelSequence.Location = new System.Drawing.Point(459, 137);
+            this.labelSequence.Location = new System.Drawing.Point(686, 139);
             this.labelSequence.Name = "labelSequence";
             this.labelSequence.Size = new System.Drawing.Size(77, 15);
             this.labelSequence.TabIndex = 9;
@@ -592,7 +615,7 @@ namespace XPOAPITest
             // 
             // numericUpDownSequenceNo
             // 
-            this.numericUpDownSequenceNo.Location = new System.Drawing.Point(542, 139);
+            this.numericUpDownSequenceNo.Location = new System.Drawing.Point(769, 133);
             this.numericUpDownSequenceNo.Name = "numericUpDownSequenceNo";
             this.numericUpDownSequenceNo.Size = new System.Drawing.Size(39, 23);
             this.numericUpDownSequenceNo.TabIndex = 8;
@@ -600,7 +623,7 @@ namespace XPOAPITest
             // labelPickupTo
             // 
             this.labelPickupTo.AutoSize = true;
-            this.labelPickupTo.Location = new System.Drawing.Point(274, 117);
+            this.labelPickupTo.Location = new System.Drawing.Point(380, 111);
             this.labelPickupTo.Name = "labelPickupTo";
             this.labelPickupTo.Size = new System.Drawing.Size(106, 15);
             this.labelPickupTo.TabIndex = 6;
@@ -617,29 +640,26 @@ namespace XPOAPITest
             // 
             // dateTimePickerScheduledTimeTo
             // 
-            this.dateTimePickerScheduledTimeTo.Location = new System.Drawing.Point(275, 135);
+            this.dateTimePickerScheduledTimeTo.Location = new System.Drawing.Point(380, 131);
             this.dateTimePickerScheduledTimeTo.Name = "dateTimePickerScheduledTimeTo";
-            this.dateTimePickerScheduledTimeTo.Size = new System.Drawing.Size(131, 23);
+            this.dateTimePickerScheduledTimeTo.Size = new System.Drawing.Size(228, 23);
             this.dateTimePickerScheduledTimeTo.TabIndex = 4;
             // 
             // dateTimePickerScheduledTimeFrom
             // 
             this.dateTimePickerScheduledTimeFrom.Location = new System.Drawing.Point(79, 129);
             this.dateTimePickerScheduledTimeFrom.Name = "dateTimePickerScheduledTimeFrom";
-            this.dateTimePickerScheduledTimeFrom.Size = new System.Drawing.Size(146, 23);
+            this.dateTimePickerScheduledTimeFrom.Size = new System.Drawing.Size(217, 23);
             this.dateTimePickerScheduledTimeFrom.TabIndex = 3;
             // 
             // comboBoxStopType
             // 
             this.comboBoxStopType.FormattingEnabled = true;
-            this.comboBoxStopType.Items.AddRange(new object[] {
-            "PICKUP",
-            "INTERMEDIATE",
-            "DELIVERY"});
             this.comboBoxStopType.Location = new System.Drawing.Point(100, 60);
             this.comboBoxStopType.Name = "comboBoxStopType";
             this.comboBoxStopType.Size = new System.Drawing.Size(436, 23);
             this.comboBoxStopType.TabIndex = 2;
+            this.comboBoxStopType.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopType_SelectedIndexChanged_1);
             // 
             // comboBoxStops
             // 
@@ -648,6 +668,7 @@ namespace XPOAPITest
             this.comboBoxStops.Name = "comboBoxStops";
             this.comboBoxStops.Size = new System.Drawing.Size(436, 23);
             this.comboBoxStops.TabIndex = 1;
+            this.comboBoxStops.SelectedIndexChanged += new System.EventHandler(this.comboBoxStops_SelectedIndexChanged);
             // 
             // tabControlStop
             // 
@@ -692,15 +713,17 @@ namespace XPOAPITest
             this.buttonDeleteStopContact.TabIndex = 13;
             this.buttonDeleteStopContact.Text = "Delete Contact";
             this.buttonDeleteStopContact.UseVisualStyleBackColor = true;
+            this.buttonDeleteStopContact.Click += new System.EventHandler(this.buttonDeleteStopContact_Click_1);
             // 
             // buttonSaveStopContact
             // 
-            this.buttonSaveStopContact.Location = new System.Drawing.Point(127, 369);
+            this.buttonSaveStopContact.Location = new System.Drawing.Point(162, 369);
             this.buttonSaveStopContact.Name = "buttonSaveStopContact";
             this.buttonSaveStopContact.Size = new System.Drawing.Size(150, 30);
             this.buttonSaveStopContact.TabIndex = 12;
             this.buttonSaveStopContact.Text = "Save Contact";
             this.buttonSaveStopContact.UseVisualStyleBackColor = true;
+            this.buttonSaveStopContact.Click += new System.EventHandler(this.buttonSaveStopContact_Click);
             // 
             // panel1
             // 
@@ -758,6 +781,7 @@ namespace XPOAPITest
             this.buttonDeleteStopContactPhoneNumber.TabIndex = 5;
             this.buttonDeleteStopContactPhoneNumber.Text = "Delete";
             this.buttonDeleteStopContactPhoneNumber.UseVisualStyleBackColor = true;
+            this.buttonDeleteStopContactPhoneNumber.Click += new System.EventHandler(this.buttonDeleteStopContactPhoneNumber_Click_1);
             // 
             // buttonAddStopContactPhoneNumber
             // 
@@ -767,6 +791,7 @@ namespace XPOAPITest
             this.buttonAddStopContactPhoneNumber.TabIndex = 4;
             this.buttonAddStopContactPhoneNumber.Text = "Save";
             this.buttonAddStopContactPhoneNumber.UseVisualStyleBackColor = true;
+            this.buttonAddStopContactPhoneNumber.Click += new System.EventHandler(this.buttonAddStopContactPhoneNumber_Click);
             // 
             // textBoxStopContactPhoneNumber
             // 
@@ -966,6 +991,7 @@ namespace XPOAPITest
             this.buttonDeleteStopReferenceTypeCode.TabIndex = 4;
             this.buttonDeleteStopReferenceTypeCode.Text = "Delete";
             this.buttonDeleteStopReferenceTypeCode.UseVisualStyleBackColor = true;
+            this.buttonDeleteStopReferenceTypeCode.Click += new System.EventHandler(this.buttonDeleteStopReferenceTypeCode_Click);
             // 
             // buttonSaveStopReferenceTypeCode
             // 
@@ -1034,6 +1060,7 @@ namespace XPOAPITest
             this.buttonDeleteStopSpecialRequirement.TabIndex = 10;
             this.buttonDeleteStopSpecialRequirement.Text = "Delete";
             this.buttonDeleteStopSpecialRequirement.UseVisualStyleBackColor = true;
+            this.buttonDeleteStopSpecialRequirement.Click += new System.EventHandler(this.buttonDeleteStopSpecialRequirement_Click_1);
             // 
             // textBoxSpecialRequirementValue
             // 
@@ -1084,6 +1111,7 @@ namespace XPOAPITest
             this.buttonAddStopSpecialRequirement.TabIndex = 10;
             this.buttonAddStopSpecialRequirement.Text = "Save";
             this.buttonAddStopSpecialRequirement.UseVisualStyleBackColor = true;
+            this.buttonAddStopSpecialRequirement.Click += new System.EventHandler(this.buttonAddStopSpecialRequirement_Click);
             // 
             // tabPageStopAddress
             // 
@@ -1119,6 +1147,7 @@ namespace XPOAPITest
             this.buttonSaveStopAddress.TabIndex = 17;
             this.buttonSaveStopAddress.Text = "Save";
             this.buttonSaveStopAddress.UseVisualStyleBackColor = true;
+            this.buttonSaveStopAddress.Click += new System.EventHandler(this.buttonSaveStopAddress_Click_1);
             // 
             // labelStopState
             // 
@@ -1265,7 +1294,7 @@ namespace XPOAPITest
             this.tabPageContactInformations.Controls.Add(this.comboBoxCustomerConact);
             this.tabPageContactInformations.Location = new System.Drawing.Point(4, 24);
             this.tabPageContactInformations.Name = "tabPageContactInformations";
-            this.tabPageContactInformations.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageContactInformations.Size = new System.Drawing.Size(1021, 729);
             this.tabPageContactInformations.TabIndex = 3;
             this.tabPageContactInformations.Text = "Contact Informations";
             this.tabPageContactInformations.UseVisualStyleBackColor = true;
@@ -1311,6 +1340,7 @@ namespace XPOAPITest
             this.buttonDeleteCustomerContact.TabIndex = 13;
             this.buttonDeleteCustomerContact.Text = "Delete";
             this.buttonDeleteCustomerContact.UseVisualStyleBackColor = true;
+            this.buttonDeleteCustomerContact.Click += new System.EventHandler(this.buttonDeleteCustomerContact_Click_1);
             // 
             // buttonSaveCustomerContact
             // 
@@ -1320,6 +1350,7 @@ namespace XPOAPITest
             this.buttonSaveCustomerContact.TabIndex = 12;
             this.buttonSaveCustomerContact.Text = "Save";
             this.buttonSaveCustomerContact.UseVisualStyleBackColor = true;
+            this.buttonSaveCustomerContact.Click += new System.EventHandler(this.buttonSaveCustomerContact_Click_1);
             // 
             // panel2
             // 
@@ -1371,6 +1402,7 @@ namespace XPOAPITest
             this.buttonDeleteCustomerContactPhoneNumber.TabIndex = 4;
             this.buttonDeleteCustomerContactPhoneNumber.Text = "Delete";
             this.buttonDeleteCustomerContactPhoneNumber.UseVisualStyleBackColor = true;
+            this.buttonDeleteCustomerContactPhoneNumber.Click += new System.EventHandler(this.buttonDeleteCustomerContactPhoneNumber_Click_1);
             // 
             // buttonSaveCustomerContactPhoneNumber
             // 
@@ -1380,6 +1412,7 @@ namespace XPOAPITest
             this.buttonSaveCustomerContactPhoneNumber.TabIndex = 3;
             this.buttonSaveCustomerContactPhoneNumber.Text = "Save";
             this.buttonSaveCustomerContactPhoneNumber.UseVisualStyleBackColor = true;
+            this.buttonSaveCustomerContactPhoneNumber.Click += new System.EventHandler(this.buttonSaveCustomerContactPhoneNumber_Click);
             // 
             // textBoxCustomerContactPhoneNumber
             // 
@@ -1488,7 +1521,7 @@ namespace XPOAPITest
             this.tabPageReferenceNumbers.Controls.Add(this.comboBoxCustomerReferenceNumbers);
             this.tabPageReferenceNumbers.Location = new System.Drawing.Point(4, 24);
             this.tabPageReferenceNumbers.Name = "tabPageReferenceNumbers";
-            this.tabPageReferenceNumbers.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageReferenceNumbers.Size = new System.Drawing.Size(1021, 729);
             this.tabPageReferenceNumbers.TabIndex = 4;
             this.tabPageReferenceNumbers.Text = "Reference Numbers";
             this.tabPageReferenceNumbers.UseVisualStyleBackColor = true;
@@ -1535,6 +1568,7 @@ namespace XPOAPITest
             this.buttonDeleteCustomerReferenceNumber.TabIndex = 3;
             this.buttonDeleteCustomerReferenceNumber.Text = "Delete";
             this.buttonDeleteCustomerReferenceNumber.UseVisualStyleBackColor = true;
+            this.buttonDeleteCustomerReferenceNumber.Click += new System.EventHandler(this.buttonDeleteCustomerReferenceNumber_Click_1);
             // 
             // buttonSaveCustomerReferenceNumber
             // 
@@ -1544,6 +1578,7 @@ namespace XPOAPITest
             this.buttonSaveCustomerReferenceNumber.TabIndex = 2;
             this.buttonSaveCustomerReferenceNumber.Text = "Save";
             this.buttonSaveCustomerReferenceNumber.UseVisualStyleBackColor = true;
+            this.buttonSaveCustomerReferenceNumber.Click += new System.EventHandler(this.buttonSaveCustomerReferenceNumber_Click);
             // 
             // comboBoxCustomerReferenceNumberTypeCode
             // 
@@ -1563,29 +1598,27 @@ namespace XPOAPITest
             // 
             // tabPageAdditionalServices
             // 
-            this.tabPageAdditionalServices.Controls.Add(this.label21);
-            this.tabPageAdditionalServices.Controls.Add(this.labelAdditionalServices);
             this.tabPageAdditionalServices.Controls.Add(this.labelAdditionalServiceCode);
+            this.tabPageAdditionalServices.Controls.Add(this.labelAdditionalServices);
             this.tabPageAdditionalServices.Controls.Add(this.buttonDeleteAdditionalServices);
             this.tabPageAdditionalServices.Controls.Add(this.buttonSaveAdditionalServices);
-            this.tabPageAdditionalServices.Controls.Add(this.comboBox2);
             this.tabPageAdditionalServices.Controls.Add(this.comboBoxAdditionalServiceCode);
             this.tabPageAdditionalServices.Controls.Add(this.comboBoxAdditionalServices);
             this.tabPageAdditionalServices.Location = new System.Drawing.Point(4, 24);
             this.tabPageAdditionalServices.Name = "tabPageAdditionalServices";
-            this.tabPageAdditionalServices.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageAdditionalServices.Size = new System.Drawing.Size(1021, 729);
             this.tabPageAdditionalServices.TabIndex = 5;
             this.tabPageAdditionalServices.Text = "Additional Services";
             this.tabPageAdditionalServices.UseVisualStyleBackColor = true;
             // 
-            // label21
+            // labelAdditionalServiceCode
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(20, 80);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(31, 15);
-            this.label21.TabIndex = 6;
-            this.label21.Text = "Type";
+            this.labelAdditionalServiceCode.AutoSize = true;
+            this.labelAdditionalServiceCode.Location = new System.Drawing.Point(20, 80);
+            this.labelAdditionalServiceCode.Name = "labelAdditionalServiceCode";
+            this.labelAdditionalServiceCode.Size = new System.Drawing.Size(35, 15);
+            this.labelAdditionalServiceCode.TabIndex = 6;
+            this.labelAdditionalServiceCode.Text = "Code";
             // 
             // labelAdditionalServices
             // 
@@ -1596,15 +1629,6 @@ namespace XPOAPITest
             this.labelAdditionalServices.TabIndex = 5;
             this.labelAdditionalServices.Text = "Additional Services";
             // 
-            // labelAdditionalServiceCode
-            // 
-            this.labelAdditionalServiceCode.AutoSize = true;
-            this.labelAdditionalServiceCode.Location = new System.Drawing.Point(20, 120);
-            this.labelAdditionalServiceCode.Name = "labelAdditionalServiceCode";
-            this.labelAdditionalServiceCode.Size = new System.Drawing.Size(35, 15);
-            this.labelAdditionalServiceCode.TabIndex = 4;
-            this.labelAdditionalServiceCode.Text = "Code";
-            // 
             // buttonDeleteAdditionalServices
             // 
             this.buttonDeleteAdditionalServices.Location = new System.Drawing.Point(244, 186);
@@ -1613,6 +1637,7 @@ namespace XPOAPITest
             this.buttonDeleteAdditionalServices.TabIndex = 3;
             this.buttonDeleteAdditionalServices.Text = "Delete";
             this.buttonDeleteAdditionalServices.UseVisualStyleBackColor = true;
+            this.buttonDeleteAdditionalServices.Click += new System.EventHandler(this.buttonDeleteAdditionalServices_Click_1);
             // 
             // buttonSaveAdditionalServices
             // 
@@ -1622,14 +1647,7 @@ namespace XPOAPITest
             this.buttonSaveAdditionalServices.TabIndex = 2;
             this.buttonSaveAdditionalServices.Text = "Save";
             this.buttonSaveAdditionalServices.UseVisualStyleBackColor = true;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(150, 120);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(262, 23);
-            this.comboBox2.TabIndex = 1;
+            this.buttonSaveAdditionalServices.Click += new System.EventHandler(this.buttonSaveAdditionalServices_Click);
             // 
             // comboBoxAdditionalServiceCode
             // 
@@ -1646,6 +1664,7 @@ namespace XPOAPITest
             this.comboBoxAdditionalServices.Name = "comboBoxAdditionalServices";
             this.comboBoxAdditionalServices.Size = new System.Drawing.Size(266, 23);
             this.comboBoxAdditionalServices.TabIndex = 0;
+            this.comboBoxAdditionalServices.SelectedIndexChanged += new System.EventHandler(this.comboBoxAdditionalServices_SelectedIndexChanged_1);
             // 
             // tabPageItems
             // 
@@ -1695,7 +1714,7 @@ namespace XPOAPITest
             this.tabPageItems.Controls.Add(this.textBoxItemProductCode);
             this.tabPageItems.Location = new System.Drawing.Point(4, 24);
             this.tabPageItems.Name = "tabPageItems";
-            this.tabPageItems.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageItems.Size = new System.Drawing.Size(1021, 729);
             this.tabPageItems.TabIndex = 6;
             this.tabPageItems.Text = "Items";
             this.tabPageItems.UseVisualStyleBackColor = true;
@@ -1707,6 +1726,7 @@ namespace XPOAPITest
             this.comboBoxItem.Name = "comboBoxItem";
             this.comboBoxItem.Size = new System.Drawing.Size(179, 23);
             this.comboBoxItem.TabIndex = 44;
+            this.comboBoxItem.SelectedIndexChanged += new System.EventHandler(this.comboBoxItem_SelectedIndexChanged);
             // 
             // buttonSaveItem
             // 
@@ -1716,6 +1736,7 @@ namespace XPOAPITest
             this.buttonSaveItem.TabIndex = 43;
             this.buttonSaveItem.Text = "Save";
             this.buttonSaveItem.UseVisualStyleBackColor = true;
+            this.buttonSaveItem.Click += new System.EventHandler(this.buttonSaveItem_Click);
             // 
             // buttonDeleteItem
             // 
@@ -1725,6 +1746,7 @@ namespace XPOAPITest
             this.buttonDeleteItem.TabIndex = 42;
             this.buttonDeleteItem.Text = "Delete";
             this.buttonDeleteItem.UseVisualStyleBackColor = true;
+            this.buttonDeleteItem.Click += new System.EventHandler(this.buttonDeleteItem_Click_1);
             // 
             // groupBox3
             // 
@@ -1747,6 +1769,7 @@ namespace XPOAPITest
             this.radioButtonTemperatureControlledNo.TabStop = true;
             this.radioButtonTemperatureControlledNo.Text = "No";
             this.radioButtonTemperatureControlledNo.UseVisualStyleBackColor = true;
+            this.radioButtonTemperatureControlledNo.CheckedChanged += new System.EventHandler(this.radioButtonTemperatureControlledNo_CheckedChanged_1);
             // 
             // radioButtonTemperatureControlledYes
             // 
@@ -1780,6 +1803,7 @@ namespace XPOAPITest
             this.radioButtonHazardousMaterialNo.TabStop = true;
             this.radioButtonHazardousMaterialNo.Text = "No";
             this.radioButtonHazardousMaterialNo.UseVisualStyleBackColor = true;
+            this.radioButtonHazardousMaterialNo.CheckedChanged += new System.EventHandler(this.radioButtonHazardousMaterialNo_CheckedChanged_1);
             // 
             // radioButtonHazardousMaterialYes
             // 
@@ -2390,7 +2414,7 @@ namespace XPOAPITest
             this.tabPageQuotes.Controls.Add(this.tabControlQuotes);
             this.tabPageQuotes.Location = new System.Drawing.Point(4, 24);
             this.tabPageQuotes.Name = "tabPageQuotes";
-            this.tabPageQuotes.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageQuotes.Size = new System.Drawing.Size(1021, 729);
             this.tabPageQuotes.TabIndex = 8;
             this.tabPageQuotes.Text = "Quotes";
             this.tabPageQuotes.UseVisualStyleBackColor = true;
@@ -2437,7 +2461,7 @@ namespace XPOAPITest
             this.tabPageOrder.Controls.Add(this.lblQuoteIdCaption);
             this.tabPageOrder.Location = new System.Drawing.Point(4, 24);
             this.tabPageOrder.Name = "tabPageOrder";
-            this.tabPageOrder.Size = new System.Drawing.Size(1021, 697);
+            this.tabPageOrder.Size = new System.Drawing.Size(1021, 729);
             this.tabPageOrder.TabIndex = 7;
             this.tabPageOrder.Text = "Order";
             this.tabPageOrder.UseVisualStyleBackColor = true;
@@ -2521,7 +2545,7 @@ namespace XPOAPITest
             // 
             // buttonGetQuote
             // 
-            this.buttonGetQuote.Location = new System.Drawing.Point(310, 750);
+            this.buttonGetQuote.Location = new System.Drawing.Point(311, 778);
             this.buttonGetQuote.Name = "buttonGetQuote";
             this.buttonGetQuote.Size = new System.Drawing.Size(150, 30);
             this.buttonGetQuote.TabIndex = 1;
@@ -2538,7 +2562,7 @@ namespace XPOAPITest
             this.Controls.Add(this.tabControlMain);
             this.Name = "FormUserInterface";
             this.Text = "FormUserInterface";
-            this.Load += new System.EventHandler(this.FormUserInterfaceCopy_Load);
+            this.Load += new System.EventHandler(this.FormUserInterface_Load);
             this.tabControlMain.ResumeLayout(false);
             this.tabPageLoadSamples.ResumeLayout(false);
             this.tabPageLoadSamples.PerformLayout();
@@ -2800,7 +2824,6 @@ namespace XPOAPITest
         private System.Windows.Forms.Button buttonDeleteAdditionalServices;
         private System.Windows.Forms.Button buttonSaveAdditionalServices;
         private System.Windows.Forms.Label labelAdditionalServices;
-        private System.Windows.Forms.Label labelAdditionalServiceCode;
         private System.Windows.Forms.Label labelStopType;
         private System.Windows.Forms.Label labelStops;
         private System.Windows.Forms.ComboBox comboBoxItem;
@@ -2831,8 +2854,9 @@ namespace XPOAPITest
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label labelAdditionalServiceCode;
         private System.Windows.Forms.Label labelExceptionConvertToOrder;
+        private System.Windows.Forms.Button buttonDeleteStop;
+        private System.Windows.Forms.Button buttonSaveStop;
     }
 }

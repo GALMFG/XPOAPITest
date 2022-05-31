@@ -7,10 +7,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Accessorial.cs" />
+    <Compile Remove="AdditionalService.cs" />
+    <Compile Remove="AddressInformation.cs" />
+    <Compile Remove="Contact.cs" />
+    <Compile Remove="ContactInformation.cs" />
+    <Compile Remove="CustomerContactInformation.cs" />
+    <Compile Remove="CustomerReferenceNumber.cs" />
+    <Compile Remove="FixedLists.cs" />
     <Compile Remove="Form1 - Copy.cs" />
     <Compile Remove="Form1 - Copy.Designer.cs" />
     <Compile Remove="Form1.cs" />
     <Compile Remove="Form1.Designer.cs" />
+    <Compile Remove="HazardousItemInfo.cs" />
+    <Compile Remove="Item.cs" />
+    <Compile Remove="ItemReferenceNumber.cs" />
+    <Compile Remove="Note.cs" />
+    <Compile Remove="OrderDocument.cs" />
+    <Compile Remove="OrderItem.cs" />
+    <Compile Remove="OrderReferenceNumber.cs" />
+    <Compile Remove="OrderRequest.cs" />
+    <Compile Remove="OrderResponse.cs" />
+    <Compile Remove="PhoneNumber.cs" />
+    <Compile Remove="PriceResponse.cs" />
+    <Compile Remove="Quote.cs" />
+    <Compile Remove="QuoteItem.cs" />
+    <Compile Remove="QuoteRequest.cs" />
+    <Compile Remove="QuoteResponse.cs" />
+    <Compile Remove="Rate.cs" />
+    <Compile Remove="RatedQuoteResponse.cs" />
+    <Compile Remove="Response.cs" />
+    <Compile Remove="Service.cs" />
+    <Compile Remove="SpecialRequirementType.cs" />
+    <Compile Remove="Stop.cs" />
+    <Compile Remove="StopContactInformation.cs" />
+    <Compile Remove="StopContactPhoneNumber.cs" />
+    <Compile Remove="StopReferenceTypeCode.cs" />
+    <Compile Remove="StopSpecialRequirement.cs" />
+    <Compile Remove="TemperatureInformation.cs" />
+    <Compile Remove="Token.cs" />
+    <Compile Remove="TokenBody.cs" />
+    <Compile Remove="TokenResponse.cs" />
+    <Compile Remove="XPO.cs" />
+    <Compile Remove="XPOSettings.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,5 +73,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <Import Project="..\XPOLib\XPOLib.projitems" Label="Shared" />
 
 </Project>

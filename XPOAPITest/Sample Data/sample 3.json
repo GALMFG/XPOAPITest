@@ -101,7 +101,7 @@
         {
             "declaredValueAmount": 1000,
             "productCode": "1 OPERATOR ETC",
-            "classcode": "",
+            "class": "55",
             "itemDescription": "1 OPERATOR ETC",
             "itemNumber": "1",
             "units": 1,
