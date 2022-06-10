@@ -1,0 +1,229 @@
+[
+  {
+            "type": "PICKUP",
+            "scheduledTimeFrom": "2022-06-08T14:00:00-04:00",
+            "scheduledTimeTo": "2022-06-08T16:30:00-04:00",
+            "sequenceNo": 1,
+            "addressInformations": {
+                "locationName": "GAL Manufacturing Company LLC.",
+                "addressLine1": "50 East 153rd Street",
+                "cityName": "Bronx",
+                "stateCode": "NY",
+                "country": "USA",
+                "zipCode": "10451"
+            },
+            "stopContactInformations": [
+                {
+                    "firstName": "Leslie",
+                    "lastName": "Rivera",
+                    "email": "leslie.rivera@gal.com",
+                    "phoneNumbers": [
+                        {
+                            "Type": "MOBILE",
+                            "number": "6463373449",
+                            "isPrimary": true
+                        }
+                    ]
+                }
+            ]
+        },
+    {
+            "type": "DELIVERY",
+            "scheduledTimeFrom": "2022-06-11T08:00:00-04:00",
+            "scheduledTimeTo": "2022-06-11T15:00:00-04:00",
+            "sequenceNo": 2,
+            "addressInformations": {
+                "locationName": "OTIS ELEVATOR COMPANY         ",
+                "addressLine1": "95 SHWMUT ROAD         ",
+                "cityName": "CANTON",
+                "stateCode": "MA",
+                "country": "USA",
+                "zipCode": "02021"
+            },
+            "stopContactInformations": [
+                {
+                    "firstName": "Fred",
+                    "lastName": "Miller",
+                    "email": "Frederick.Miller@otis.com",
+                    "phoneNumbers": [
+                        {
+                            "Type": "MOBILE",
+                            "number": "6463373449",
+                            "isPrimary": true
+                        },
+                        {
+                            "Type": "WORK",
+                            "number": "781-433-8600",
+                            "isPrimary": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "DELIVERY",
+            "scheduledTimeFrom": "2022-06-11T08:00:00-04:00",
+            "scheduledTimeTo": "2022-06-11T15:00:00-04:00",
+            "sequenceNo": 2,
+            "addressInformations": {
+                "locationName": "GILLESPIE CORPORATION",
+                "addressLine1": "60 Shawmut Road Ste 1",
+                "cityName": "Canton",
+                "stateCode": "MA",
+                "country": "USA",
+                "zipCode": "02021"
+            },
+            "stopContactInformations": [
+                {
+                    "firstName": "Demetri",
+                    "lastName": "Kachulis",
+                    "email": "demetri@gillespiecorp.com",
+                    "phoneNumbers": [
+                        {
+                            "Type": "MOBILE",
+                            "number": "6463373449",
+                            "isPrimary": true
+                        },
+                        {
+                            "Type": "WORK",
+                            "number": "413-967-4980",
+                            "isPrimary": true
+                        }
+                    ]
+                }
+            ]
+        },
+               {
+            "type": "INTERMEDIATE",
+            "scheduledTimeFrom": "2022-06-11T08:00:00-04:00",
+            "scheduledTimeTo": "2022-06-11T15:00:00-04:00",
+            "sequenceNo": 2,
+            "addressInformations": {
+                "locationName": "OTIS ELEVATOR COMPANY         ",
+                "addressLine1": "1 ODELL PLAZA",
+                "cityName": "YONKERS            ",
+                "stateCode": "NY",
+                "country": "USA",
+                "zipCode": "10701"
+            },
+            "stopContactInformations": [
+                {
+                    "firstName": "James",
+                    "lastName": "Walter",
+                    "email": "James.walter@otis.com",
+                    "phoneNumbers": [
+                        {
+                            "Type": "MOBILE",
+                            "number": "6463373449",
+                            "isPrimary": true
+                        },
+                        {
+                            "Type": "WORK",
+                            "number": "914-375-7815",
+                            "isPrimary": true
+                        }
+                    ]
+                }
+            ]
+        }
+,
+{
+            "type": "DELIVERY",
+            "scheduledTimeFrom": "2022-06-11T08:00:00-04:00",
+            "scheduledTimeTo": "2022-06-11T15:00:00-04:00",
+            "sequenceNo": 2,
+            "addressInformations": {
+                "locationName": "GENERAL ELEVATOR SOLUTIONS",
+                "addressLine1": "2620 NE 9TH AVE.",
+                "cityName": "CAPE CORAL ",
+                "stateCode": "FL",
+                "country": "USA",
+                "zipCode": "33909"
+            },
+            "stopContactInformations": [
+                {
+                    "firstName": "John",
+                    "lastName": "Atherton",
+                    "email": "john.atherton@generalelevatorfl.com",
+                    "phoneNumbers": [
+                        {
+                            "Type": "MOBILE",
+                            "number": "6463373449",
+                            "isPrimary": true
+                        },
+                        {
+                            "Type": "WORK",
+                            "number": "239-257-0074",
+                            "isPrimary": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "INTERMEDIATE",
+            "scheduledTimeFrom": "2022-06-11T08:00:00-04:00",
+            "scheduledTimeTo": "2022-06-11T15:00:00-04:00",
+            "sequenceNo": 2,
+            "addressInformations": {
+                "locationName": "TRIAD LIFTS, LLC",
+                "addressLine1": "1608 WALNUT STREET",
+                "cityName": "PHILADELPHIA",
+                "stateCode": "PA",
+                "country": "USA",
+                "zipCode": "19103"
+            },
+            "stopContactInformations": [
+                {
+                    "firstName": "Lorrie",
+                    "lastName": "Haring",
+                    "email": "Lorrie@triadlifts.com",
+                    "phoneNumbers": [
+                        {
+                            "Type": "MOBILE",
+                            "number": "6463373449",
+                            "isPrimary": true
+                        },
+                        {
+                            "Type": "WORK",
+                            "number": "267-462-1011",
+                            "isPrimary": true
+                        }
+                    ]
+                }
+            ]
+        },
+{
+            "type": "INTERMEDIATE",
+            "scheduledTimeFrom": "2022-06-11T08:00:00-04:00",
+            "scheduledTimeTo": "2022-06-11T15:00:00-04:00",
+            "sequenceNo": 2,
+            "addressInformations": {
+                "locationName": "ALLIANCE ELEVATOR SOLUTIONS",
+                "addressLine1": "335 NOVA DRIVE",
+                "cityName": "GREENCASTLE",
+                "stateCode": "PA",
+                "country": "USA",
+                "zipCode": "17225"
+            },
+            "stopContactInformations": [
+                {
+                    "firstName": "Brandon",
+                    "lastName": "Sixeas",
+                    "email": "BSixeas@allianceelevator.net",
+                    "phoneNumbers": [
+                        {
+                            "Type": "MOBILE",
+                            "number": "6463373449",
+                            "isPrimary": true
+                        },
+                        {
+                            "Type": "WORK",
+                            "number": "888-960-5596 x 100",
+                            "isPrimary": true
+                        }
+                    ]
+                }
+            ]
+        }        
+]

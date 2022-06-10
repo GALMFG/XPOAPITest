@@ -38,8 +38,8 @@
                 "zipCode": "10451"
             },
             "type": "PICKUP",
-            "scheduledTimeFrom": "2022-06-01T08:00:01-04:00",
-            "scheduledTimeTo": "2022-06-01T17:00:01-04:00",
+            "scheduledTimeFrom": "2022-06-13T08:00:01-04:00",
+            "scheduledTimeTo": "2022-06-13T17:00:01-04:00",
             "stopContactInformations": [
                 {
                     "phoneNumbers": [
@@ -73,8 +73,8 @@
                 "zipCode": "08820"
             },
             "type": "DELIVERY",
-            "scheduledTimeFrom": "2022-06-06T08:00:01-04:00",
-            "scheduledTimeTo": "2022-06-06T17:00:01-04:00",
+            "scheduledTimeFrom": "2022-06-16T08:00:01-04:00",
+            "scheduledTimeTo": "2022-06-16T17:00:01-04:00",
             "stopContactInformations": [
                 {
                     "phoneNumbers": [
@@ -101,7 +101,7 @@
         {
             "declaredValueAmount": 1000,
             "productCode": "1 OPERATOR ETC",
-            "class": "55",
+            "Class": "55",
             "itemDescription": "1 OPERATOR ETC",
             "itemNumber": "1",
             "units": 1,

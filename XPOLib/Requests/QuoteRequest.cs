@@ -15,8 +15,6 @@ namespace XPOAPITest
             items= new List<QuoteItem>();
             additionalServices= new  List<AdditionalService>() ;
     }
-        //[JsonPropertyName("x-mode")]
-        //public string x_mode { get; set; }
         public string partnerOrderCode { get; set; }
         public string partnerIdentifierCode { get; set; }
         public string equipmentCategoryCode { get; set; }

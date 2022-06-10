@@ -11,8 +11,6 @@ namespace XPOAPITest
         public bool isOversized{ get; set; }
         public bool isStackable{ get; set; }
 
-        [JsonPropertyName("class")]
-        public string classcode{ get; set; }
         public string nmfcCode{ get; set; }
         public double declaredValue{ get; set; }
         public string declaredValueCurrencyCode{ get; set; }

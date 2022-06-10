@@ -4,6 +4,7 @@
     {
         public static string XAPIKeyToken;
         public static string XAPIKeyRequest;
+        public static string ApplicationSource;
         public static string ClientId;
         public static string ClientSecret;
         public static string Scope;

@@ -31,6 +31,8 @@ namespace XPOAPITest
         {
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageLoadSamples = new System.Windows.Forms.TabPage();
+            this.labelSelectedOutputFolderCaption = new System.Windows.Forms.Label();
+            this.buttonSelectOutputFolder = new System.Windows.Forms.Button();
             this.labelSelectedFileCaption = new System.Windows.Forms.Label();
             this.buttonLoadSampleJSONFile = new System.Windows.Forms.Button();
             this.listBoxSampleJSONFiles = new System.Windows.Forms.ListBox();
@@ -312,6 +314,8 @@ namespace XPOAPITest
             // 
             // tabPageLoadSamples
             // 
+            this.tabPageLoadSamples.Controls.Add(this.labelSelectedOutputFolderCaption);
+            this.tabPageLoadSamples.Controls.Add(this.buttonSelectOutputFolder);
             this.tabPageLoadSamples.Controls.Add(this.labelSelectedFileCaption);
             this.tabPageLoadSamples.Controls.Add(this.buttonLoadSampleJSONFile);
             this.tabPageLoadSamples.Controls.Add(this.listBoxSampleJSONFiles);
@@ -325,6 +329,26 @@ namespace XPOAPITest
             this.tabPageLoadSamples.Text = "Load Samples";
             this.tabPageLoadSamples.UseVisualStyleBackColor = true;
             // 
+            // labelSelectedOutputFolderCaption
+            // 
+            this.labelSelectedOutputFolderCaption.AutoSize = true;
+            this.labelSelectedOutputFolderCaption.Location = new System.Drawing.Point(66, 435);
+            this.labelSelectedOutputFolderCaption.Name = "labelSelectedOutputFolderCaption";
+            this.labelSelectedOutputFolderCaption.Size = new System.Drawing.Size(141, 15);
+            this.labelSelectedOutputFolderCaption.TabIndex = 10;
+            this.labelSelectedOutputFolderCaption.Text = "Selected Output Location";
+            this.labelSelectedOutputFolderCaption.Visible = false;
+            // 
+            // buttonSelectOutputFolder
+            // 
+            this.buttonSelectOutputFolder.Location = new System.Drawing.Point(66, 392);
+            this.buttonSelectOutputFolder.Name = "buttonSelectOutputFolder";
+            this.buttonSelectOutputFolder.Size = new System.Drawing.Size(150, 30);
+            this.buttonSelectOutputFolder.TabIndex = 9;
+            this.buttonSelectOutputFolder.Text = "Select Output Folder";
+            this.buttonSelectOutputFolder.UseVisualStyleBackColor = true;
+            this.buttonSelectOutputFolder.Click += new System.EventHandler(this.buttonSelectOutputFolder_Click);
+            // 
             // labelSelectedFileCaption
             // 
             this.labelSelectedFileCaption.AutoSize = true;
@@ -337,7 +361,7 @@ namespace XPOAPITest
             // 
             // buttonLoadSampleJSONFile
             // 
-            this.buttonLoadSampleJSONFile.Location = new System.Drawing.Point(230, 387);
+            this.buttonLoadSampleJSONFile.Location = new System.Drawing.Point(66, 344);
             this.buttonLoadSampleJSONFile.Name = "buttonLoadSampleJSONFile";
             this.buttonLoadSampleJSONFile.Size = new System.Drawing.Size(150, 30);
             this.buttonLoadSampleJSONFile.TabIndex = 6;
@@ -349,7 +373,7 @@ namespace XPOAPITest
             // 
             this.listBoxSampleJSONFiles.FormattingEnabled = true;
             this.listBoxSampleJSONFiles.ItemHeight = 15;
-            this.listBoxSampleJSONFiles.Location = new System.Drawing.Point(66, 201);
+            this.listBoxSampleJSONFiles.Location = new System.Drawing.Point(66, 184);
             this.listBoxSampleJSONFiles.Name = "listBoxSampleJSONFiles";
             this.listBoxSampleJSONFiles.Size = new System.Drawing.Size(518, 154);
             this.listBoxSampleJSONFiles.TabIndex = 5;
@@ -659,7 +683,6 @@ namespace XPOAPITest
             this.comboBoxStopType.Name = "comboBoxStopType";
             this.comboBoxStopType.Size = new System.Drawing.Size(436, 23);
             this.comboBoxStopType.TabIndex = 2;
-            this.comboBoxStopType.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopType_SelectedIndexChanged_1);
             // 
             // comboBoxStops
             // 
@@ -2426,7 +2449,7 @@ namespace XPOAPITest
             // 
             // buttonConvertToOrder
             // 
-            this.buttonConvertToOrder.Location = new System.Drawing.Point(355, 613);
+            this.buttonConvertToOrder.Location = new System.Drawing.Point(370, 696);
             this.buttonConvertToOrder.Name = "buttonConvertToOrder";
             this.buttonConvertToOrder.Size = new System.Drawing.Size(150, 30);
             this.buttonConvertToOrder.TabIndex = 1;
@@ -2440,7 +2463,7 @@ namespace XPOAPITest
             this.tabControlQuotes.Location = new System.Drawing.Point(16, 12);
             this.tabControlQuotes.Name = "tabControlQuotes";
             this.tabControlQuotes.SelectedIndex = 0;
-            this.tabControlQuotes.Size = new System.Drawing.Size(992, 587);
+            this.tabControlQuotes.Size = new System.Drawing.Size(992, 678);
             this.tabControlQuotes.TabIndex = 0;
             // 
             // tabPage1
@@ -2448,7 +2471,7 @@ namespace XPOAPITest
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(984, 559);
+            this.tabPage1.Size = new System.Drawing.Size(984, 650);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -2863,5 +2886,7 @@ namespace XPOAPITest
         private System.Windows.Forms.Label labelExceptionConvertToOrder;
         private System.Windows.Forms.Button buttonDeleteStop;
         private System.Windows.Forms.Button buttonSaveStop;
+        private System.Windows.Forms.Button buttonSelectOutputFolder;
+        private System.Windows.Forms.Label labelSelectedOutputFolderCaption;
     }
 }

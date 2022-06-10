@@ -1,0 +1,112 @@
+[
+{
+ "firstName" : "Alias",   
+ "lastName" : "George",
+ "email": "alias.george@gmail.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"mobile","number":"908 241 7894"},
+ {"type":"work","number":"718 292 9000"},
+ {"type":"home","number":"201 678 5689"}
+ ]
+ 
+},
+{
+ "firstName" : "Shalini",   
+ "lastName" : "Singh",
+ "email": "Shalini.Singh@artech.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"mobile","number":"973.314.9225"}
+ ]
+ 
+}
+,
+{
+ "firstName" : "Harshit",   
+ "lastName" : "Upadhyay",
+ "email": "harshit.k@nityo.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"work","number":"609-853-0818 Ext. 2439"}
+ ]
+ 
+}
+,
+{
+ "firstName" : "Sabaha",   
+ "lastName" : "V.",
+ "email": "sabahat@hitekstaffing.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"work","number":"202-318-5644"}
+
+ ]
+ 
+}
+,
+{
+ "firstName" : "Chris",   
+ "lastName" : "Kerwick",
+ "email": "ckerwick@millennium-consulting.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"mobile","number":"508-203-8146"}
+  ]
+ 
+}
+,
+{
+ "firstName" : "Ken",   
+ "lastName" : "Hart",
+ "email": "alias.george@gmail.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"mobile","number":"908 241 7894"},
+ {"type":"work","number":"718 292 9000"},
+ {"type":"home","number":"201 678 5689"}
+ ]
+ 
+}
+,
+{
+ "firstName" : "Chris",   
+ "lastName" : "Gazaway",
+ "email": "cgazaway@genesis10.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"work","number":"(720) 383-2297"}
+ ]
+ 
+}
+,
+{
+ "firstName" : "Vincent",   
+ "lastName" : "Tata",
+ "email": "vincent.tata@axelon.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+ {"type":"work","number":"(212) 488-5448"}
+ ]
+ 
+}
+,
+{
+ "firstName" : "Melanie",   
+ "lastName" : "Ciappi",
+ "email": "melanie.a.ciappi.vactg4@statefarm.com",
+ "title": "",
+ "isPrimary": true,
+ "PhoneNumbers": [
+  {"type":"work","number":"(201) 877-4633"}
+   ]
+}
+]
