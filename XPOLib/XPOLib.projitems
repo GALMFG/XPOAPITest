@@ -42,7 +42,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)model\StopReferenceTypeCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)model\StopSpecialRequirement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)model\TemperatureInformation.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)model\Token.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)model\TokenBody.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Responses\TokenResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)model\XPO.cs" />

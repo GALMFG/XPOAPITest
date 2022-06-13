@@ -25,9 +25,10 @@ namespace XPOAPITest.Tests
         DateTime intermediateDate;
         DateTime deliveryDate;
         List<QuoteItem> items;
+        String xpoToken;
         Random rnd;
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             InitializeSettings();
             xpo = new XPO();
@@ -50,6 +51,7 @@ namespace XPOAPITest.Tests
                              where s.type.Equals("PICKUP")
                              select s).FirstOrDefault<Stop>();
             rnd = new Random();
+
         }
 
         void InitializeXPORequest()
@@ -80,6 +82,11 @@ namespace XPOAPITest.Tests
             XPOSettings.ApplicationSource = "GPAPI";
         }
         [Test, Order(1)]
+        public async Task TestTokenRequest()
+        {
+            xpoToken = await xpo.getToken(XPOSettings.XPOConnectURL, XPOSettings.XAPIKeyToken, XPOSettings.ClientId, XPOSettings.ClientSecret, XPOSettings.Scope, XPOSettings.GrantType);
+        }
+        [Test, Order(2)]
         public async Task TestQuoteRequestWithMimumParameters()
         {
             InitializeXPORequest();
@@ -90,19 +97,14 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(2)]
+        [Test, Order(3)]
         public async Task TestOrderRequestWithMimumParameters()
         {
-            OrderRequest orderRequest = new();
-            orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
-            orderRequest.transportationMode = XPOSettings.TransportationMode;
-            orderRequest.applicationSource = XPOSettings.ApplicationSource;
-            orderRequest.quoteId = quoteId;
-            OrderResponse orderResponse = await xpo.ConvertToOrder(orderRequest, "345676666");
+            OrderResponse orderResponse = await ConvertToOrder();
             Assert.IsNotNull(orderResponse);
         }
 
-        [Test, Order(3)]
+        [Test, Order(4)]
         public async Task TestQuoteRequestWithMultipleContacts()
         {
             InitializeXPORequest();
@@ -113,7 +115,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(4)]
+        [Test, Order(5)]
         public async Task TestQuoteRequestWithMultipleItems()
         {
             InitializeXPORequest();
@@ -124,7 +126,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(5)]
+        [Test, Order(6)]
         public async Task TestQuoteRequestWithIntermediateStops()
         {
             InitializeXPORequest();
@@ -136,7 +138,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(6)]
+        [Test, Order(7)]
         public async Task TestQuoteRequestWithLiftGateDelivery()
         {
             InitializeXPORequest();
@@ -150,7 +152,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(7)]
+        [Test, Order(8)]
         public async Task TestQuoteRequestWithLiftGatePickup()
         {
             InitializeXPORequest();
@@ -164,7 +166,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(8)]
+        [Test, Order(9)]
         public async Task TestQuoteRequestWithResidentialDelivery()
         {
             InitializeXPORequest();
@@ -178,7 +180,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(9)]
+        [Test, Order(10)]
         public async Task TestQuoteRequestWithResidentialPickup()
         {
             InitializeXPORequest();
@@ -192,7 +194,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(10)]
+        [Test, Order(11)]
         public async Task TestQuoteRequestWithHazardousInformation()
         {
             InitializeXPORequest();
@@ -214,7 +216,7 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(11)]
+        [Test, Order(12)]
         public async Task TestQuoteRequestWithTemperatureInformation()
         {
             InitializeXPORequest();
@@ -230,20 +232,19 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(12)]
+        [Test, Order(13)]
         public async Task TestQuoteRequestWithCustomerReferenceNumber()
         {
             InitializeXPORequest();
             addContactInformation(1);
             addCustomerReferenceNumbers();
             addStop("PICKUP", 0, null, null);
-            addStop("DELIVERY", 0, null, null);
-            
+            addStop("DELIVERY", 0, null, null);            
             addItem(1, null, null);
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(13)]
+        [Test, Order(14)]
         public async Task TestQuoteRequestWithAdditionalServices()
         {
             InitializeXPORequest();
@@ -251,12 +252,11 @@ namespace XPOAPITest.Tests
             addAdditionalServices();
             addStop("PICKUP", 0, null, null);
             addStop("DELIVERY", 0, null, null);
-
             addItem(1, null, null);
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(14)]
+        [Test, Order(15)]
         public async Task TestQuoteRequestWithStopReferenceCode()
         {
             InitializeXPORequest();
@@ -300,17 +300,15 @@ namespace XPOAPITest.Tests
             QuoteResponse quoteResponse = await getQuote();
             Assert.IsNotNull(quoteResponse);
         }
-        [Test, Order(15)]
+        [Test, Order(16)]
         public async Task TestOrderRequestWithContactInformation()
         {
-
             InitializeXPORequest();
             addContactInformation(1);
             addStop("PICKUP", 0, null, null);
             addStop("DELIVERY", 0, null, null);
             addItem(1, null, null);
             QuoteResponse quoteResponse = await getQuote();
-
             OrderRequest orderRequest = new();
             orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
             orderRequest.transportationMode = XPOSettings.TransportationMode;
@@ -319,7 +317,7 @@ namespace XPOAPITest.Tests
             IList<ContactInformation> orderContactInformations = quoteRequest.contactInformations;
             foreach(ContactInformation contactInformation in orderContactInformations)
             orderRequest.addOrderContact(contactInformation);
-            OrderResponse orderResponse = await xpo.ConvertToOrder(orderRequest, rnd.Next(5567865, 9967865).ToString());
+            OrderResponse orderResponse = await ConvertToOrder();
             Assert.IsNotNull(orderResponse);
         }
         public void  addContactInformation(int count )
@@ -371,11 +369,19 @@ namespace XPOAPITest.Tests
                 }
             }
         }
+        public async Task<OrderResponse> ConvertToOrder()
+        {
+            OrderRequest orderRequest = new();
+            orderRequest.partnerIdentifierCode = XPOSettings.PartnerIdentifierCode;
+            orderRequest.transportationMode = XPOSettings.TransportationMode;
+            orderRequest.applicationSource = XPOSettings.ApplicationSource;
+            orderRequest.quoteId = quoteId;
+            OrderResponse orderResponse = await xpo.ConvertToOrder(orderRequest, rnd.Next(45634578, 95634578).ToString(), xpoToken, XPOSettings.XPOConnectURL, XPOSettings.XAPIKeyRequest);
+            return orderResponse;
+        }
         public async Task<QuoteResponse> getQuote()
         {
-            String xpoToken = await Token.getToken();
-
-            QuoteResponse quoteResponse = await xpo.getQuote(quoteRequest, xpoToken);
+            QuoteResponse quoteResponse = await xpo.getQuote(quoteRequest, xpoToken, XPOSettings.XPOConnectURL, XPOSettings.XAPIKeyRequest);
             quoteId = quoteResponse.masterQuoteId.ToString();
             return quoteResponse;
         }
